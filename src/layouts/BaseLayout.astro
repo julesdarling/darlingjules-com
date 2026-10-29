@@ -63,6 +63,15 @@ const schema = {
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-M320J1PC7Z"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        window.dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+      gtag('config', 'G-M320J1PC7Z');
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{pageTitle}</title>
     <meta name="description" content={metaDescription} />

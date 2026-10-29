@@ -23,7 +23,6 @@ const blockedStrings = [
   'Haggard &amp; Associates',
   'Haggard and Associates',
   'Jonathan Haggard',
-  'googletagmanager',
   'G-8YHNXLP7D5',
   '246345318',
   'hs-scripts',
