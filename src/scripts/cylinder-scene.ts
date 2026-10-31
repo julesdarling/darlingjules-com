@@ -89,7 +89,7 @@ const logoBasePitch = 0.34;
 const fogColor = new THREE.Color(0xfaf9f6);
 const sceneDesignWidth = 1600;
 const sceneDesignHeight = 900;
-const mobileLayoutQuery = '(max-width: 767px)';
+const mobileLayoutQuery = '(max-width: 1023px)';
 const dragRotationScale = 0.008;
 const dragVelocityDamping = 0.925;
 
@@ -113,7 +113,7 @@ const defaultTitleControls = {
 
 const mobileTitleControls = {
   ...defaultTitleControls,
-  y: -0.6,
+  y: 0,
 };
 
 const defaultLogoControls = {
@@ -126,7 +126,7 @@ const defaultLogoControls = {
 
 const mobileLogoControls = {
   ...defaultLogoControls,
-  y: 2.15,
+  y: 0,
 };
 
 const defaultCameraControls = {
@@ -395,6 +395,67 @@ const getScenePoint = (
   return { x, y };
 };
 
+const fitGroupToAnchor = (
+  group: THREE.Group,
+  anchorRect: DOMRect,
+  stageRect: DOMRect,
+  camera: THREE.PerspectiveCamera,
+) => {
+  const mesh = group.children.find((child): child is THREE.Mesh => child instanceof THREE.Mesh);
+  if (!mesh) return;
+
+  const vertices = mesh.geometry.getAttribute('position');
+  const baseScale = group.scale.clone();
+  const basePosition = group.position.clone();
+  const visibleHeight = 2 * Math.tan(THREE.MathUtils.degToRad(camera.fov) / 2) * Math.abs(camera.position.z);
+  const targetX = (anchorRect.left + anchorRect.width / 2 - stageRect.left) / stageRect.width * 2 - 1;
+  const targetY = 1 - (anchorRect.top + anchorRect.height / 2 - stageRect.top) / stageRect.height * 2;
+  const projectedBounds = () => {
+    group.updateMatrixWorld(true);
+    const bounds = new THREE.Box2();
+
+    // Sample the cylinder rims rather than a box, whose empty corners overestimate perspective bounds.
+    for (let index = 0; index < vertices.count; index += 8) {
+      const point = new THREE.Vector3()
+        .fromBufferAttribute(vertices, index)
+        .applyMatrix4(mesh.matrixWorld)
+        .project(camera);
+      bounds.expandByPoint(new THREE.Vector2(point.x, point.y));
+    }
+
+    return bounds;
+  };
+
+  const place = (scale: number) => {
+    group.scale.copy(baseScale).multiplyScalar(scale);
+    group.position.copy(basePosition);
+
+    for (let pass = 0; pass < 2; pass += 1) {
+      const center = projectedBounds().getCenter(new THREE.Vector2());
+      group.position.x += (targetX - center.x) * visibleHeight * camera.aspect / 2;
+      group.position.y += (targetY - center.y) * visibleHeight / 2;
+    }
+
+    return projectedBounds().getSize(new THREE.Vector2());
+  };
+
+  let lower = 0;
+  let upper = 1;
+  for (let pass = 0; pass < 10; pass += 1) {
+    const scale = (lower + upper) / 2;
+    const size = place(scale);
+    if (
+      size.x <= anchorRect.width / stageRect.width * 2 * 0.94 &&
+      size.y <= anchorRect.height / stageRect.height * 2 * 0.9
+    ) {
+      lower = scale;
+    } else {
+      upper = scale;
+    }
+  }
+  place(lower);
+};
+
 const setBackfaceVisibility = (material: THREE.Material, visible: boolean) => {
   const nextSide = visible ? THREE.DoubleSide : THREE.FrontSide;
   if (material.side === nextSide) return;
@@ -461,7 +522,9 @@ export const initCylinderScene = (root: HTMLElement) => {
   let animationFrame = 0;
   let renderer: THREE.WebGLRenderer | undefined;
   let resizeObserver: ResizeObserver | undefined;
+  let resizeListener: (() => void) | undefined;
   let controls = getControlState();
+  let controlOverrides: CylinderControls | undefined;
   let controlListener: ((event: Event) => void) | undefined;
   let pointerCleanup: (() => void) | undefined;
   const textures: THREE.Texture[] = [];
@@ -472,6 +535,9 @@ export const initCylinderScene = (root: HTMLElement) => {
     disposed = true;
     cancelAnimationFrame(animationFrame);
     resizeObserver?.disconnect();
+    if (resizeListener) {
+      window.removeEventListener('resize', resizeListener);
+    }
     if (controlListener) {
       window.removeEventListener(controlsEventName, controlListener);
     }
@@ -732,22 +798,29 @@ export const initCylinderScene = (root: HTMLElement) => {
         return;
       }
 
+      controls = getControlState(controlOverrides);
+      const mobile = isMobileLayout();
       const rootRect = root.getBoundingClientRect();
       const titleRect = titleAnchor.getBoundingClientRect();
       const logoRect = logoAnchor.getBoundingClientRect();
       const stageTop = Math.max(0, titleRect.top - rootRect.top - Math.min(24, titleRect.height * 0.05));
-      const stageTopBleed = getStageTopBleed();
-
-      stage.style.top = `${Math.round(stageTop + controls.canvas.topOffsetPx - stageTopBleed)}px`;
-      stage.style.height = '100vh';
-      stage.style.minHeight = '100dvh';
+      if (mobile) {
+        const top = Math.max(0, titleRect.top - rootRect.top - 12);
+        stage.style.top = `${Math.round(top)}px`;
+        stage.style.height = `${Math.ceil(logoRect.bottom - rootRect.top - top + 12)}px`;
+        stage.style.minHeight = '0';
+      } else {
+        stage.style.top = `${Math.round(stageTop + controls.canvas.topOffsetPx - getStageTopBleed())}px`;
+        stage.style.height = '100vh';
+        stage.style.minHeight = '100dvh';
+      }
       stage.style.setProperty('--cylinder-stage-width-extra', `${Math.round(controls.canvas.widthOffsetPx)}px`);
       stage.style.setProperty('--cylinder-stage-x', `${Math.round(controls.canvas.x)}px`);
       stage.style.setProperty('--cylinder-stage-opacity', `${controls.canvas.opacity}`);
 
       const stageRect = stage.getBoundingClientRect();
-      const width = Math.max(320, Math.round(stageRect.width));
-      const height = Math.max(220, Math.round(stageRect.height));
+      const width = Math.max(1, Math.round(stageRect.width));
+      const height = Math.max(1, Math.round(stageRect.height));
       const renderWidth = width;
       const frameRect = new DOMRect(stageRect.left, stageRect.top, renderWidth, height);
       const ratio = renderWidth / height;
@@ -761,6 +834,7 @@ export const initCylinderScene = (root: HTMLElement) => {
       camera.position.set(controls.camera.x, controls.camera.y, controls.camera.z);
       camera.rotation.set(controls.camera.pitch, controls.camera.yaw, controls.camera.roll);
       camera.updateProjectionMatrix();
+      camera.updateMatrixWorld();
       applySceneFog(scene, controls, materials);
 
       const titlePoint = getScenePoint(titleRect, frameRect, camera);
@@ -775,8 +849,8 @@ export const initCylinderScene = (root: HTMLElement) => {
         titleScale * controls.title.scale * viewportScale,
       );
       titleGroup.position.x = titlePoint.x + controls.title.x;
-      titleGroup.position.y =
-        titlePoint.y + (titleRatio > 4.4 ? -0.28 : titleRatio < 3.25 ? -0.14 : -0.2) + controls.title.y - titleWideDrop;
+      const titleOffsetY = mobile ? 0 : (titleRatio > 4.4 ? -0.28 : titleRatio < 3.25 ? -0.14 : -0.2) - titleWideDrop;
+      titleGroup.position.y = titlePoint.y + titleOffsetY + controls.title.y;
 
       const logoPoint = getScenePoint(logoRect, frameRect, camera);
       const logoRatio = logoRect.width / Math.max(1, logoRect.height);
@@ -789,8 +863,15 @@ export const initCylinderScene = (root: HTMLElement) => {
         logoScale * controls.logos.scale * viewportScale,
       );
       logoGroup.position.x = logoPoint.x + controls.logos.x;
-      logoGroup.position.y =
-        logoPoint.y + (logoRatio > 5.5 ? 0.82 : logoRatio < 3.4 ? 0.44 : 0.62) + controls.logos.y;
+      const logoOffsetY = mobile ? 0 : logoRatio > 5.5 ? 0.82 : logoRatio < 3.4 ? 0.44 : 0.62;
+      logoGroup.position.y = logoPoint.y + logoOffsetY + controls.logos.y;
+
+      if (mobile) {
+        titleGroup.rotation.x = titleBasePitch + controls.title.pitch;
+        logoGroup.rotation.x = logoBasePitch + controls.logos.pitch;
+        fitGroupToAnchor(titleGroup, titleRect, frameRect, camera);
+        fitGroupToAnchor(logoGroup, logoRect, frameRect, camera);
+      }
     };
 
     resizeObserver = new ResizeObserver(resize);
@@ -798,10 +879,12 @@ export const initCylinderScene = (root: HTMLElement) => {
     resizeObserver.observe(titleAnchor);
     resizeObserver.observe(logoAnchor);
     resizeObserver.observe(band);
+    resizeListener = resize;
+    window.addEventListener('resize', resizeListener);
 
     controlListener = (event: Event) => {
       const detail = event instanceof CustomEvent ? (event.detail as CylinderControls) : undefined;
-      controls = getControlState(detail);
+      controlOverrides = detail;
       resize();
     };
     window.addEventListener(controlsEventName, controlListener);

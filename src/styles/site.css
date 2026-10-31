@@ -4363,6 +4363,44 @@ section.footer .splitpara.jhppara.footerrr {
 
 }
 
+@media screen and (max-width: 1023px) {
+  .cylinder-home .agency-cylinder-hero {
+    min-height: 0;
+    padding-top: clamp(1.05rem, 4.5vw, 1.9rem) !important;
+    padding-bottom: 1rem !important;
+  }
+
+  .cylinder-home .agency-cylinder-headline {
+    left: auto;
+    width: 100%;
+    height: clamp(7.5rem, 32vw, 10rem);
+    margin: 0 0 1rem;
+    transform: none;
+  }
+
+  .cylinder-home .agency-cylinder-stage {
+    --cylinder-stage-breakpoint-bleed: 0px;
+    width: calc(100% + var(--cylinder-stage-width-extra));
+  }
+
+  .cylinder-home .agency-cylinder-hero.is-cylinder-ready .flex-block-3 {
+    margin-top: 0 !important;
+  }
+
+  .cylinder-home .agency-pattern-logo-band {
+    min-height: 0;
+    padding: 0 var(--haggard-page-x) clamp(2rem, 7vw, 3rem);
+  }
+
+  .cylinder-home .agency-logo-cylinder {
+    left: auto;
+    width: 100%;
+    height: clamp(8rem, 32vw, 10rem);
+    margin: 0;
+    transform: none;
+  }
+}
+
 @media screen and (max-width: 767px) {
   .agency-pattern-home {
     width: 100%;
@@ -4401,27 +4439,6 @@ section.footer .splitpara.jhppara.footerrr {
     white-space: normal !important;
   }
 
-  .cylinder-home .agency-cylinder-hero {
-    min-height: clamp(31rem, 72svh, 38rem);
-    padding-top: clamp(1.05rem, 4.5vw, 1.9rem) !important;
-  }
-
-  .cylinder-home .agency-cylinder-headline {
-    width: calc(100vw + 2rem);
-    height: clamp(8.25rem, 34vw, 11.5rem);
-    margin-top: clamp(-6rem, -22vw, -5rem);
-    margin-bottom: clamp(0.25rem, 2vw, 0.75rem);
-  }
-
-  .cylinder-home .agency-cylinder-stage {
-    --cylinder-stage-breakpoint-bleed: clamp(12rem, 54vw, 18rem);
-    width: calc(100vw + 2rem + var(--cylinder-stage-breakpoint-bleed) + var(--cylinder-stage-width-extra));
-  }
-
-  .cylinder-home .agency-cylinder-hero.is-cylinder-ready .flex-block-3 {
-    margin-top: clamp(-6.5rem, -21vw, -4.25rem) !important;
-  }
-
   .agency-pattern-hero .flex-block-7 .ctalink {
     width: min(76vw, 19rem) !important;
     justify-content: center !important;
@@ -4430,18 +4447,6 @@ section.footer .splitpara.jhppara.footerrr {
   .agency-pattern-logo-band {
     padding-top: clamp(0.75rem, 4vw, 1.5rem);
     padding-bottom: clamp(2.35rem, 9vw, 3.4rem);
-  }
-
-  .cylinder-home .agency-pattern-logo-band {
-    min-height: clamp(9.25rem, 36vw, 11.5rem);
-    padding-top: clamp(0.1rem, 1vw, 0.4rem);
-  }
-
-  .cylinder-home .agency-logo-cylinder {
-    width: calc(100vw + 2rem);
-    height: clamp(9rem, 36vw, 11rem);
-    margin-top: clamp(-3.75rem, -12vw, -2.5rem);
-    margin-bottom: clamp(0.85rem, 4vw, 1.4rem);
   }
 
   .cylinder-controls {
