@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       ASTRO_TELEMETRY_DISABLED: "1"
-      PUBLIC_SITE_ORIGIN: https://www.juleshaggard.com
+      PUBLIC_SITE_ORIGIN: https://darlingjules.com
     steps:
       - name: Checkout
         uses: actions/checkout@v4

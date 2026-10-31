@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This repo is Juleshaggard.com, a sparse editorial portfolio for Jules Haggard as a freelance Creative Director and Designer. Treat the visual system itself as the product: senior, restrained, precise, image-led, and hireable.
+This repo is Darlingjules.com, a sparse editorial portfolio for Jules Darling as a freelance Creative Director and Designer. Treat the visual system itself as the product: senior, restrained, precise, image-led, and hireable.
 
 Use this file before making UI, copy, spacing, typography, or layout edits.
 
@@ -88,7 +88,7 @@ Use `npm run visual` when comparing local output to the live site, or when a spa
 - Keep copy concrete, senior, and useful to hiring managers.
 - Do not add filler claims, generic agency language, or vague superlatives.
 - No em dashes in visible copy. Use commas, colons, semicolons, periods, or parentheses.
-- Use `Jules Haggard` and Jules-specific contact details.
+- Use `Jules Darling` and Jules-specific contact details.
 
 ## Editing Rules
 

@@ -1,7 +1,7 @@
 {
-  "name": "juleshaggard-com",
+  "name": "darlingjules-com",
   "version": "1.0.0",
-  "description": "Personal portfolio for Jules Haggard.",
+  "description": "Personal portfolio for Jules Darling.",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
@@ -16,7 +16,7 @@
     "visual": "node scripts/visual-compare.mjs"
   },
   "keywords": [],
-  "author": "Jules Haggard",
+  "author": "Jules Darling",
   "license": "UNLICENSED",
   "private": false,
   "type": "module",

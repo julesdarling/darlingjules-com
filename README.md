@@ -1,6 +1,6 @@
-# Jules Haggard Website
+# Jules Darling Website
 
-Static Astro portfolio for `juleshaggard.com`, forked from the `haggard.design` rebuild.
+Static Astro portfolio for Jules Darling at `darlingjules.com`.
 
 ## Commands
 
@@ -19,8 +19,9 @@ Static Astro portfolio for `juleshaggard.com`, forked from the `haggard.design` 
 GitHub Pages is deployed through `.github/workflows/deploy.yml`.
 
 - Pushes to `main` run `check`, `build`, and `verify`, then publish `dist/`.
-- The Astro site is configured for `https://www.juleshaggard.com` and root-relative paths.
-- GitHub Pages is configured for `www.juleshaggard.com`; DNS still needs to point there before the domain resolves to this build.
+- The Astro site is configured for `https://darlingjules.com` and root-relative paths.
+- The custom domain is `darlingjules.com`; configure it in the new GitHub Pages repository and point the domain's web DNS to GitHub Pages before publishing.
+- Keep the previous domain on its own GitHub Pages redirect site so existing HTTPS links continue to work.
 
 ## Editing Content
 
@@ -32,6 +33,7 @@ This site uses repo content as the CMS:
 - Self-hosted media lives in `public/assets/site`.
 - Render-time HTML cleanup lives in `src/lib/enhanceContent.ts`; it normalizes headings, media attributes, image alt text, external-link rel attributes, and decorative media.
 - Shared SEO settings live in `src/lib/seo.ts`, with generated `robots.txt` and `sitemap.xml` routes in `src/pages`.
+- Outlined Instrument Serif branding sources live in `Logo.svg` and `public/assets/brand`; social and app-icon PNG exports use those vector assets.
 - The current case-study rewrite lives in `scripts/rewrite-case-studies.mjs`, but this fork now carries Jules-focused page and case-study copy directly in the migrated content files.
 - The sentence-case cleanup lives in `scripts/enforce-sentence-case.mjs`; acronyms and initialisms stay capitalized.
 

@@ -128,8 +128,8 @@ function altForImage($: CheerioAPI, element: Element, options: EnhanceContentOpt
   }
 
   if (className.includes('clientlogo')) return 'Client logo';
-  if (className.includes('image-8')) return 'Jules Haggard portrait';
-  if (className.includes('image-18')) return 'Jules Haggard collaborator portrait collage';
+  if (className.includes('image-8')) return 'Jules Darling portrait';
+  if (className.includes('image-18')) return 'Jules Darling collaborator portrait collage';
 
   return `${options.title} visual`;
 }
@@ -447,7 +447,7 @@ function replaceAssociateCollage($: CheerioAPI) {
   $('#aboutmesection .image-18').each((_, element) => {
     const cloud = $('<div></div>')
       .addClass('associate-portrait-cloud')
-      .attr('aria-label', 'Jules Haggard collaborator portraits')
+      .attr('aria-label', 'Jules Darling collaborator portraits')
       .attr('role', 'img');
 
     associateFaces.forEach((face) => {

@@ -19,6 +19,8 @@ const blockedStrings = [
   'www.haggard.design',
   'https://www.haggard.design',
   'hello@haggard.design',
+  'juleshaggard.com',
+  'Jules Haggard',
   'Haggard & Associates',
   'Haggard &amp; Associates',
   'Haggard and Associates',

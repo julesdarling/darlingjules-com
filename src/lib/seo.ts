@@ -1,3 +1,3 @@
-export const siteName = 'Jules Haggard';
-export const productionOrigin = 'https://www.juleshaggard.com';
+export const siteName = 'Jules Darling';
+export const productionOrigin = 'https://darlingjules.com';
 export const noindexPaths = new Set(['/pricing', '/pricing-old-copy', '/type-specimen']);

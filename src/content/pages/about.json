@@ -1,8 +1,8 @@
 {
   "path": "/about",
-  "sourceUrl": "https://www.juleshaggard.com/about",
+  "sourceUrl": "https://darlingjules.com/about",
   "title": "About",
-  "description": "About Jules Haggard, a senior freelance creative director and embedded creative partner for agencies, startups, and in-house teams.",
+  "description": "About Jules Darling, a senior freelance creative director and embedded creative partner for agencies, startups, and in-house teams.",
   "bodyClass": "maincontent about-page",
   "ogImage": "/assets/social-image.png",
   "htmlFile": "pages/about.html",

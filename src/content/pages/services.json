@@ -1,8 +1,8 @@
 {
   "path": "/services",
-  "sourceUrl": "https://www.juleshaggard.com/services",
+  "sourceUrl": "https://darlingjules.com/services",
   "title": "Services",
-  "description": "Freelance creative direction, brand systems, digital design, motion, and launch support from Jules Haggard.",
+  "description": "Freelance creative direction, brand systems, digital design, motion, and launch support from Jules Darling.",
   "bodyClass": "maincontent",
   "ogImage": "/assets/social-image.png",
   "htmlFile": "pages/services.html",

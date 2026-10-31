@@ -1,4 +1,4 @@
-# Jules Haggard Website Design Context
+# Jules Darling Website Design Context
 
 ## System
 

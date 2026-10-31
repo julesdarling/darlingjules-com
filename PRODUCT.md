@@ -1,4 +1,4 @@
-# Jules Haggard Website Product Context
+# Jules Darling Website Product Context
 
 ## Register
 
@@ -6,7 +6,7 @@ brand
 
 ## Product Purpose
 
-Juleshaggard.com is a personal portfolio and freelance creative direction site. The site should make Jules feel senior, specific, hireable, and proven across complex product brands.
+Darlingjules.com is a personal portfolio and freelance creative direction site. The site should make Jules feel senior, specific, hireable, and proven across complex product brands.
 
 ## Primary Audience
 

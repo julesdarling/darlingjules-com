@@ -4,7 +4,7 @@ import path from 'node:path';
 import * as cheerio from 'cheerio';
 
 const ROOT = process.cwd();
-const SITE_ORIGIN = 'https://www.juleshaggard.com';
+const SITE_ORIGIN = 'https://darlingjules.com';
 const SITEMAP_URL = `${SITE_ORIGIN}/sitemap.xml`;
 const EXTRA_ROUTES = ['/projects/beats-by-dre'];
 const ASSET_HOSTS = [
@@ -22,7 +22,7 @@ const assetMap = new Map();
 const aliasCopies = [];
 
 const fetchHeaders = {
-  'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X) AppleWebKit/537.36 HaggardStaticMigration/1.0',
+  'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X) AppleWebKit/537.36 DarlingStaticMigration/1.0',
 };
 
 function isAssetUrl(value) {
@@ -266,7 +266,7 @@ function rewriteElementAssets($) {
 }
 
 function pageMetadata($) {
-  const title = $('title').first().text().trim() || 'Jules Haggard';
+  const title = $('title').first().text().trim() || 'Jules Darling';
   const description =
     $('meta[name="description"]').attr('content') ||
     $('meta[property="og:description"]').attr('content') ||

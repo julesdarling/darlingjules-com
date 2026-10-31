@@ -7,7 +7,7 @@ import { chromium } from 'playwright-core';
 const ROOT = process.cwd();
 const CHROME_PATH = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
 const LOCAL_ORIGIN = process.env.LOCAL_ORIGIN ?? 'http://127.0.0.1:4321';
-const LIVE_ORIGIN = process.env.LIVE_ORIGIN ?? 'https://www.juleshaggard.com';
+const LIVE_ORIGIN = process.env.LIVE_ORIGIN ?? 'https://darlingjules.com';
 const OUT_DIR = path.join(ROOT, 'artifacts', 'visual');
 
 const routes = [

@@ -23,7 +23,7 @@ interface Props {
 
 const {
   title,
-  description = 'Jules Haggard is a freelance creative director and designer in San Francisco working across brand, digital, motion, and launch systems.',
+  description = 'Jules Darling is a freelance creative director and designer in San Francisco working across brand, digital, motion, and launch systems.',
   bodyClass = '',
   currentPath,
   ogImage = '/assets/social-image.png',
@@ -31,7 +31,7 @@ const {
 
 const canonicalPath = currentPath === '/' ? '' : currentPath;
 const canonicalUrl = absoluteSiteUrl(canonicalPath, Astro.site ?? new URL(productionOrigin));
-const pageTitle = title.includes('Haggard') || title.length > 48 ? title : `${title} | ${siteName}`;
+const pageTitle = title.includes('Darling') || title.length > 48 ? title : `${title} | ${siteName}`;
 const absoluteOgImage = absoluteSiteUrl(ogImage, Astro.site ?? new URL(productionOrigin));
 const robots = noindexPaths.has(currentPath) ? 'noindex, nofollow' : 'index, follow';
 const showCopyrightFooter = true;
@@ -47,7 +47,7 @@ const schema = {
   url: absoluteSiteUrl('/', Astro.site ?? new URL(productionOrigin)),
   image: absoluteOgImage,
   jobTitle: 'Freelance creative director and designer',
-  email: 'mailto:hello@juleshaggard.com',
+  email: 'mailto:hello@darlingjules.com',
   description: metaDescription,
   address: {
     '@type': 'PostalAddress',
@@ -95,7 +95,7 @@ const schema = {
     <meta name="twitter:image:alt" content={pageTitle} />
     <link rel="icon" href={withBasePath('/assets/favicon.png')} type="image/png" />
     <link rel="shortcut icon" href={withBasePath('/favicon.ico')} />
-    <link rel="apple-touch-icon" href={withBasePath('/assets/site/apple-touch-icon.webp')} />
+    <link rel="apple-touch-icon" href={withBasePath('/assets/apple-touch-icon.png')} />
     <script is:inline>
       document.documentElement.classList.add('motion-ready');
     </script>
@@ -111,7 +111,7 @@ const schema = {
     {
       showCopyrightFooter && (
         <footer class="site-copyright-footer" aria-label="Site copyright">
-          <p>© 2026 Jules Haggard · San Francisco, California</p>
+          <p>© 2026 Jules Darling · San Francisco, California</p>
         </footer>
       )
     }
