@@ -33,7 +33,7 @@ This site uses repo content as the CMS:
 - Self-hosted media lives in `public/assets/site`.
 - Render-time HTML cleanup lives in `src/lib/enhanceContent.ts`; it normalizes headings, media attributes, image alt text, external-link rel attributes, and decorative media.
 - Shared SEO settings live in `src/lib/seo.ts`, with generated `robots.txt` and `sitemap.xml` routes in `src/pages`.
-- Outlined Instrument Serif branding sources live in `Logo.svg` and `public/assets/brand`; social and app-icon PNG exports use those vector assets.
+- Outlined Instrument Serif branding sources live in `Logo.svg` and `public/assets/brand`; social PNG exports use those vector assets. The favicon and touch icons use the supplied pink heart with a transparent background.
 - The current case-study rewrite lives in `scripts/rewrite-case-studies.mjs`, but this fork now carries Jules-focused page and case-study copy directly in the migrated content files.
 - The sentence-case cleanup lives in `scripts/enforce-sentence-case.mjs`; acronyms and initialisms stay capitalized.
 
