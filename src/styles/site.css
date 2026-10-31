@@ -240,7 +240,6 @@ a {
   display: inline-flex;
   flex: 0 0 auto;
   align-items: center;
-  gap: 0.72rem;
   margin: -0.38rem -0.58rem;
   padding: 0.38rem 0.58rem;
   border: 1px solid transparent;
@@ -297,12 +296,6 @@ a {
 .logo.w--current {
   border-radius: 999px;
   filter: none !important;
-}
-
-.navbar-logo {
-  display: block;
-  width: clamp(2.2rem, 3vw, 2.85rem);
-  height: auto;
 }
 
 .logo-wordmark {
@@ -2598,14 +2591,6 @@ section.footer .splitpara.jhppara.footerrr {
     padding: 0.95rem var(--haggard-page-x) 0.75rem !important;
   }
 
-  .logo {
-    gap: 0.58rem;
-  }
-
-  .navbar-logo {
-    width: clamp(1.95rem, 8vw, 2.25rem);
-  }
-
   .logo-wordmark {
     font-size: clamp(1.18rem, 4.8vw, 1.38rem);
   }
@@ -2991,10 +2976,6 @@ section.footer .splitpara.jhppara.footerrr {
     align-items: center !important;
     padding-top: 0.85rem !important;
     padding-bottom: 0.7rem !important;
-  }
-
-  .navbar-logo {
-    width: 2rem;
   }
 
   .logo-wordmark {

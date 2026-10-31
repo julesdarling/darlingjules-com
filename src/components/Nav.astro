@@ -1,5 +1,4 @@
 ---
-import logoUrl from '../../Logo.svg?url';
 import { withBasePath } from '../lib/paths';
 import { siteName } from '../lib/seo';
 
@@ -34,7 +33,6 @@ const hrefFor = (href: string) => (href.startsWith('mailto:') || isExternal(href
     aria-current={currentPath === '/' ? 'page' : undefined}
     aria-label={`${siteName} home`}
   >
-    <img class="navbar-logo" src={logoUrl} alt="" aria-hidden="true" decoding="async" />
     <span class="logo-wordmark">{siteName}</span>
   </a>
   <div class="div-block-29">
