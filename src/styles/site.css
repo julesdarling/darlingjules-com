@@ -950,7 +950,7 @@ a {
   padding-bottom: clamp(1.5rem, 4vw, 4rem);
 }
 
-.personal-about.personal-about-longform .personal-page-hero.personal-about-hero {
+.homecontainer .aboutintro.personal-page-hero.personal-about-hero {
   display: grid !important;
   grid-template-columns: minmax(0, 0.92fr) minmax(16rem, 0.48fr);
   justify-content: center !important;
@@ -1126,7 +1126,7 @@ a {
 }
 
 @media screen and (max-width: 1080px) {
-  .personal-about.personal-about-longform .personal-page-hero.personal-about-hero,
+  .homecontainer .aboutintro.personal-page-hero.personal-about-hero,
   .personal-about-longform .personal-page-hero,
   .personal-hero,
   .personal-page-hero,
