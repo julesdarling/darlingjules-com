@@ -952,7 +952,8 @@ a {
 
 .homecontainer .aboutintro.personal-page-hero.personal-about-hero {
   display: grid !important;
-  grid-template-columns: minmax(0, 0.92fr) minmax(16rem, 0.48fr);
+  grid-template-columns: minmax(0, 42rem) clamp(15.5rem, 27vw, 25rem);
+  gap: clamp(2rem, 6vw, 7rem);
   justify-content: center !important;
   align-items: center !important;
   width: min(100%, 92rem) !important;
@@ -961,6 +962,7 @@ a {
 
 .personal-about-hero-copy {
   max-width: min(100%, 52rem);
+  padding-bottom: 0;
 }
 
 .personal-about-portrait {
@@ -1168,7 +1170,7 @@ a {
   }
 
   .personal-about-portrait {
-    justify-self: start;
+    justify-self: center;
     width: min(72vw, 21rem);
   }
 }
