@@ -972,7 +972,7 @@ a {
   margin: 0;
   overflow: hidden;
   background: #f6f4f0;
-  border: clamp(0.24rem, 0.42vw, 0.38rem) solid #444342;
+  border: clamp(0.24rem, 0.42vw, 0.38rem) solid #59759f;
   border-radius: 50%;
 }
 
