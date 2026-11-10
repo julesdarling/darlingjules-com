@@ -27,6 +27,6 @@ The current site is an intentional white editorial portfolio with giant Instrume
 ## Color
 
 - Preserve the restrained black-on-warm-white system.
-- Use cool charcoal for body copy and a readable deeper pink from the CTA hue for bold body emphasis. Keep display headlines and navigation near-black.
+- Use cool charcoal for body copy and bold body emphasis. Keep display headlines and navigation near-black.
 - Project imagery carries most of the color.
 - Avoid adding a new decorative palette for the personal fork.

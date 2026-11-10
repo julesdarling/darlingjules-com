@@ -2,7 +2,7 @@
   color-scheme: light;
   --haggard-ink: #11100f;
   --haggard-muted: oklch(43% 0.012 285);
-  --haggard-emphasis: oklch(54% 0.18 350);
+  --haggard-emphasis: var(--haggard-muted);
   --haggard-soft: #f6f3ee;
   --haggard-border: rgba(17, 16, 15, 0.14);
   --haggard-focus: rgba(17, 16, 15, 0.28);
@@ -973,6 +973,11 @@ a {
 .personal-about-hero-copy {
   max-width: min(100%, 52rem);
   padding-bottom: 0;
+}
+
+#about-jules .personal-about-hero-copy > .paragraph-4 {
+  max-width: 32rem !important;
+  margin-left: 0;
 }
 
 .personal-about-portrait {
