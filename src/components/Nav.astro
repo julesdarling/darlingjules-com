@@ -7,6 +7,7 @@ interface Props {
 }
 
 const { currentPath } = Astro.props;
+const [firstName, lastName] = siteName.split(' ');
 
 const navLinks = [
   { href: '/all-work', label: 'Work' },
@@ -33,6 +34,7 @@ const hrefFor = (href: string) => (href.startsWith('mailto:') || isExternal(href
     aria-current={currentPath === '/' ? 'page' : undefined}
     aria-label={`${siteName} home`}
   >
+    <span class="logo-wordmark">{firstName}</span>
     <img
       class="logo-mark"
       src={withBasePath('/assets/brand/jules-darling-mark.svg')}
@@ -41,7 +43,7 @@ const hrefFor = (href: string) => (href.startsWith('mailto:') || isExternal(href
       alt=""
       aria-hidden="true"
     />
-    <span class="logo-wordmark">{siteName}</span>
+    <span class="logo-wordmark">{lastName}</span>
   </a>
   <div class="div-block-29">
     {
