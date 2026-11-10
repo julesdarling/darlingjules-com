@@ -41,14 +41,21 @@ const fragmentSource = `
     vec2 point = (v_uv - 0.5) * u_size;
     vec2 pull = u_blob * u_strength * 0.025;
     float oval = ellipseDistance(point - pull, u_radii + 3.0);
-    float blob = length(point - u_blob) - 38.0;
-    float field = mix(oval, smoothUnion(oval, blob, 110.0), u_strength);
+    float blobDistance = length(point - u_blob);
+    float blob = blobDistance - 74.0;
+    float field = mix(oval, smoothUnion(oval, blob, 200.0), u_strength);
     float outside = max(field, 0.0);
 
     vec3 blush = vec3(1.0, 0.72, 0.80);
     vec3 lightPink = vec3(1.0, 0.91, 0.94);
     vec3 color = mix(blush, lightPink, smoothstep(0.0, 82.0, outside));
+    float whiteCore = (1.0 - smoothstep(38.0, 140.0, blobDistance)) *
+      smoothstep(0.015, 0.16, u_strength);
+    color = mix(color, vec3(1.0), whiteCore);
     float alpha = 0.46 * exp(-pow(outside / 58.0, 1.6));
+    float bloom = 0.22 * exp(-pow(max(blobDistance - 74.0, 0.0) / 82.0, 1.6)) *
+      smoothstep(0.0, 0.35, u_strength);
+    alpha += bloom * (1.0 - alpha);
 
     vec2 cell = floor(point / 34.0);
     float seed = hash(cell + 19.7);
@@ -64,8 +71,29 @@ const fragmentSource = `
     float sparkle = max(core, arms * 0.85) * step(0.68, seed) * haloMask * twinkle;
     float sparkleAlpha = sparkle * 0.78;
     vec3 sparkleColor = mix(vec3(1.0, 0.63, 0.77), vec3(1.0, 0.98, 0.99), core);
+    sparkleColor = mix(sparkleColor, vec3(1.0), whiteCore);
     vec3 premultiplied = color * alpha * (1.0 - sparkleAlpha) + sparkleColor * sparkleAlpha;
     alpha += sparkleAlpha * (1.0 - alpha);
+
+    // Keep the colored halo and glints off the photograph, including at rest.
+    vec2 photoPoint = point / u_radii;
+    float photoRadius = length(photoPoint);
+    float photoEdge = 1.25 / min(u_radii.x, u_radii.y);
+    float outsidePhoto = smoothstep(1.0 - photoEdge * 0.6, 1.0 + photoEdge * 0.6, photoRadius);
+    float insidePhoto = 1.0 - smoothstep(1.0 - photoEdge, 1.0, photoRadius);
+    premultiplied *= outsidePhoto;
+    alpha *= outsidePhoto;
+
+    // A shallow glossy dome catches the same eased light that pulls the halo.
+    vec3 normal = normalize(vec3(photoPoint, sqrt(max(0.0, 1.0 - dot(photoPoint, photoPoint)))));
+    vec3 lightDirection = normalize(vec3(u_blob / u_radii, 0.22));
+    vec3 halfway = normalize(lightDirection + vec3(0.0, 0.0, 1.0));
+    float diffuse = pow(max(dot(normal, lightDirection), 0.0), 3.0);
+    float specular = pow(max(dot(normal, halfway), 0.0), 48.0);
+    float shineAlpha = (0.08 * diffuse + 0.26 * specular) * u_strength * insidePhoto;
+    premultiplied = vec3(shineAlpha) + premultiplied * (1.0 - shineAlpha);
+    alpha = shineAlpha + alpha * (1.0 - shineAlpha);
+
     float edge = min(min(v_uv.x, 1.0 - v_uv.x), min(v_uv.y, 1.0 - v_uv.y));
     float edgeFade = smoothstep(0.0, 0.05, edge);
 
@@ -239,7 +267,7 @@ const createPortraitGlow = (portrait: HTMLElement) => {
 
     if (target.strength > 0 && distance > 0) {
       const edgeDistance = distance / normalized;
-      const extension = Math.min(96, outside * 0.45 + 18);
+      const extension = Math.min(180, outside * 0.7 + 24);
       target.x = (dx / distance) * (edgeDistance + extension);
       target.y = (dy / distance) * (edgeDistance + extension);
     }
@@ -255,8 +283,8 @@ const createPortraitGlow = (portrait: HTMLElement) => {
     if (bounds.width !== previousWidth || bounds.height !== previousHeight) needsPaint = true;
     visible = bounds.width > 0 && bounds.height > 0 && bounds.bottom > 0 &&
       bounds.top < window.innerHeight && bounds.right > 0 && bounds.left < window.innerWidth;
-    const width = Math.max(1, bounds.width * 2.2);
-    const height = Math.max(1, bounds.height * 2.2);
+    const width = Math.max(1, bounds.width * 2.6);
+    const height = Math.max(1, bounds.height * 2.6);
     const dpr = Math.min(window.devicePixelRatio || 1, 1.25, 1000 / Math.max(width, height));
     const pixelWidth = Math.max(1, Math.round(width * dpr));
     const pixelHeight = Math.max(1, Math.round(height * dpr));

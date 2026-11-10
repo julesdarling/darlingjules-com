@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="white" stroke="#11100f" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round">
+  <style>
+    .flower-frame { opacity: 0; animation: redraw .42s steps(1, end) infinite; }
+    .flower-frame--a { opacity: 1; }
+    .flower-frame--b { animation-delay: .14s; }
+    .flower-frame--c { animation-delay: .28s; }
+    @keyframes redraw { 0% { opacity: 1; } 33.333%, 100% { opacity: 0; } }
+    @media (prefers-reduced-motion: reduce) {
+      .flower-frame { animation: none; opacity: 0; }
+      .flower-frame--a { opacity: 1; }
+    }
+  </style>
+  <g class="flower-frame flower-frame--a">
+    <path d="M42 30C33 18 35 5 48 5C62 3 69 17 62 31C75 21 91 25 94 38C97 52 83 63 69 59C80 73 76 90 63 94C49 98 41 85 43 73C36 89 21 94 12 83C3 72 12 59 27 55C12 57 3 47 6 35C9 22 27 21 42 30Z"/>
+    <path d="M46 47C51 43 57 47 56 52C55 57 47 57 45 53C43 50 44 49 46 47Z" stroke-width="4.5"/>
+  </g>
+  <g class="flower-frame flower-frame--b">
+    <path d="M43 31C32 18 36 4 49 5C63 4 68 18 61 31C76 20 92 26 94 39C96 53 82 62 69 60C79 74 77 91 62 94C49 97 40 84 43 72C35 88 20 94 11 82C4 71 13 58 28 55C12 56 3 46 6 34C10 22 28 22 43 31Z"/>
+    <path d="M47 47C52 44 58 48 55 53C53 58 47 56 45 52C44 49 45 48 47 47Z" stroke-width="4.6"/>
+  </g>
+  <g class="flower-frame flower-frame--c">
+    <path d="M42 31C32 19 35 5 48 4C61 3 70 17 63 31C76 22 91 24 93 38C96 52 84 64 69 59C81 73 75 91 63 93C48 98 42 86 43 73C36 90 21 93 12 82C3 71 11 58 26 55C11 57 4 47 6 35C10 21 27 20 42 31Z"/>
+    <path d="M46 46C51 44 57 47 56 51C56 57 48 58 45 53C43 50 44 47 46 46Z" stroke-width="4.4"/>
+  </g>
+</svg>

@@ -997,16 +997,16 @@ a {
 
 .portrait-glow-canvas {
   position: absolute;
-  z-index: -1;
-  inset: -60%;
+  z-index: 1;
+  inset: -80%;
   display: block;
-  width: 220%;
+  width: 260%;
   max-width: none;
-  height: 220%;
+  height: 260%;
   pointer-events: none;
 }
 
-.personal-about-portrait img {
+.personal-about-portrait > img {
   display: block;
   width: 100%;
   height: 100%;
@@ -1014,6 +1014,119 @@ a {
   background: #f6f4f0;
   object-fit: cover;
   object-position: 50% 50%;
+}
+
+.flower-doodle {
+  display: block;
+  flex: 0 0 auto;
+  width: 2.25rem;
+  aspect-ratio: 1;
+  pointer-events: none;
+}
+
+.flower-doodle img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+  background: transparent;
+  object-fit: contain;
+  animation: flower-turn 8s steps(36, end) infinite;
+}
+
+.flower-doodle:nth-child(2) img {
+  animation-duration: 10.8s;
+  animation-delay: -3.2s;
+  animation-direction: reverse;
+}
+
+.flower-doodle:nth-child(3) img {
+  animation-duration: 9.2s;
+  animation-delay: -6.4s;
+}
+
+.cylinder-home .agency-cylinder-hero .agency-pattern-copy {
+  position: relative;
+}
+
+.hero-flowers {
+  position: absolute;
+  z-index: 2;
+  top: -4.5rem;
+  left: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  height: 2.75rem;
+  pointer-events: none;
+  transform: translateX(-50%);
+}
+
+.hero-flowers .flower-doodle:first-child {
+  width: 1.75rem;
+  margin-top: 0.6rem;
+}
+
+.hero-flowers .flower-doodle:nth-child(2) {
+  width: 2.6rem;
+}
+
+.hero-flowers .flower-doodle:nth-child(3) {
+  width: 2rem;
+  margin-top: 0.4rem;
+}
+
+.portrait-flowers {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  pointer-events: none;
+}
+
+.portrait-flowers .flower-doodle {
+  position: absolute;
+}
+
+.portrait-flowers .flower-doodle--top {
+  top: -4%;
+  left: 3%;
+  width: 2.25rem;
+  transform: rotate(-14deg);
+}
+
+.portrait-flowers .flower-doodle--right {
+  top: 19%;
+  right: -7%;
+  width: 2.75rem;
+  transform: rotate(17deg);
+}
+
+.portrait-flowers .flower-doodle--bottom {
+  bottom: 10%;
+  left: -6%;
+  width: 2.5rem;
+  transform: rotate(-23deg);
+}
+
+@keyframes flower-turn {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@media screen and (max-width: 1023px) {
+  .hero-flowers {
+    position: static;
+    height: 2.75rem;
+    margin: 0 auto 1.25rem;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flower-doodle img {
+    animation: none;
+  }
 }
 
 .personal-about-lede {
