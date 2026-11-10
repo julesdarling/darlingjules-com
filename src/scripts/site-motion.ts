@@ -2,6 +2,7 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { initCtaWebglButtons } from './cta-webgl';
 import { initHeadlineReveals, initHeroIntro, prepareHeadlineChars, splitHeadline } from './hero-intro';
+import { initPortraitGlow } from './portrait-glow';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -942,6 +943,7 @@ const initMotion = () => {
 
   currentPageKey = pageKey;
   cleanupMotion();
+  cleanupListeners.push(initPortraitGlow());
 
   if (reduceMotion.matches) {
     return;
