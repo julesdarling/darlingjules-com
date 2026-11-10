@@ -240,6 +240,7 @@ a {
   display: inline-flex;
   flex: 0 0 auto;
   align-items: center;
+  gap: 0.6rem;
   margin: -0.38rem -0.58rem;
   padding: 0.38rem 0.58rem;
   border: 1px solid transparent;
@@ -296,6 +297,13 @@ a {
 .logo.w--current {
   border-radius: 999px;
   filter: none !important;
+}
+
+.logo-mark {
+  display: block;
+  flex: 0 0 auto;
+  width: auto;
+  height: 2.25rem;
 }
 
 .logo-wordmark {
@@ -2591,6 +2599,10 @@ section.footer .splitpara.jhppara.footerrr {
     justify-content: center;
     gap: 0.55rem;
     padding: 0.95rem var(--haggard-page-x) 0.75rem !important;
+  }
+
+  .logo-mark {
+    height: 2rem;
   }
 
   .logo-wordmark {

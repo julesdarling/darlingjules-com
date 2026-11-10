@@ -33,6 +33,14 @@ const hrefFor = (href: string) => (href.startsWith('mailto:') || isExternal(href
     aria-current={currentPath === '/' ? 'page' : undefined}
     aria-label={`${siteName} home`}
   >
+    <img
+      class="logo-mark"
+      src={withBasePath('/assets/brand/jules-darling-mark.svg')}
+      width="558"
+      height="880"
+      alt=""
+      aria-hidden="true"
+    />
     <span class="logo-wordmark">{siteName}</span>
   </a>
   <div class="div-block-29">
