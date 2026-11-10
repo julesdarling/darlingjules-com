@@ -2164,15 +2164,23 @@ section.footer .splitpara.jhppara.footerrr {
 .site-copyright-footer {
   display: grid;
   place-items: center;
+  gap: clamp(1rem, 2vw, 1.5rem);
   box-sizing: border-box;
   width: 100%;
   padding: clamp(2.2rem, 4vw, 4rem) var(--haggard-page-x) clamp(1.2rem, 2vw, 2rem);
   text-align: center;
 }
 
+.footer-mark {
+  display: block;
+  width: auto;
+  height: clamp(3.5rem, 5vw, 4.5rem);
+}
+
 .site-copyright-footer p {
   max-width: min(100%, 36rem);
   margin: 0;
+  text-wrap: balance;
   color: var(--haggard-muted);
   font-family: "Instrument Sans", sans-serif;
   font-size: 0.95rem;
