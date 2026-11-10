@@ -1024,6 +1024,12 @@ a {
   pointer-events: none;
 }
 
+.flower-doodle picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
 .flower-doodle img {
   display: block;
   width: 100%;
