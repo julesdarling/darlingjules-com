@@ -3497,13 +3497,13 @@ section.footer .splitpara.jhppara.footerrr {
 
 .personal-home-compact .personal-secondary-cta {
   color: var(--haggard-ink) !important;
-  background: oklch(98% 0.006 75) !important;
+  background: #fff !important;
   border-color: var(--haggard-ink) !important;
 }
 
 .personal-home-compact .personal-secondary-cta:hover,
 .personal-home-compact .personal-secondary-cta:focus-visible {
-  color: oklch(98% 0.006 75) !important;
+  color: #fff !important;
   background: var(--haggard-ink) !important;
 }
 
