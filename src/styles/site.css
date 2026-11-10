@@ -997,7 +997,7 @@ a {
 
 .portrait-glow-canvas {
   position: absolute;
-  z-index: 1;
+  z-index: -1;
   inset: -80%;
   display: block;
   width: 260%;
@@ -1013,7 +1013,7 @@ a {
   border-radius: inherit;
   background: #f6f4f0;
   object-fit: cover;
-  object-position: 50% 50%;
+  object-position: 50% 0%;
 }
 
 .flower-doodle {
@@ -1031,24 +1031,27 @@ a {
 }
 
 .flower-doodle img {
+  --flower-rock-angle: 18deg;
   display: block;
   width: 100%;
   height: 100%;
   border-radius: 0;
   background: transparent;
   object-fit: contain;
-  animation: flower-turn 8s steps(36, end) infinite;
+  animation: flower-turn 1.8s steps(8, end) infinite alternate;
 }
 
 .flower-doodle:nth-child(2) img {
-  animation-duration: 10.8s;
-  animation-delay: -3.2s;
-  animation-direction: reverse;
+  --flower-rock-angle: 14deg;
+  animation-duration: 2.25s;
+  animation-delay: -0.7s;
+  animation-direction: alternate-reverse;
 }
 
 .flower-doodle:nth-child(3) img {
-  animation-duration: 9.2s;
-  animation-delay: -6.4s;
+  --flower-rock-angle: 20deg;
+  animation-duration: 2s;
+  animation-delay: -1.2s;
 }
 
 .cylinder-home .agency-cylinder-hero .agency-pattern-copy {
@@ -1116,8 +1119,8 @@ a {
 }
 
 @keyframes flower-turn {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from { transform: rotate(calc(-1 * var(--flower-rock-angle))); }
+  to { transform: rotate(var(--flower-rock-angle)); }
 }
 
 @media screen and (max-width: 1023px) {

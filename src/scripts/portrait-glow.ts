@@ -18,8 +18,6 @@ const fragmentSource = `
   varying vec2 v_uv;
   uniform vec2 u_size;
   uniform vec2 u_radii;
-  uniform vec2 u_blob;
-  uniform float u_strength;
   uniform float u_time;
 
   float hash(vec2 cell) {
@@ -32,30 +30,14 @@ const fragmentSource = `
     return k0 * (k0 - 1.0) / max(k1, 0.0001);
   }
 
-  float smoothUnion(float a, float b, float softness) {
-    float blend = clamp(0.5 + 0.5 * (b - a) / softness, 0.0, 1.0);
-    return mix(b, a, blend) - softness * blend * (1.0 - blend);
-  }
-
   void main() {
     vec2 point = (v_uv - 0.5) * u_size;
-    vec2 pull = u_blob * u_strength * 0.025;
-    float oval = ellipseDistance(point - pull, u_radii + 3.0);
-    float blobDistance = length(point - u_blob);
-    float blob = blobDistance - 74.0;
-    float field = mix(oval, smoothUnion(oval, blob, 200.0), u_strength);
-    float outside = max(field, 0.0);
+    float outside = max(ellipseDistance(point, u_radii + 3.0), 0.0);
 
     vec3 blush = vec3(1.0, 0.72, 0.80);
     vec3 lightPink = vec3(1.0, 0.91, 0.94);
     vec3 color = mix(blush, lightPink, smoothstep(0.0, 82.0, outside));
-    float whiteCore = (1.0 - smoothstep(38.0, 140.0, blobDistance)) *
-      smoothstep(0.015, 0.16, u_strength);
-    color = mix(color, vec3(1.0), whiteCore);
     float alpha = 0.46 * exp(-pow(outside / 58.0, 1.6));
-    float bloom = 0.22 * exp(-pow(max(blobDistance - 74.0, 0.0) / 82.0, 1.6)) *
-      smoothstep(0.0, 0.35, u_strength);
-    alpha += bloom * (1.0 - alpha);
 
     vec2 cell = floor(point / 34.0);
     float seed = hash(cell + 19.7);
@@ -71,28 +53,16 @@ const fragmentSource = `
     float sparkle = max(core, arms * 0.85) * step(0.68, seed) * haloMask * twinkle;
     float sparkleAlpha = sparkle * 0.78;
     vec3 sparkleColor = mix(vec3(1.0, 0.63, 0.77), vec3(1.0, 0.98, 0.99), core);
-    sparkleColor = mix(sparkleColor, vec3(1.0), whiteCore);
     vec3 premultiplied = color * alpha * (1.0 - sparkleAlpha) + sparkleColor * sparkleAlpha;
     alpha += sparkleAlpha * (1.0 - alpha);
 
-    // Keep the colored halo and glints off the photograph, including at rest.
+    // Keep the fixed pink halo and glints outside the photograph.
     vec2 photoPoint = point / u_radii;
     float photoRadius = length(photoPoint);
     float photoEdge = 1.25 / min(u_radii.x, u_radii.y);
     float outsidePhoto = smoothstep(1.0 - photoEdge * 0.6, 1.0 + photoEdge * 0.6, photoRadius);
-    float insidePhoto = 1.0 - smoothstep(1.0 - photoEdge, 1.0, photoRadius);
     premultiplied *= outsidePhoto;
     alpha *= outsidePhoto;
-
-    // A shallow glossy dome catches the same eased light that pulls the halo.
-    vec3 normal = normalize(vec3(photoPoint, sqrt(max(0.0, 1.0 - dot(photoPoint, photoPoint)))));
-    vec3 lightDirection = normalize(vec3(u_blob / u_radii, 0.22));
-    vec3 halfway = normalize(lightDirection + vec3(0.0, 0.0, 1.0));
-    float diffuse = pow(max(dot(normal, lightDirection), 0.0), 3.0);
-    float specular = pow(max(dot(normal, halfway), 0.0), 48.0);
-    float shineAlpha = (0.08 * diffuse + 0.26 * specular) * u_strength * insidePhoto;
-    premultiplied = vec3(shineAlpha) + premultiplied * (1.0 - shineAlpha);
-    alpha = shineAlpha + alpha * (1.0 - shineAlpha);
 
     float edge = min(min(v_uv.x, 1.0 - v_uv.x), min(v_uv.y, 1.0 - v_uv.y));
     float edgeFade = smoothstep(0.0, 0.05, edge);
@@ -127,11 +97,6 @@ const createProgram = (gl: WebGLRenderingContext) => {
   return null;
 };
 
-const smoothstep = (start: number, end: number, value: number) => {
-  const t = Math.min(1, Math.max(0, (value - start) / (end - start)));
-  return t * t * (3 - 2 * t);
-};
-
 const createPortraitGlow = (portrait: HTMLElement) => {
   const canvas = document.createElement('canvas');
   canvas.className = 'portrait-glow-canvas';
@@ -163,10 +128,8 @@ const createPortraitGlow = (portrait: HTMLElement) => {
   const position = gl.getAttribLocation(program, 'a_position');
   const size = gl.getUniformLocation(program, 'u_size');
   const radii = gl.getUniformLocation(program, 'u_radii');
-  const blob = gl.getUniformLocation(program, 'u_blob');
-  const strength = gl.getUniformLocation(program, 'u_strength');
   const sparkleTime = gl.getUniformLocation(program, 'u_time');
-  if (position < 0 || !size || !radii || !blob || !strength || !sparkleTime) {
+  if (position < 0 || !size || !radii || !sparkleTime) {
     gl.deleteBuffer(buffer);
     gl.deleteProgram(program);
     gl.getExtension('WEBGL_lose_context')?.loseContext();
@@ -183,19 +146,13 @@ const createPortraitGlow = (portrait: HTMLElement) => {
   let bounds = portrait.getBoundingClientRect();
   let visible = false;
   let destroyed = false;
-  let needsPaint = true;
   let animationFrame = 0;
   let measureFrame = 0;
-  let previousTime = 0;
   let previousPaint = 0;
-  let pointer: { x: number; y: number } | null = null;
-  const current = { x: 0, y: 0, strength: 0 };
-  const target = { x: 0, y: 0, strength: 0 };
 
   const pause = () => {
     cancelAnimationFrame(animationFrame);
     animationFrame = 0;
-    previousTime = 0;
     previousPaint = 0;
   };
 
@@ -203,29 +160,15 @@ const createPortraitGlow = (portrait: HTMLElement) => {
     animationFrame = 0;
     if (destroyed || !visible || document.hidden) return;
 
-    const frameInterval = 1000 / 30;
+    const frameInterval = 1000 / 15;
     if (previousPaint && time - previousPaint < frameInterval) {
       animationFrame = requestAnimationFrame(render);
       return;
     }
     previousPaint = previousPaint ? time - ((time - previousPaint) % frameInterval) : time;
 
-    const delta = previousTime ? Math.min(time - previousTime, 64) : 16;
-    const ease = 1 - Math.exp(-delta / 105);
-    previousTime = time;
-    current.x += (target.x - current.x) * ease;
-    current.y += (target.y - current.y) * ease;
-    current.strength += (target.strength - current.strength) * ease;
-
-    const settled = Math.abs(current.x - target.x) < 0.08 &&
-      Math.abs(current.y - target.y) < 0.08 && Math.abs(current.strength - target.strength) < 0.001;
-    if (settled) Object.assign(current, target);
-
-    gl.uniform2f(blob, current.x, current.y);
-    gl.uniform1f(strength, current.strength);
     gl.uniform1f(sparkleTime, time * 0.001);
     gl.drawArrays(gl.TRIANGLES, 0, 6);
-    needsPaint = false;
 
     if (!portrait.classList.contains('is-portrait-glow-ready')) {
       if (gl.isContextLost() || gl.getError() !== gl.NO_ERROR) {
@@ -235,52 +178,19 @@ const createPortraitGlow = (portrait: HTMLElement) => {
       portrait.classList.add('is-portrait-glow-ready');
     }
 
-    if (!settled || current.strength > 0.001) animationFrame = requestAnimationFrame(render);
-    else {
-      previousTime = 0;
-      previousPaint = 0;
-    }
+    animationFrame = requestAnimationFrame(render);
   };
 
   const requestRender = () => {
-    if (!needsPaint && current.strength === 0 && target.strength === 0) return;
     if (!destroyed && visible && !document.hidden && !animationFrame) {
       animationFrame = requestAnimationFrame(render);
     }
   };
 
-  const updateTarget = () => {
-    if (!pointer || !bounds.width || !bounds.height) {
-      target.strength = 0;
-      requestRender();
-      return;
-    }
-
-    const dx = pointer.x - bounds.left - bounds.width / 2;
-    const dy = bounds.top + bounds.height / 2 - pointer.y;
-    const distance = Math.hypot(dx, dy);
-    const rx = bounds.width / 2;
-    const ry = bounds.height / 2;
-    const normalized = Math.hypot(dx / rx, dy / ry);
-    const outside = normalized > 0 ? Math.max(0, distance * (1 - 1 / normalized)) : 0;
-    target.strength = (1 - smoothstep(0, 420, outside)) * smoothstep(0.18, 0.88, normalized);
-
-    if (target.strength > 0 && distance > 0) {
-      const edgeDistance = distance / normalized;
-      const extension = Math.min(180, outside * 0.7 + 24);
-      target.x = (dx / distance) * (edgeDistance + extension);
-      target.y = (dy / distance) * (edgeDistance + extension);
-    }
-    requestRender();
-  };
-
   const measure = () => {
     measureFrame = 0;
     if (destroyed) return;
-    const previousWidth = bounds.width;
-    const previousHeight = bounds.height;
     bounds = portrait.getBoundingClientRect();
-    if (bounds.width !== previousWidth || bounds.height !== previousHeight) needsPaint = true;
     visible = bounds.width > 0 && bounds.height > 0 && bounds.bottom > 0 &&
       bounds.top < window.innerHeight && bounds.right > 0 && bounds.left < window.innerWidth;
     const width = Math.max(1, bounds.width * 2.6);
@@ -291,30 +201,18 @@ const createPortraitGlow = (portrait: HTMLElement) => {
     if (canvas.width !== pixelWidth || canvas.height !== pixelHeight) {
       canvas.width = pixelWidth;
       canvas.height = pixelHeight;
-      needsPaint = true;
     }
     gl.viewport(0, 0, pixelWidth, pixelHeight);
     gl.uniform2f(size, width, height);
     gl.uniform2f(radii, bounds.width / 2, bounds.height / 2);
     if (!visible) pause();
-    updateTarget();
+    requestRender();
   };
 
   const requestMeasure = () => {
     if (!destroyed && !measureFrame) measureFrame = requestAnimationFrame(measure);
   };
-  const onPointerMove = (event: PointerEvent) => {
-    if (event.pointerType === 'touch' || destroyed) return;
-    pointer = { x: event.clientX, y: event.clientY };
-    updateTarget();
-  };
-  const reset = () => {
-    pointer = null;
-    target.strength = 0;
-    requestRender();
-  };
   const onVisibilityChange = () => {
-    reset();
     if (document.hidden) pause();
     else requestMeasure();
   };
@@ -337,11 +235,8 @@ const createPortraitGlow = (portrait: HTMLElement) => {
     cancelAnimationFrame(measureFrame);
     resizeObserver.disconnect();
     intersectionObserver.disconnect();
-    window.removeEventListener('pointermove', onPointerMove);
     window.removeEventListener('scroll', requestMeasure, true);
     window.removeEventListener('resize', requestMeasure);
-    window.removeEventListener('blur', reset);
-    document.removeEventListener('pointerleave', reset);
     document.removeEventListener('visibilitychange', onVisibilityChange);
     canvas.removeEventListener('webglcontextlost', onContextLost);
     portrait.classList.remove('is-portrait-glow-ready');
@@ -353,11 +248,8 @@ const createPortraitGlow = (portrait: HTMLElement) => {
 
   resizeObserver.observe(portrait);
   intersectionObserver.observe(portrait);
-  window.addEventListener('pointermove', onPointerMove, { passive: true });
   window.addEventListener('scroll', requestMeasure, { passive: true, capture: true });
   window.addEventListener('resize', requestMeasure, { passive: true });
-  window.addEventListener('blur', reset);
-  document.addEventListener('pointerleave', reset);
   document.addEventListener('visibilitychange', onVisibilityChange);
   canvas.addEventListener('webglcontextlost', onContextLost);
   document.fonts.ready.then(requestMeasure);
