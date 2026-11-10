@@ -2,7 +2,7 @@
 
 ## System
 
-The current site is an intentional white editorial portfolio with giant Instrument Serif display typography, Instrument Sans body copy, sparse black CTAs, and large project media. This fork should preserve that identity while making Jules the clear first-viewport subject.
+The current site is an intentional white editorial portfolio with giant Instrument Serif display typography, Instrument Sans body copy, pink CTAs, and large project media. This fork should preserve that identity while making Jules the clear first-viewport subject.
 
 ## Typography
 
@@ -27,6 +27,6 @@ The current site is an intentional white editorial portfolio with giant Instrume
 ## Color
 
 - Preserve the restrained black-on-warm-white system.
-- Use slightly tinted neutrals in new CSS overrides instead of pure black/white when possible.
+- Use cool charcoal for body copy and a readable deeper pink from the CTA hue for bold body emphasis. Keep display headlines and navigation near-black.
 - Project imagery carries most of the color.
 - Avoid adding a new decorative palette for the personal fork.

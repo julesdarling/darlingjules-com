@@ -36,8 +36,10 @@ const fragmentSource = `
 
     vec3 blush = vec3(1.0, 0.72, 0.80);
     vec3 lightPink = vec3(1.0, 0.91, 0.94);
-    vec3 color = mix(blush, lightPink, smoothstep(0.0, 82.0, outside));
-    float alpha = 0.46 * exp(-pow(outside / 58.0, 1.6));
+    float whiteRim = 1.0 - smoothstep(0.0, 32.0, outside);
+    vec3 color = mix(blush, lightPink, smoothstep(32.0, 96.0, outside));
+    color = mix(color, vec3(1.0), whiteRim);
+    float alpha = (0.46 + 0.26 * whiteRim) * exp(-pow(outside / 58.0, 1.6));
 
     vec2 cell = floor(point / 34.0);
     float seed = hash(cell + 19.7);

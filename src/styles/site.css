@@ -1,7 +1,8 @@
 :root {
   color-scheme: light;
   --haggard-ink: #11100f;
-  --haggard-muted: #5c5954;
+  --haggard-muted: oklch(43% 0.012 285);
+  --haggard-emphasis: oklch(54% 0.18 350);
   --haggard-soft: #f6f3ee;
   --haggard-border: rgba(17, 16, 15, 0.14);
   --haggard-focus: rgba(17, 16, 15, 0.28);
@@ -986,6 +987,7 @@ a {
   border: 0;
   border-radius: 50%;
   box-shadow:
+    0 0 0.9rem 0.85rem oklch(100% 0 0 / 99%),
     0 0 2rem 0.35rem oklch(88% 0.085 350 / 38%),
     0 0 4.5rem 1.25rem oklch(93% 0.055 350 / 30%),
     0 0 7rem 2rem oklch(97% 0.025 350 / 20%);
@@ -2325,20 +2327,13 @@ section.footer .splitpara.jhppara.footerrr {
 }
 
 .splitpara,
-.splitpara strong,
 .paragraph-3,
-.paragraph-3 strong,
 .paragraph-4,
-.paragraph-4 strong,
 .paragraph-5,
-.paragraph-5 strong,
 .posttext p,
-.posttext p strong,
 .posttext li,
-.posttext li strong,
 .homepageprojects.center,
 .deliverables-recap__summary,
-.deliverables-recap__summary strong,
 .deliverables-recap__list,
 .deliverables-recap__list li,
 .personal-about-bullets li,
@@ -2346,6 +2341,17 @@ section.footer .splitpara.jhppara.footerrr {
 .agency-pattern-reason-list li,
 .agency-pattern-closing-copy p {
   color: var(--haggard-muted) !important;
+}
+
+:is(.splitpara, .paragraph-3, .paragraph-4, .paragraph-5, .posttext p, .posttext li, .deliverables-recap__summary, .deliverables-recap__list li, .personal-hire-list p) :is(strong, b),
+.agency-pattern-reason-list li > strong,
+.personal-about-hero-copy .personal-about-pull:is(.paragraph-3, .paragraph-4),
+.personal-about-copy .personal-about-pull:is(.paragraph-3, .paragraph-4) {
+  color: var(--haggard-emphasis) !important;
+}
+
+.personal-meta :is(.splitpara, .paragraph-3, .paragraph-4, .paragraph-5) :is(strong, b) {
+  color: inherit !important;
 }
 
 .splitpara:not(.serviceslist) br + br,
