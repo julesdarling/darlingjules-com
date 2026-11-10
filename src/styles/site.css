@@ -986,9 +986,9 @@ a {
   border: 0;
   border-radius: 50%;
   box-shadow:
-    0 0 1.25rem 0.35rem oklch(84% 0.105 350 / 48%),
-    0 0 3rem 1rem oklch(91% 0.075 350 / 38%),
-    0 0 5rem 1.75rem oklch(96% 0.045 350 / 24%);
+    0 0 2rem 0.35rem oklch(88% 0.085 350 / 38%),
+    0 0 4.5rem 1.25rem oklch(93% 0.055 350 / 30%),
+    0 0 7rem 2rem oklch(97% 0.025 350 / 20%);
 }
 
 .personal-about-portrait.is-portrait-glow-ready {
@@ -998,11 +998,11 @@ a {
 .portrait-glow-canvas {
   position: absolute;
   z-index: -1;
-  inset: -40%;
+  inset: -60%;
   display: block;
-  width: 180%;
+  width: 220%;
   max-width: none;
-  height: 180%;
+  height: 220%;
   pointer-events: none;
 }
 

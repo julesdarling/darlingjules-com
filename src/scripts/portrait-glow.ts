@@ -9,13 +9,22 @@ const vertexSource = `
 `;
 
 const fragmentSource = `
-  precision mediump float;
+  #ifdef GL_FRAGMENT_PRECISION_HIGH
+    precision highp float;
+  #else
+    precision mediump float;
+  #endif
 
   varying vec2 v_uv;
   uniform vec2 u_size;
   uniform vec2 u_radii;
   uniform vec2 u_blob;
   uniform float u_strength;
+  uniform float u_time;
+
+  float hash(vec2 cell) {
+    return fract(sin(dot(cell, vec2(127.1, 311.7))) * 43758.5453);
+  }
 
   float ellipseDistance(vec2 point, vec2 radii) {
     float k0 = length(point / radii);
@@ -32,18 +41,35 @@ const fragmentSource = `
     vec2 point = (v_uv - 0.5) * u_size;
     vec2 pull = u_blob * u_strength * 0.025;
     float oval = ellipseDistance(point - pull, u_radii + 3.0);
-    float blob = length(point - u_blob) - 34.0;
-    float field = mix(oval, smoothUnion(oval, blob, 72.0), u_strength);
+    float blob = length(point - u_blob) - 38.0;
+    float field = mix(oval, smoothUnion(oval, blob, 110.0), u_strength);
     float outside = max(field, 0.0);
 
-    vec3 blush = vec3(1.0, 0.61, 0.70);
-    vec3 lightPink = vec3(1.0, 0.86, 0.90);
-    vec3 color = mix(blush, lightPink, smoothstep(0.0, 52.0, outside));
-    float alpha = 0.64 * exp(-pow(outside / 32.0, 2.0));
-    float edge = min(min(v_uv.x, 1.0 - v_uv.x), min(v_uv.y, 1.0 - v_uv.y));
-    alpha *= smoothstep(0.0, 0.035, edge);
+    vec3 blush = vec3(1.0, 0.72, 0.80);
+    vec3 lightPink = vec3(1.0, 0.91, 0.94);
+    vec3 color = mix(blush, lightPink, smoothstep(0.0, 82.0, outside));
+    float alpha = 0.46 * exp(-pow(outside / 58.0, 1.6));
 
-    gl_FragColor = vec4(color * alpha, alpha);
+    vec2 cell = floor(point / 34.0);
+    float seed = hash(cell + 19.7);
+    vec2 center = (cell + 0.2 + 0.6 * vec2(hash(cell), hash(cell + 7.3))) * 34.0;
+    vec2 glintPoint = abs(point - center);
+    float core = exp(-dot(glintPoint, glintPoint) / 1.25);
+    float arms = max(
+      exp(-glintPoint.x / 0.38 - glintPoint.y / 3.4),
+      exp(-glintPoint.y / 0.38 - glintPoint.x / 3.4)
+    );
+    float twinkle = 0.38 + 0.62 * pow(0.5 + 0.5 * sin(u_time * 1.1 + seed * 6.283), 3.0);
+    float haloMask = smoothstep(3.0, 18.0, outside) * (1.0 - smoothstep(80.0, 155.0, outside));
+    float sparkle = max(core, arms * 0.85) * step(0.68, seed) * haloMask * twinkle;
+    float sparkleAlpha = sparkle * 0.78;
+    vec3 sparkleColor = mix(vec3(1.0, 0.63, 0.77), vec3(1.0, 0.98, 0.99), core);
+    vec3 premultiplied = color * alpha * (1.0 - sparkleAlpha) + sparkleColor * sparkleAlpha;
+    alpha += sparkleAlpha * (1.0 - alpha);
+    float edge = min(min(v_uv.x, 1.0 - v_uv.x), min(v_uv.y, 1.0 - v_uv.y));
+    float edgeFade = smoothstep(0.0, 0.05, edge);
+
+    gl_FragColor = vec4(premultiplied * edgeFade, alpha * edgeFade);
   }
 `;
 
@@ -111,7 +137,8 @@ const createPortraitGlow = (portrait: HTMLElement) => {
   const radii = gl.getUniformLocation(program, 'u_radii');
   const blob = gl.getUniformLocation(program, 'u_blob');
   const strength = gl.getUniformLocation(program, 'u_strength');
-  if (position < 0 || !size || !radii || !blob || !strength) {
+  const sparkleTime = gl.getUniformLocation(program, 'u_time');
+  if (position < 0 || !size || !radii || !blob || !strength || !sparkleTime) {
     gl.deleteBuffer(buffer);
     gl.deleteProgram(program);
     gl.getExtension('WEBGL_lose_context')?.loseContext();
@@ -132,6 +159,7 @@ const createPortraitGlow = (portrait: HTMLElement) => {
   let animationFrame = 0;
   let measureFrame = 0;
   let previousTime = 0;
+  let previousPaint = 0;
   let pointer: { x: number; y: number } | null = null;
   const current = { x: 0, y: 0, strength: 0 };
   const target = { x: 0, y: 0, strength: 0 };
@@ -140,11 +168,19 @@ const createPortraitGlow = (portrait: HTMLElement) => {
     cancelAnimationFrame(animationFrame);
     animationFrame = 0;
     previousTime = 0;
+    previousPaint = 0;
   };
 
   const render = (time: number) => {
     animationFrame = 0;
     if (destroyed || !visible || document.hidden) return;
+
+    const frameInterval = 1000 / 30;
+    if (previousPaint && time - previousPaint < frameInterval) {
+      animationFrame = requestAnimationFrame(render);
+      return;
+    }
+    previousPaint = previousPaint ? time - ((time - previousPaint) % frameInterval) : time;
 
     const delta = previousTime ? Math.min(time - previousTime, 64) : 16;
     const ease = 1 - Math.exp(-delta / 105);
@@ -159,6 +195,7 @@ const createPortraitGlow = (portrait: HTMLElement) => {
 
     gl.uniform2f(blob, current.x, current.y);
     gl.uniform1f(strength, current.strength);
+    gl.uniform1f(sparkleTime, time * 0.001);
     gl.drawArrays(gl.TRIANGLES, 0, 6);
     needsPaint = false;
 
@@ -170,13 +207,15 @@ const createPortraitGlow = (portrait: HTMLElement) => {
       portrait.classList.add('is-portrait-glow-ready');
     }
 
-    if (!settled) animationFrame = requestAnimationFrame(render);
-    else previousTime = 0;
+    if (!settled || current.strength > 0.001) animationFrame = requestAnimationFrame(render);
+    else {
+      previousTime = 0;
+      previousPaint = 0;
+    }
   };
 
   const requestRender = () => {
-    if (!needsPaint && current.strength === target.strength &&
-      (target.strength === 0 || (current.x === target.x && current.y === target.y))) return;
+    if (!needsPaint && current.strength === 0 && target.strength === 0) return;
     if (!destroyed && visible && !document.hidden && !animationFrame) {
       animationFrame = requestAnimationFrame(render);
     }
@@ -196,11 +235,11 @@ const createPortraitGlow = (portrait: HTMLElement) => {
     const ry = bounds.height / 2;
     const normalized = Math.hypot(dx / rx, dy / ry);
     const outside = normalized > 0 ? Math.max(0, distance * (1 - 1 / normalized)) : 0;
-    target.strength = (1 - smoothstep(0, 160, outside)) * smoothstep(0.18, 0.88, normalized);
+    target.strength = (1 - smoothstep(0, 420, outside)) * smoothstep(0.18, 0.88, normalized);
 
     if (target.strength > 0 && distance > 0) {
       const edgeDistance = distance / normalized;
-      const extension = Math.min(56, outside * 0.68 + 12);
+      const extension = Math.min(96, outside * 0.45 + 18);
       target.x = (dx / distance) * (edgeDistance + extension);
       target.y = (dy / distance) * (edgeDistance + extension);
     }
@@ -216,8 +255,8 @@ const createPortraitGlow = (portrait: HTMLElement) => {
     if (bounds.width !== previousWidth || bounds.height !== previousHeight) needsPaint = true;
     visible = bounds.width > 0 && bounds.height > 0 && bounds.bottom > 0 &&
       bounds.top < window.innerHeight && bounds.right > 0 && bounds.left < window.innerWidth;
-    const width = Math.max(1, bounds.width * 1.8);
-    const height = Math.max(1, bounds.height * 1.8);
+    const width = Math.max(1, bounds.width * 2.2);
+    const height = Math.max(1, bounds.height * 2.2);
     const dpr = Math.min(window.devicePixelRatio || 1, 1.25, 1000 / Math.max(width, height));
     const pixelWidth = Math.max(1, Math.round(width * dpr));
     const pixelHeight = Math.max(1, Math.round(height * dpr));
