@@ -4647,7 +4647,73 @@ section.footer .splitpara.jhppara.footerrr {
   }
 
   .personal-home-compact .personal-hero {
-    padding-top: clamp(2rem, 8vw, 3rem) !important;
+    padding-top: clamp(0.5rem, 2svh, 1rem) !important;
+  }
+
+  .cylinder-home .agency-cylinder-hero {
+    padding-bottom: 0.75rem !important;
+  }
+
+  .cylinder-home .hero-flowers {
+    height: 2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .cylinder-home .hero-flowers .flower-doodle:first-child {
+    width: 1.25rem;
+    margin-top: 0.35rem;
+  }
+
+  .cylinder-home .hero-flowers .flower-doodle:nth-child(2) {
+    width: 1.875rem;
+  }
+
+  .cylinder-home .hero-flowers .flower-doodle:nth-child(3) {
+    width: 1.5rem;
+    margin-top: 0.25rem;
+  }
+
+  .cylinder-home .agency-cylinder-headline {
+    height: clamp(4.5rem, 14svh, 6.5rem);
+    margin-bottom: 0.75rem;
+  }
+
+  .cylinder-home .agency-cylinder-hero .flex-block-3 {
+    gap: 0.6rem;
+  }
+
+  .cylinder-home .agency-cylinder-hero .splitpara.jhppara {
+    margin: 0 !important;
+    font-size: 1rem !important;
+    line-height: 1.5 !important;
+  }
+
+  .cylinder-home .agency-cylinder-hero .flex-block-7 {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem !important;
+    margin: 0.25rem 0 !important;
+    padding: 0;
+  }
+
+  .cylinder-home .agency-cylinder-hero .flex-block-7 .ctalink {
+    width: 100% !important;
+    min-height: 2.75rem;
+    padding: 0.7rem 0.5rem !important;
+  }
+
+  .cylinder-home .agency-pattern-availability {
+    margin: 0;
+    font-size: 0.875rem;
+    line-height: 1.4;
+  }
+
+  .cylinder-home .agency-logo-cylinder {
+    height: clamp(4rem, 13svh, 6rem);
+  }
+
+  .cylinder-home .agency-pattern-logo-band {
+    padding-bottom: 1rem;
   }
 
   .agency-pattern-hero {
