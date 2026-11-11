@@ -40,6 +40,7 @@ const initStickyNavVisibility = () => {
 
   let lastScrollY = Math.max(window.scrollY, 0);
   let ticking = false;
+  let pendingFrame = 0;
 
   const showNav = () => nav.classList.remove('nav--hidden');
   const hideNav = () => nav.classList.add('nav--hidden');
@@ -47,7 +48,8 @@ const initStickyNavVisibility = () => {
   const update = () => {
     const currentScrollY = Math.max(window.scrollY, 0);
     const delta = currentScrollY - lastScrollY;
-    const shouldShow = currentScrollY <= 12 || delta < -4;
+    nav.classList.toggle('nav--scrolled', currentScrollY > 0);
+    const shouldShow = reduceMotion.matches || currentScrollY <= 12 || delta < -4;
     const shouldHide = delta > 6 && currentScrollY > nav.offsetHeight;
 
     if (shouldShow) {
@@ -66,17 +68,19 @@ const initStickyNavVisibility = () => {
     }
 
     ticking = true;
-    requestAnimationFrame(update);
+    pendingFrame = requestAnimationFrame(update);
   };
 
   nav.classList.remove('nav--hidden');
+  update();
   window.addEventListener('scroll', onScroll, { passive: true });
   nav.addEventListener('focusin', showNav);
 
   return () => {
+    cancelAnimationFrame(pendingFrame);
     window.removeEventListener('scroll', onScroll);
     nav.removeEventListener('focusin', showNav);
-    nav.classList.remove('nav--hidden');
+    nav.classList.remove('nav--hidden', 'nav--scrolled');
   };
 };
 
@@ -944,6 +948,7 @@ const initMotion = () => {
   currentPageKey = pageKey;
   cleanupMotion();
   cleanupListeners.push(initPortraitGlow());
+  cleanupListeners.push(initStickyNavVisibility());
 
   if (reduceMotion.matches) {
     return;
@@ -1064,7 +1069,6 @@ const initMotion = () => {
     initCylinderScene();
     cleanupListeners.push(initMarketAttentionInteraction());
     cleanupListeners.push(initNavHoverGlow());
-    cleanupListeners.push(initStickyNavVisibility());
     cleanupListeners.push(initCtaWebglButtons());
     requestAnimationFrame(() => ScrollTrigger.refresh());
   });

@@ -221,7 +221,7 @@ a {
   align-items: center;
   gap: 1rem;
   padding: 1.4rem var(--haggard-page-x) 1rem !important;
-  background: #fff;
+  background: transparent;
   isolation: isolate;
   overflow: visible;
   transform: translateY(0);
@@ -229,6 +229,10 @@ a {
     background-color 180ms var(--haggard-fast),
     transform 260ms var(--haggard-fast);
   will-change: transform;
+}
+
+.nav.nav--scrolled {
+  background: #fff;
 }
 
 .nav.nav--hidden {
@@ -4813,10 +4817,6 @@ body.ok-bloomer-body {
 
 body.ok-bloomer-body main {
   background: var(--flower-paper);
-}
-
-body.ok-bloomer-body .nav {
-  background: oklch(98% 0.016 92);
 }
 
 body.ok-bloomer-body .site-copyright-footer {
