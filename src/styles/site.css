@@ -986,6 +986,9 @@ a {
 }
 
 .personal-about-meet-hero .personal-about-lede {
+  position: relative;
+  z-index: 2;
+  pointer-events: none;
   display: grid;
   grid-template-columns: var(--meet-columns);
   column-gap: inherit;
@@ -1006,11 +1009,13 @@ a {
 }
 
 .personal-about-meet-hero .meet-title-word--first {
+  pointer-events: auto;
   grid-column: 1;
   text-align: right;
 }
 
 .personal-about-meet-hero .meet-title-word--last {
+  pointer-events: auto;
   grid-column: 3;
   text-align: left;
 }
