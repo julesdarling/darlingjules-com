@@ -3,6 +3,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { initCtaWebglButtons } from './cta-webgl';
 import { initHeadlineReveals, initHeroIntro, prepareHeadlineChars, splitHeadline } from './hero-intro';
 import { initPortraitGlow } from './portrait-glow';
+import { initPortraitFlowers } from './portrait-flowers';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -948,6 +949,7 @@ const initMotion = () => {
   currentPageKey = pageKey;
   cleanupMotion();
   cleanupListeners.push(initPortraitGlow());
+  cleanupListeners.push(initPortraitFlowers());
   cleanupListeners.push(initStickyNavVisibility());
 
   if (reduceMotion.matches) {
