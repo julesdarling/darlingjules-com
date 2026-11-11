@@ -980,6 +980,13 @@ a {
   gap: clamp(3.5rem, 6vw, 5rem);
 }
 
+.personal-about-longform .personal-about-lede {
+  margin: 0;
+  font-size: clamp(6.5rem, 12vw, 11rem);
+  line-height: 0.96;
+  text-align: center;
+}
+
 #about-jules .personal-about-hero-copy > .paragraph-4 {
   max-width: 32rem !important;
   margin-left: 0;
