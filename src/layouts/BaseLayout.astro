@@ -93,9 +93,8 @@ const schema = {
     <meta name="twitter:description" content={metaDescription} />
     <meta name="twitter:image" content={absoluteOgImage} />
     <meta name="twitter:image:alt" content={pageTitle} />
-    <link rel="icon" href={withBasePath('/assets/favicon.png?v=pink-heart')} type="image/png" />
-    <link rel="shortcut icon" href={withBasePath('/assets/favicon.png?v=pink-heart')} type="image/png" />
-    <link rel="apple-touch-icon" href={withBasePath('/assets/apple-touch-icon.png?v=pink-heart')} />
+    <link rel="icon" data-flower-favicon data-static-icon={withBasePath('/assets/favicon.png?v=flower-1')} href={withBasePath('/assets/favicon.png?v=flower-1')} type="image/png" sizes="64x64" />
+    <link rel="apple-touch-icon" href={withBasePath('/assets/apple-touch-icon.png?v=flower-1')} />
     <script is:inline>
       document.documentElement.classList.add('motion-ready');
     </script>
@@ -132,6 +131,7 @@ const schema = {
     }
     <script>
       import '../scripts/site-motion';
+      import '../scripts/flower-favicon';
     </script>
   </body>
 </html>
