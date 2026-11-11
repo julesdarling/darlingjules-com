@@ -4647,7 +4647,7 @@ section.footer .splitpara.jhppara.footerrr {
   }
 
   .personal-home-compact .personal-hero {
-    padding-top: 0.5rem !important;
+    padding-top: 0 !important;
   }
 
   .cylinder-home .agency-cylinder-hero,
@@ -4661,8 +4661,16 @@ section.footer .splitpara.jhppara.footerrr {
   }
 
   .cylinder-home .hero-flowers {
+    width: max-content;
     height: 1.5rem;
-    margin-bottom: 0;
+    margin: 0;
+  }
+
+  .cylinder-home .agency-cylinder-hero.is-cylinder-ready .hero-flowers {
+    position: absolute;
+    top: 1.25rem;
+    left: 50%;
+    transform: translateX(-50%);
   }
 
   .cylinder-home .hero-flowers .flower-doodle:first-child {
