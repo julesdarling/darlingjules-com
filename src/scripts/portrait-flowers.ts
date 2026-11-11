@@ -42,16 +42,15 @@ const createFlowerParallax = (portrait: HTMLElement) => {
     const reach = Math.min(84, rect.width * 0.22);
     const outward = Math.min(12, rect.width * 0.03);
     const targets = [
-      { x: clamp(x * reach, -outward, reach), y: clamp(y * reach, -outward, reach), depth: x + y },
-      { x: clamp(x * reach, -reach, outward), y: y * reach * 0.6, depth: -x + y - 0.25 },
-      { x: clamp(-x * reach * 0.9, -outward, reach), y: clamp(-y * reach * 0.9, -reach, outward), depth: x - y },
+      { x: clamp(x * reach, -outward, reach), y: clamp(y * reach, -outward, reach) },
+      { x: clamp(x * reach, -reach, outward), y: y * reach * 0.6 },
+      { x: clamp(-x * reach * 0.9, -outward, reach), y: clamp(-y * reach * 0.9, -reach, outward) },
     ];
     flowers.forEach((flower, index) => {
       const target = targets[index];
       if (!target) return;
       positions[index].targetX = target.x;
       positions[index].targetY = target.y;
-      if (Math.abs(target.depth) > 0.15) flower.style.zIndex = target.depth > 0 ? '2' : '0';
     });
     animate();
   };
@@ -84,7 +83,6 @@ const createFlowerParallax = (portrait: HTMLElement) => {
     window.removeEventListener('resize', reset);
     document.removeEventListener('mouseleave', reset);
     document.removeEventListener('visibilitychange', visibility);
-    flowers.forEach((flower) => flower.style.removeProperty('z-index'));
   };
 };
 

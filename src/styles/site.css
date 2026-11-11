@@ -1167,6 +1167,7 @@ a {
 }
 
 .portrait-flowers .flower-doodle--right {
+  z-index: 0;
   top: 19%;
   right: -7%;
   width: 2.75rem;
