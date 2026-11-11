@@ -2189,6 +2189,12 @@ section.footer .splitpara.jhppara.footerrr {
   height: clamp(3.5rem, 5vw, 4.5rem);
 }
 
+.footer-trans-flag {
+  display: block;
+  width: 24px;
+  height: 16px;
+}
+
 .site-copyright-footer p {
   max-width: min(100%, 36rem);
   margin: 0;
