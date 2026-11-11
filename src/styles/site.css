@@ -979,13 +979,13 @@ a {
   padding-bottom: 0;
 }
 
-.homecontainer.personal-about-longform .aboutintro.personal-page-hero.personal-about-meet-hero {
+.homecontainer .aboutintro.personal-page-hero.personal-about-hero.personal-about-meet-hero {
   --meet-columns: minmax(0, 1fr) clamp(8rem, 27vw, 25rem) minmax(0, 1fr);
   grid-template-columns: var(--meet-columns);
   gap: clamp(0.65rem, 3vw, 3.5rem);
 }
 
-.personal-about-longform .personal-about-lede {
+.personal-about-meet-hero .personal-about-lede {
   display: grid;
   grid-template-columns: var(--meet-columns);
   column-gap: inherit;
@@ -998,19 +998,19 @@ a {
   line-height: 0.96;
 }
 
-.personal-about-longform .personal-about-lede > .headline-visual {
+.personal-about-meet-hero .personal-about-lede > .headline-visual {
   display: grid;
   grid-template-columns: inherit;
   column-gap: inherit;
   grid-column: 1 / -1;
 }
 
-.personal-about-longform .meet-title-word--first {
+.personal-about-meet-hero .meet-title-word--first {
   grid-column: 1;
   text-align: right;
 }
 
-.personal-about-longform .meet-title-word--last {
+.personal-about-meet-hero .meet-title-word--last {
   grid-column: 3;
   text-align: left;
 }
@@ -1027,9 +1027,9 @@ a {
   }
 }
 
-#about-jules .personal-about-hero-copy > .paragraph-4 {
+.personal-about-hero .personal-about-hero-copy > .paragraph-4 {
   max-width: 32rem !important;
-  margin-left: 0;
+  margin-left: 0 !important;
 }
 
 .personal-about-portrait {
@@ -1155,7 +1155,7 @@ a {
 
 .portrait-flowers .flower-doodle {
   position: absolute;
-  z-index: 2;
+  z-index: 0;
   translate: var(--flower-x, 0px) var(--flower-y, 0px);
 }
 
@@ -1167,7 +1167,7 @@ a {
 }
 
 .portrait-flowers .flower-doodle--right {
-  z-index: 0;
+  z-index: 2;
   top: 19%;
   right: -7%;
   width: 2.75rem;
