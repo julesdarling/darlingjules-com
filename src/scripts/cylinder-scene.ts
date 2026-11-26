@@ -18,6 +18,7 @@ type CylinderControlGroup = {
   scale?: number;
   x?: number;
   y?: number;
+  z?: number;
   pitch?: number;
   yaw?: number;
   speed?: number;
@@ -66,16 +67,18 @@ type DragTarget = 'title' | 'logos';
 const controlsEventName = 'jules:cylinder-controls';
 
 const titleInk = 'rgba(17, 16, 15, 0.96)';
-const titleFontFamily = '"Instrument Serif", Georgia, serif';
-const titleFontSize = 330;
-const titleTextureWidth = 4096;
+const titleFontFamily = '"Xanh Mono", monospace';
+const titleFontSize = 288.75;
+const titleTextureWidth = 8192;
 const titleTextureHeight = 768;
 const titleRadius = 5.5;
 const titleCylinderHeight = 1.35;
 const titleRadialSegments = 256;
-const titleHorizontalScale = 0.72;
 const titleTextWidthRatio = 0.82;
-const titleTextureRepeatX = 3;
+const titleTextureRepeatX = 4;
+// Compensate for UV repetition so adding labels does not squeeze their glyphs.
+const titleHorizontalScale = titleCylinderHeight * titleTextureWidth * titleTextureRepeatX
+  / (titleTextureHeight * Math.PI * 2 * titleRadius);
 const titleRotationSpeed = 0.075;
 const titleBasePitch = -0.11;
 
@@ -97,18 +100,20 @@ const defaultCylinderControls = {
   scale: 1,
   x: 0,
   y: 0,
+  z: 0,
   pitch: 0,
   yaw: 0,
   speed: 1,
-  backfaceVisible: true,
+  backfaceVisible: false,
 };
 
 const defaultTitleControls = {
   ...defaultCylinderControls,
-  scale: 0.76,
-  y: 1.69,
-  pitch: 0.23,
-  backfaceVisible: true,
+  scale: 0.78,
+  y: 1.60,
+  pitch: Math.PI / 15,
+  yaw: -Math.PI / 10,
+  backfaceVisible: false,
 };
 
 const mobileTitleControls = {
@@ -119,9 +124,9 @@ const mobileTitleControls = {
 const defaultLogoControls = {
   ...defaultCylinderControls,
   heightCompression: 1.32,
-  scale: 0.59,
-  y: 0.35,
-  pitch: -0.29,
+  scale: 0.46,
+  y: 2.59,
+  pitch: -17 * Math.PI / 180,
 };
 
 const mobileLogoControls = {
@@ -234,7 +239,7 @@ const makeMeasureContext = () => {
   return context;
 };
 
-const createTitleTexture = (text: string) => {
+const createTitleTexture = (labels: readonly string[]) => {
   const measure = makeMeasureContext();
   if (!measure) return undefined;
 
@@ -251,15 +256,19 @@ const createTitleTexture = (text: string) => {
   context.textAlign = 'center';
   context.textBaseline = 'middle';
 
-  const measuredWidth = measure.measureText(text).width;
-  const targetTextWidth = canvas.width * titleTextWidthRatio;
-  const fittedHorizontalScale = Math.min(titleHorizontalScale, targetTextWidth / measuredWidth);
+  const slotWidth = canvas.width / labels.length;
+  labels.forEach((label, index) => {
+    const measuredWidth = measure.measureText(label).width;
+    const targetTextWidth = slotWidth * titleTextWidthRatio;
+    const fittedFontSize = titleFontSize * Math.min(1, targetTextWidth / (measuredWidth * titleHorizontalScale));
 
-  context.save();
-  context.translate(canvas.width * 0.5, canvas.height * 0.54);
-  context.scale(fittedHorizontalScale, 1);
-  context.fillText(text, 0, 0);
-  context.restore();
+    context.save();
+    context.font = `400 ${fittedFontSize}px ${titleFontFamily}`;
+    context.translate(slotWidth * (index + 0.5), canvas.height * 0.54);
+    context.scale(titleHorizontalScale, 1);
+    context.fillText(label, 0, 0);
+    context.restore();
+  });
 
   const edgeFade = context.createLinearGradient(0, 0, canvas.width, 0);
   edgeFade.addColorStop(0, 'rgba(0, 0, 0, 0)');
@@ -400,6 +409,7 @@ const fitGroupToAnchor = (
   anchorRect: DOMRect,
   stageRect: DOMRect,
   camera: THREE.PerspectiveCamera,
+  relativeScale = 1,
 ) => {
   const mesh = group.children.find((child): child is THREE.Mesh => child instanceof THREE.Mesh);
   if (!mesh) return;
@@ -445,8 +455,8 @@ const fitGroupToAnchor = (
     const scale = (lower + upper) / 2;
     const size = place(scale);
     if (
-      size.x <= anchorRect.width / stageRect.width * 2 * 0.94 &&
-      size.y <= anchorRect.height / stageRect.height * 2 * 0.9
+      size.x <= anchorRect.width / stageRect.width * 2 * 0.94 * relativeScale &&
+      size.y <= anchorRect.height / stageRect.height * 2 * 0.9 * relativeScale
     ) {
       lower = scale;
     } else {
@@ -510,7 +520,8 @@ export const initCylinderScene = (root: HTMLElement) => {
   const logoAnchor = root.querySelector<HTMLElement>('.agency-logo-cylinder');
   const hero = root.querySelector<HTMLElement>('.agency-cylinder-hero');
   const band = root.querySelector<HTMLElement>('.agency-pattern-logo-band');
-  const text = titleAnchor?.dataset.cylinderHeadline?.trim() || 'Senior Freelance Design Director';
+  const text = titleAnchor?.dataset.cylinderHeadline?.trim() || 'Design director';
+  const alternateText = titleAnchor?.dataset.cylinderAlternate?.trim() || 'San Francisco';
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
   if (!stage || !canvas || !titleAnchor || !logoAnchor || !hero || !band || reduceMotion.matches || !hasWebgl()) {
@@ -555,7 +566,7 @@ export const initCylinderScene = (root: HTMLElement) => {
     const logoTexturePromise = createLogoTexture();
 
     await Promise.allSettled([
-      document.fonts?.load?.(`400 ${titleFontSize}px "Instrument Serif"`) ?? Promise.resolve(),
+      document.fonts?.load?.(`400 ${titleFontSize}px "Xanh Mono"`) ?? Promise.resolve(),
       document.fonts?.ready ?? Promise.resolve(),
     ]);
 
@@ -563,7 +574,7 @@ export const initCylinderScene = (root: HTMLElement) => {
       return;
     }
 
-    const titleTexture = createTitleTexture(text);
+    const titleTexture = createTitleTexture([text, alternateText]);
     const logoTexture = await logoTexturePromise;
 
     if (disposed || !titleTexture || !logoTexture) {
@@ -620,7 +631,7 @@ export const initCylinderScene = (root: HTMLElement) => {
       map: logoTexture,
       transparent: true,
       alphaTest: 0.025,
-      side: THREE.DoubleSide,
+      side: THREE.FrontSide,
       fog: true,
       depthWrite: false,
     });
@@ -640,6 +651,7 @@ export const initCylinderScene = (root: HTMLElement) => {
       title: 0,
       logos: 0,
     };
+    const automaticRotation = { title: 0, logos: 0 };
     const spinVelocity = {
       title: 0,
       logos: 0,
@@ -843,14 +855,12 @@ export const initCylinderScene = (root: HTMLElement) => {
       const titleWideScale = titleRatio > 4.4 ? 0.74 : titleRatio < 3.25 ? 0.86 : 0.79;
       const titleWideDrop = Math.min(1.35, Math.max(0, (layoutWidth - 1680) / 420));
       setBackfaceVisibility(titleMaterial, controls.title.backfaceVisible);
-      titleGroup.scale.set(
-        titleScale * titleWideScale * controls.title.scale * viewportScale,
-        titleScale * controls.title.scale * viewportScale,
-        titleScale * controls.title.scale * viewportScale,
-      );
+      // Keep the cylinder uniform so the lettering keeps its font proportions.
+      titleGroup.scale.setScalar(titleScale * titleWideScale * controls.title.scale * viewportScale);
       titleGroup.position.x = titlePoint.x + controls.title.x;
       const titleOffsetY = mobile ? 0 : (titleRatio > 4.4 ? -0.28 : titleRatio < 3.25 ? -0.14 : -0.2) - titleWideDrop;
       titleGroup.position.y = titlePoint.y + titleOffsetY + controls.title.y;
+      titleGroup.position.z = controls.title.z;
 
       const logoPoint = getScenePoint(logoRect, frameRect, camera);
       const logoRatio = logoRect.width / Math.max(1, logoRect.height);
@@ -865,12 +875,17 @@ export const initCylinderScene = (root: HTMLElement) => {
       logoGroup.position.x = logoPoint.x + controls.logos.x;
       const logoOffsetY = mobile ? 0 : logoRatio > 5.5 ? 0.82 : logoRatio < 3.4 ? 0.44 : 0.62;
       logoGroup.position.y = logoPoint.y + logoOffsetY + controls.logos.y;
+      logoGroup.position.z = controls.logos.z;
 
       if (mobile) {
         titleGroup.rotation.x = titleBasePitch + controls.title.pitch;
         logoGroup.rotation.x = logoBasePitch + controls.logos.pitch;
-        fitGroupToAnchor(titleGroup, titleRect, frameRect, camera);
-        fitGroupToAnchor(logoGroup, logoRect, frameRect, camera);
+        fitGroupToAnchor(titleGroup, titleRect, frameRect, camera, controls.title.scale / defaultTitleControls.scale);
+        fitGroupToAnchor(logoGroup, logoRect, frameRect, camera, controls.logos.scale / defaultLogoControls.scale);
+        titleGroup.position.x += controls.title.x;
+        titleGroup.position.y += controls.title.y;
+        logoGroup.position.x += controls.logos.x;
+        logoGroup.position.y += controls.logos.y;
       }
     };
 
@@ -915,11 +930,13 @@ export const initCylinderScene = (root: HTMLElement) => {
         }
       });
 
-      titleCylinder.rotation.y = controls.title.yaw - elapsed * titleRotationSpeed * controls.title.speed + spinOffset.title;
+      automaticRotation.title -= frameDelta * titleRotationSpeed * controls.title.speed;
+      automaticRotation.logos -= frameDelta * 0.075 * controls.logos.speed;
+      titleCylinder.rotation.y = controls.title.yaw + automaticRotation.title + spinOffset.title;
       titleGroup.rotation.x = titleBasePitch + controls.title.pitch + Math.sin(elapsed * 0.28) * 0.006;
 
       logoGroup.rotation.x = logoBasePitch + controls.logos.pitch + Math.sin(elapsed * 0.24) * 0.01;
-      logoGroup.rotation.y = -0.18 + controls.logos.yaw - elapsed * 0.075 * controls.logos.speed + spinOffset.logos;
+      logoGroup.rotation.y = -0.18 + controls.logos.yaw + automaticRotation.logos + spinOffset.logos;
 
       renderer.render(scene, camera);
       animationFrame = requestAnimationFrame(animate);

@@ -2,12 +2,12 @@
 
 ## System
 
-The current site is an intentional white editorial portfolio with giant Instrument Serif display typography, Instrument Sans body copy, pink CTAs, and large project media. This fork should preserve that identity while making Jules the clear first-viewport subject.
+The current site is an intentional white editorial portfolio with giant Xanh Mono display typography, Libre Franklin body copy, pink CTAs, and large project media. This fork should preserve that identity while making Jules the clear first-viewport subject.
 
 ## Typography
 
-- Display: Instrument Serif, used for brand name, large headlines, project titles, and case-study hero lines.
-- Body: Instrument Sans, used for navigation, paragraphs, CTAs, metadata, and service lists.
+- Display: Xanh Mono, used for brand name, large headlines, project titles, and case-study hero lines.
+- Body: Libre Franklin, used for navigation, paragraphs, CTAs, metadata, and service lists.
 - Case-study intro paragraphs should read as executive summaries, capped to a comfortable measure and visually subordinate to the headline.
 
 ## Layout

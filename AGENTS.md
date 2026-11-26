@@ -11,7 +11,7 @@ Use this file before making UI, copy, spacing, typography, or layout edits.
 - Read `PRODUCT.md` and `DESIGN.md` before UI work.
 - If available, use the `impeccable` skill for brand-register judgment.
 - If available, use the frontend taste skill for spacing, responsiveness, viewport stability, and anti-slop checks.
-- Preserve the existing identity: Instrument Serif display type, Instrument Sans body type, warm white surfaces, near-black text, sparse black CTAs, and large project media.
+- Preserve the existing identity: Xanh Mono display type, Libre Franklin body type, warm white surfaces, near-black text, sparse black CTAs, and large project media.
 - Do not replace the site with generic SaaS, dashboard, agency-template, or card-grid language.
 
 ## Typography Rules

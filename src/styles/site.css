@@ -35,7 +35,7 @@ html {
 
 body {
   min-height: 100%;
-  font-family: "Instrument Sans", sans-serif;
+  font-family: "Libre Franklin", sans-serif;
 }
 
 button,
@@ -194,7 +194,7 @@ button:focus-visible,
 body {
   color: var(--haggard-ink);
   background: #fff;
-  font-family: "Instrument Sans", sans-serif;
+  font-family: "Libre Franklin", sans-serif;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -312,7 +312,7 @@ a {
 }
 
 .logo-wordmark {
-  font-family: "Instrument Serif", serif;
+  font-family: "Xanh Mono", monospace;
   font-size: clamp(1.25rem, 1.6vw, 1.7rem);
   font-weight: 400;
   line-height: 1;
@@ -334,7 +334,7 @@ a {
   min-height: 2.75rem;
   padding: 0.65rem 0.95rem !important;
   border-radius: 999px;
-  font-family: "Instrument Sans", sans-serif;
+  font-family: "Libre Franklin", sans-serif;
   font-size: 0.94rem !important;
   line-height: 1 !important;
   text-decoration: none;
@@ -547,6 +547,28 @@ a {
   opacity: 1;
 }
 
+.ctalink:not(.personal-secondary-cta),
+.mainline.inver.rightsidecontact.contact {
+  color: var(--haggard-cta-text-hover) !important;
+  background: #df056e !important;
+  border-color: #df056e !important;
+}
+
+.ctalink:not(.personal-secondary-cta):is(:hover, :focus-visible),
+.mainline.inver.rightsidecontact.contact:is(:hover, :focus-visible) {
+  color: var(--haggard-cta-text-hover) !important;
+  background: #7138c5 !important;
+  border-color: #7138c5 !important;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.25),
+    0 1rem 2.1rem rgba(113, 56, 197, 0.28);
+}
+
+.ctalink:not(.personal-secondary-cta).cta-webgl-ready .cta-noise-canvas,
+.mainline.inver.rightsidecontact.contact.cta-webgl-ready .cta-noise-canvas {
+  opacity: 1;
+}
+
 .personal-home,
 .personal-about,
 .personal-services {
@@ -566,7 +588,7 @@ a {
 .personal-eyebrow {
   margin: 0 0 clamp(0.7rem, 1vw, 1rem) !important;
   color: var(--haggard-muted) !important;
-  font-family: "Instrument Sans", sans-serif;
+  font-family: "Libre Franklin", sans-serif;
   font-size: clamp(0.82rem, 0.88vw, 0.96rem) !important;
   font-weight: 600;
   line-height: 1.2 !important;
@@ -595,7 +617,7 @@ a {
 .personal-hero .heading-3.topheader.herohero {
   max-width: 8ch !important;
   margin-left: 0 !important;
-  font-size: clamp(5.2rem, 9.6vw, 10.5rem) !important;
+  font-size: clamp(4.55rem, 8.4vw, 9.1875rem) !important;
   line-height: 0.86 !important;
   text-align: left !important;
   white-space: normal !important;
@@ -640,7 +662,7 @@ a {
 }
 
 .personal-hero-card .projecttitle {
-  font-size: clamp(3.25rem, 5.6vw, 6.4rem) !important;
+  font-size: clamp(2.84375rem, 4.9vw, 5.6rem) !important;
   line-height: 0.92 !important;
 }
 
@@ -664,7 +686,7 @@ a {
 }
 
 .personal-feature-grid .projecttitle {
-  font-size: clamp(2.2rem, 3.4vw, 4.2rem) !important;
+  font-size: clamp(1.9rem, 2.9vw, 3.6rem) !important;
   line-height: 0.96 !important;
 }
 
@@ -672,8 +694,8 @@ a {
   max-width: 9.4em;
   margin: 0 !important;
   color: var(--haggard-ink) !important;
-  font-family: "Instrument Serif", serif;
-  font-size: clamp(4.4rem, 9.2vw, 11rem) !important;
+  font-family: "Xanh Mono", monospace;
+  font-size: clamp(3.85rem, 8.05vw, 9.625rem) !important;
   font-weight: 400;
   line-height: 0.86 !important;
   text-wrap: balance;
@@ -716,7 +738,7 @@ a {
   width: auto !important;
   margin: 0 !important;
   color: var(--haggard-ink) !important;
-  font-size: clamp(3rem, 5.8vw, 6.6rem) !important;
+  font-size: clamp(2.625rem, 5.075vw, 5.775rem) !important;
   line-height: 0.9 !important;
   text-align: left !important;
 }
@@ -759,7 +781,7 @@ a {
 
 .personal-difference-list span {
   color: var(--haggard-muted);
-  font-family: "Instrument Sans", sans-serif;
+  font-family: "Libre Franklin", sans-serif;
   font-size: 0.86rem;
   font-weight: 600;
   line-height: 1.2;
@@ -769,8 +791,8 @@ a {
 .personal-mode-list h3 {
   margin: 0;
   color: var(--haggard-ink);
-  font-family: "Instrument Serif", serif;
-  font-size: clamp(2.15rem, 3.3vw, 4.1rem);
+  font-family: "Xanh Mono", monospace;
+  font-size: clamp(1.88125rem, 2.8875vw, 3.5875rem);
   font-weight: 400;
   line-height: 0.92;
 }
@@ -800,8 +822,8 @@ a {
   max-width: 9.2em;
   margin: 0;
   color: var(--haggard-ink);
-  font-family: "Instrument Serif", serif;
-  font-size: clamp(3.8rem, 7.2vw, 8.5rem);
+  font-family: "Xanh Mono", monospace;
+  font-size: clamp(3.325rem, 6.3vw, 7.4375rem);
   font-weight: 400;
   line-height: 0.88;
   text-wrap: balance;
@@ -855,8 +877,8 @@ a {
 
 .personal-proof-columns span {
   color: var(--haggard-ink);
-  font-family: "Instrument Serif", serif;
-  font-size: clamp(2.55rem, 4vw, 5rem);
+  font-family: "Xanh Mono", monospace;
+  font-size: clamp(2.23125rem, 3.5vw, 4.375rem);
   line-height: 0.9;
 }
 
@@ -881,8 +903,8 @@ a {
   max-width: 9em;
   margin: 0;
   color: var(--haggard-ink);
-  font-family: "Instrument Serif", serif;
-  font-size: clamp(4rem, 7vw, 8rem);
+  font-family: "Xanh Mono", monospace;
+  font-size: clamp(3.5rem, 6.125vw, 7rem);
   font-weight: 400;
   line-height: 0.88;
   text-wrap: balance;
@@ -922,7 +944,7 @@ a {
 
 .personal-link-list .heading-3 {
   margin: 0 !important;
-  font-size: clamp(2.1rem, 4.4vw, 5.2rem) !important;
+  font-size: clamp(1.8375rem, 3.85vw, 4.55rem) !important;
   line-height: 0.96 !important;
 }
 
@@ -981,8 +1003,10 @@ a {
 
 .homecontainer .aboutintro.personal-page-hero.personal-about-hero.personal-about-meet-hero {
   --meet-columns: minmax(0, 1fr) clamp(8rem, 27vw, 25rem) minmax(0, 1fr);
+  --meet-title-size: clamp(2.1875rem, 10.5vw, 9.625rem);
   grid-template-columns: var(--meet-columns);
-  gap: clamp(0.65rem, 3vw, 3.5rem);
+  column-gap: clamp(0.65rem, 3vw, 3.5rem);
+  row-gap: clamp(0.65rem, 1vw, 1rem);
 }
 
 .personal-about-meet-hero .personal-about-lede {
@@ -997,7 +1021,7 @@ a {
   align-items: center;
   max-width: none;
   margin: 0;
-  font-size: clamp(2.5rem, 12vw, 11rem);
+  font-size: var(--meet-title-size);
   line-height: 0.96;
 }
 
@@ -1026,7 +1050,92 @@ a {
   width: 100%;
 }
 
+.personal-about-meet-hero .meet-pronouns {
+  position: relative;
+  z-index: 2;
+  grid-column: 2;
+  grid-row: 2;
+  align-self: start;
+  justify-self: center;
+  margin: 0;
+  color: var(--haggard-muted);
+  font-size: clamp(0.7rem, 0.85vw, 0.9rem);
+  font-weight: 400;
+  line-height: 1.4;
+  text-align: center;
+}
+
+.personal-about-meet-hero .portrait-role-line {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  grid-column: 1 / -1;
+  grid-row: 3;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45em;
+  width: 100%;
+  margin: 0;
+  color: var(--haggard-muted);
+  font-size: clamp(0.9rem, 1.25vw, 1.15rem);
+  font-weight: 400;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.portrait-role-prefix {
+  white-space: nowrap;
+}
+
+.portrait-role-rotator {
+  display: inline-grid;
+  align-items: center;
+  overflow: clip;
+}
+
+.portrait-role-word {
+  grid-area: 1 / 1;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.portrait-role-word:first-child {
+  opacity: 1;
+  visibility: visible;
+}
+
+.portrait-role-accessible {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.personal-how-work-list > p {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65em;
+}
+
+.about-work-emoji {
+  flex: 0 0 1.25em;
+  text-align: center;
+}
+
 @media screen and (max-width: 767px) {
+  .homecontainer .aboutintro.personal-page-hero.personal-about-hero.personal-about-meet-hero {
+    --meet-title-size: clamp(1.225rem, 7vw, 3.5rem);
+  }
+
+  .personal-about-meet-hero .personal-about-lede {
+    font-size: var(--meet-title-size);
+  }
+
   .personal-about-meet-hero .portrait-flowers .flower-doodle {
     width: 1.2rem;
   }
@@ -1070,7 +1179,15 @@ a {
   pointer-events: none;
 }
 
-.personal-about-portrait > img {
+.personal-about-portrait > .personal-about-photo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+}
+
+.personal-about-portrait > img,
+.personal-about-photo > img {
   position: relative;
   z-index: 1;
   display: block;
@@ -1210,8 +1327,8 @@ a {
   max-width: 10em;
   margin: 0 0 clamp(1.4rem, 2.4vw, 2.4rem);
   color: var(--haggard-ink);
-  font-family: "Instrument Serif", serif;
-  font-size: clamp(2.55rem, 3.85vw, 4.9rem);
+  font-family: "Xanh Mono", monospace;
+  font-size: clamp(2.23125rem, 3.36875vw, 4.2875rem);
   font-weight: 400;
   letter-spacing: 0;
   line-height: 1.02;
@@ -1230,6 +1347,16 @@ a {
 .personal-about .personal-section .projecttitle.headertitledesc.lefty.brand-leader.hp {
   max-width: 8.6em;
   line-height: 0.96 !important;
+}
+
+.personal-about .personal-two-col .projecttitle.headertitledesc.lefty.brand-leader.hp {
+  font-size: clamp(2.1rem, 4.06vw, 4.62rem) !important;
+}
+
+@media screen and (max-width: 767px) {
+  .personal-about .personal-two-col .projecttitle.headertitledesc.lefty.brand-leader.hp {
+    font-size: clamp(2.1rem, 9.8vw, 3.36rem) !important;
+  }
 }
 
 .personal-about-copy {
@@ -1261,7 +1388,7 @@ a {
   margin: 0;
   padding-left: 1.25rem;
   color: var(--haggard-muted);
-  font-family: "Instrument Sans", sans-serif;
+  font-family: "Libre Franklin", sans-serif;
   font-size: clamp(1.05rem, 1.22vw, 1.24rem);
   line-height: 1.5;
   border-top: 0;
@@ -1314,7 +1441,12 @@ a {
 }
 
 .personal-about-final .ctalink {
-  width: min(100%, 32rem);
+  width: min(100%, 19rem);
+  min-height: 5.75rem;
+  padding: 1.5rem 2rem !important;
+  font-size: 1.75rem !important;
+  font-weight: 400 !important;
+  line-height: 1.2 !important;
 }
 
 .personal-service-grid {
@@ -1340,8 +1472,8 @@ a {
   display: block;
   margin-bottom: clamp(0.8rem, 1.2vw, 1.1rem);
   color: var(--haggard-ink);
-  font-family: "Instrument Serif", serif;
-  font-size: clamp(2.6rem, 4.2vw, 4.8rem);
+  font-family: "Xanh Mono", monospace;
+  font-size: clamp(2.275rem, 3.675vw, 4.2rem);
   line-height: 0.9;
 }
 
@@ -1409,7 +1541,7 @@ a {
   }
 
   .personal-hero .heading-3.topheader.herohero {
-    font-size: clamp(4.2rem, 21vw, 6.2rem) !important;
+    font-size: clamp(3.675rem, 18.375vw, 5.425rem) !important;
   }
 
   .personal-feature-grid,
@@ -1423,13 +1555,13 @@ a {
   }
 
   .personal-section .projecttitle.headertitledesc.lefty.brand-leader.hp {
-    font-size: clamp(3rem, 14vw, 4.8rem) !important;
+    font-size: clamp(2.625rem, 12.25vw, 4.2rem) !important;
   }
 
   .personal-kicker,
   .personal-mode-large h2,
   .personal-client-memory h2 {
-    font-size: clamp(3.7rem, 16vw, 5.2rem) !important;
+    font-size: clamp(3.2375rem, 14vw, 4.55rem) !important;
   }
 
   .personal-difference-list article {
@@ -1442,7 +1574,7 @@ a {
   }
 
   .personal-link-list .heading-3 {
-    font-size: clamp(2.25rem, 12vw, 3.7rem) !important;
+    font-size: clamp(1.96875rem, 10.5vw, 3.2375rem) !important;
   }
 }
 
@@ -1509,7 +1641,7 @@ a {
   margin-right: auto !important;
   margin-bottom: 0 !important;
   margin-left: auto !important;
-  font-size: clamp(5.6rem, 6.85vw, 7.4rem) !important;
+  font-size: clamp(4.9rem, 5.99375vw, 6.475rem) !important;
   line-height: 0.93 !important;
   text-align: center !important;
   white-space: nowrap;
@@ -1654,7 +1786,7 @@ a {
 .heading-3.topheader.herohero.downher {
   width: min(100%, 12em);
   max-width: 12em;
-  font-size: clamp(4.6rem, 6.1vw, 6.7rem) !important;
+  font-size: clamp(4.025rem, 5.3375vw, 5.8625rem) !important;
   line-height: 0.96 !important;
   white-space: normal;
 }
@@ -1698,7 +1830,7 @@ a {
   margin: 0;
   padding: 0;
   color: var(--haggard-muted);
-  font-family: "Instrument Sans", sans-serif;
+  font-family: "Libre Franklin", sans-serif;
   font-size: clamp(1rem, 1.35vw, 1.14rem);
   line-height: 1.42;
   list-style: none;
@@ -1816,7 +1948,7 @@ a {
   max-width: 8em;
   margin-right: auto !important;
   margin-left: auto !important;
-  font-size: clamp(4rem, 7.2vw, 7.8rem) !important;
+  font-size: clamp(3.5rem, 6.3vw, 6.825rem) !important;
   line-height: 0.92 !important;
   text-align: center !important;
   white-space: normal;
@@ -1867,9 +1999,12 @@ a {
 
 .homecontainer .aboutintro.hp.herohp.lowerdown.testimonials + .grid .text-span-7 {
   display: block;
+  margin: 0;
+  padding: 0;
+  border: 0;
   max-width: 36rem;
   color: inherit;
-  font-family: "Instrument Sans", sans-serif;
+  font-family: "Libre Franklin", sans-serif;
   font-size: clamp(1.05rem, 1.3vw, 1.28rem) !important;
   font-style: italic !important;
   line-height: 1.52 !important;
@@ -1879,6 +2014,7 @@ a {
 .homecontainer .aboutintro.hp.herohp.lowerdown.testimonials + .grid .text-span-8 {
   display: block;
   margin-top: clamp(1rem, 1.8vw, 1.35rem);
+  text-align: left;
   color: var(--haggard-ink);
   font-size: clamp(0.98rem, 1.02vw, 1.05rem);
   line-height: 1.3;
@@ -1989,6 +2125,12 @@ a {
   overflow: visible;
 }
 
+.bigthinks.personal-writing {
+  box-sizing: border-box;
+  padding-right: var(--haggard-page-x);
+  padding-left: var(--haggard-page-x);
+}
+
 body.maincontent main:has(.bigthinks) {
   overflow-x: clip;
   overflow-y: visible;
@@ -2046,7 +2188,7 @@ body.maincontent main:has(.bigthinks) {
 .tiny {
   margin: 0 !important;
   color: var(--haggard-ink);
-  font-family: "Instrument Sans", sans-serif;
+  font-family: "Libre Franklin", sans-serif;
   font-size: 0.95rem !important;
   line-height: 1.35 !important;
   text-align: center;
@@ -2054,7 +2196,7 @@ body.maincontent main:has(.bigthinks) {
 
 .bold-text-4 {
   color: inherit;
-  font-family: "Instrument Sans", sans-serif;
+  font-family: "Libre Franklin", sans-serif;
   font-size: inherit !important;
   font-weight: 500;
   line-height: inherit !important;
@@ -2076,6 +2218,22 @@ body.maincontent main:has(.bigthinks) {
   text-wrap: balance;
 }
 
+.projecttitle {
+  font-size: 2.625vw;
+}
+
+.projecttitleworkpage {
+  font-size: 2.1875vw;
+}
+
+.heading-3 {
+  font-size: 1.75vw;
+}
+
+.mainline.myname.morework {
+  font-size: 11.375vw;
+}
+
 .leftcol .copysection.projectcopy {
   align-items: center !important;
   justify-content: center !important;
@@ -2095,7 +2253,7 @@ body.maincontent main:has(.bigthinks) {
 .subline.homesub {
   margin: 0 0 1.5rem;
   color: var(--haggard-muted);
-  font-family: "Instrument Sans", sans-serif;
+  font-family: "Libre Franklin", sans-serif;
   font-size: 0.95rem !important;
   font-weight: 500;
   line-height: 1.25 !important;
@@ -2107,8 +2265,8 @@ body.maincontent main:has(.bigthinks) {
   margin: 0 auto 1.35rem !important;
   padding: 0 !important;
   color: var(--haggard-ink);
-  font-family: "Instrument Serif", serif;
-  font-size: 4rem !important;
+  font-family: "Xanh Mono", monospace;
+  font-size: 3.5rem !important;
   font-weight: 400;
   line-height: 0.96 !important;
   text-align: center !important;
@@ -2119,13 +2277,17 @@ body.maincontent main:has(.bigthinks) {
   max-width: 42rem;
   margin: 0;
   color: var(--haggard-muted);
-  font-family: "Instrument Sans", sans-serif;
+  font-family: "Libre Franklin", sans-serif;
   font-size: 1.08rem !important;
   line-height: 1.62 !important;
 }
 
 .copysection.projectcopy .splitpara {
   text-align: left !important;
+}
+
+.copysection.projectcopy .splitpara + .splitpara {
+  margin-top: clamp(1rem, 1.5vw, 1.4rem);
 }
 
 .deliverables-recap {
@@ -2146,7 +2308,7 @@ body.maincontent main:has(.bigthinks) {
   grid-row: span 3;
   margin: 0;
   color: var(--haggard-muted);
-  font-family: "Instrument Sans", sans-serif;
+  font-family: "Libre Franklin", sans-serif;
   font-size: 0.95rem !important;
   font-weight: 500;
   line-height: 1.25 !important;
@@ -2155,8 +2317,8 @@ body.maincontent main:has(.bigthinks) {
 .deliverables-recap__title {
   margin: 0;
   color: var(--haggard-ink);
-  font-family: "Instrument Serif", serif;
-  font-size: clamp(2.6rem, 4vw, 4rem) !important;
+  font-family: "Xanh Mono", monospace;
+  font-size: clamp(2.275rem, 3.5vw, 3.5rem) !important;
   font-weight: 400;
   line-height: 0.98 !important;
   text-wrap: balance;
@@ -2166,7 +2328,7 @@ body.maincontent main:has(.bigthinks) {
   max-width: 42rem;
   margin: 0;
   color: var(--haggard-muted);
-  font-family: "Instrument Sans", sans-serif;
+  font-family: "Libre Franklin", sans-serif;
   font-size: 1.05rem !important;
   line-height: 1.55 !important;
   text-wrap: pretty;
@@ -2179,7 +2341,7 @@ body.maincontent main:has(.bigthinks) {
   margin: 0.25rem 0 0;
   padding: 0;
   color: var(--haggard-ink);
-  font-family: "Instrument Sans", sans-serif;
+  font-family: "Libre Franklin", sans-serif;
   font-size: 0.98rem !important;
   line-height: 1.35 !important;
   list-style: none;
@@ -2256,7 +2418,7 @@ section.footer .splitpara.jhppara.footerrr {
   margin: 0;
   text-wrap: balance;
   color: var(--haggard-muted);
-  font-family: "Instrument Sans", sans-serif;
+  font-family: "Libre Franklin", sans-serif;
   font-size: 0.95rem;
   line-height: 1.35;
 }
@@ -2343,8 +2505,8 @@ section.footer .splitpara.jhppara.footerrr {
 .service-pill-group__title {
   margin: 0;
   color: var(--haggard-ink);
-  font-family: "Instrument Serif", serif;
-  font-size: clamp(2.2rem, 3.2vw, 3.1rem);
+  font-family: "Xanh Mono", monospace;
+  font-size: clamp(1.925rem, 2.8vw, 2.7125rem);
   font-weight: 400;
   line-height: 0.96;
   text-wrap: balance;
@@ -2375,7 +2537,7 @@ section.footer .splitpara.jhppara.footerrr {
   background: color-mix(in srgb, #fff 96%, var(--haggard-cta-pink) 4%);
   border: 1px solid rgba(17, 16, 15, 0.15);
   border-radius: 999px;
-  font-family: "Instrument Sans", sans-serif;
+  font-family: "Libre Franklin", sans-serif;
   font-size: 0.95rem;
   line-height: 1;
   white-space: nowrap;
@@ -2383,7 +2545,7 @@ section.footer .splitpara.jhppara.footerrr {
 
 .div-block-31 .heading-4 {
   margin-top: 0 !important;
-  font-size: clamp(2.55rem, 3.85vw, 3rem) !important;
+  font-size: clamp(2.23125rem, 3.36875vw, 2.625rem) !important;
   line-height: 0.99 !important;
 }
 
@@ -2472,7 +2634,7 @@ section.footer .splitpara.jhppara.footerrr {
 }
 
 .homepageprojects.center {
-  font-family: "Instrument Sans", sans-serif;
+  font-family: "Libre Franklin", sans-serif;
   font-size: 1rem !important;
   line-height: 1.25 !important;
 }
@@ -2649,7 +2811,7 @@ section.footer .splitpara.jhppara.footerrr {
 .projecttitle.headertitledesc.lefty.brand-leader.morework,
 .disciplines,
 .boldtextpara {
-  font-family: "Instrument Serif", serif;
+  font-family: "Xanh Mono", monospace;
   font-weight: 400;
   line-height: 0.92 !important;
   text-wrap: balance;
@@ -2657,22 +2819,22 @@ section.footer .splitpara.jhppara.footerrr {
 
 .projecttitle.headertitledesc.lefty.brand-leader.hp {
   max-width: 8.5em;
-  font-size: 7.25rem !important;
+  font-size: 6.34375rem !important;
 }
 
 .projecttitle.headertitledesc.lefty.brand-leader.morework {
-  font-size: 6.5rem !important;
+  font-size: 5.6875rem !important;
 }
 
 .heading-3.topheader,
 .heading-4 {
-  font-family: "Instrument Serif", serif;
+  font-family: "Xanh Mono", monospace;
   font-weight: 400;
 }
 
 .heading-4 {
   margin-bottom: 1.4rem;
-  font-size: 3.5rem !important;
+  font-size: 3.0625rem !important;
   line-height: 0.98 !important;
 }
 
@@ -2683,7 +2845,7 @@ section.footer .splitpara.jhppara.footerrr {
 .posttext p,
 .posttext li {
   color: var(--haggard-muted);
-  font-family: "Instrument Sans", sans-serif;
+  font-family: "Libre Franklin", sans-serif;
   font-size: 1.08rem !important;
   line-height: 1.65 !important;
 }
@@ -2713,18 +2875,27 @@ section.footer .splitpara.jhppara.footerrr {
 .posttext h2,
 .posttext h3 {
   color: var(--haggard-ink);
-  font-family: "Instrument Serif", serif;
+  font-family: "Xanh Mono", monospace;
   font-weight: 400;
   line-height: 1;
   text-wrap: balance;
 }
 
 .posttext h1 {
-  font-size: 4rem !important;
+  font-size: 3.5rem !important;
+}
+
+body.writingbody .postcontent > .posttext:first-child > h1 {
+  font-size: 3.15rem !important;
+  line-height: 1.12 !important;
 }
 
 .posttext h2 {
-  font-size: 3rem !important;
+  font-size: 2.625rem !important;
+}
+
+.posttext h3 {
+  font-size: 1.3125rem;
 }
 
 .copysection.whitebg.blackbg {
@@ -2763,6 +2934,10 @@ section.footer .splitpara.jhppara.footerrr {
     --haggard-writing-hero-start: 4.25rem;
   }
 
+  .projecttitle {
+    font-size: 2.1875vw;
+  }
+
   .leftcol .copysection.projectcopy {
     min-height: auto;
     padding-top: var(--haggard-project-hero-start) !important;
@@ -2771,15 +2946,15 @@ section.footer .splitpara.jhppara.footerrr {
 
   .mainline.smallhomesection {
     max-width: 11.5em;
-    font-size: 3.35rem !important;
+    font-size: 2.93125rem !important;
   }
 
   .projecttitle.headertitledesc.lefty.brand-leader.hp {
-    font-size: 5.4rem !important;
+    font-size: 4.725rem !important;
   }
 
   .projecttitle.headertitledesc.lefty.brand-leader.morework {
-    font-size: 5rem !important;
+    font-size: 4.375rem !important;
   }
 
   .div-block-27.services-pill-grid {
@@ -2796,7 +2971,7 @@ section.footer .splitpara.jhppara.footerrr {
   }
 
   .div-block-11.twoup .heading-4 {
-    font-size: clamp(2.15rem, 4vw, 2.75rem) !important;
+    font-size: clamp(1.88125rem, 3.5vw, 2.40625rem) !important;
     line-height: 1.01 !important;
   }
 
@@ -2870,14 +3045,14 @@ section.footer .splitpara.jhppara.footerrr {
 
   .heading-3.topheader.herohero {
     max-width: 6.7em;
-    font-size: clamp(3.35rem, 13.5vw, 4.8rem) !important;
+    font-size: clamp(2.93125rem, 11.8125vw, 4.2rem) !important;
     line-height: 0.96 !important;
     white-space: normal;
   }
 
   .heading-3.topheader.herohero.downher {
     max-width: 7.1em;
-    font-size: clamp(3rem, 12vw, 4.25rem) !important;
+    font-size: clamp(2.625rem, 10.5vw, 3.71875rem) !important;
   }
 
   .homecontainer > .aboutintro.hp.herohp {
@@ -2922,7 +3097,7 @@ section.footer .splitpara.jhppara.footerrr {
 
   .homecontainer .aboutintro.hp.herohp.lowerdown.testimonials .heading-3.topheader.herohero {
     max-width: 7em;
-    font-size: clamp(3.35rem, 13vw, 4.8rem) !important;
+    font-size: clamp(2.93125rem, 11.375vw, 4.2rem) !important;
   }
 
   .homecontainer .aboutintro.hp.herohp.lowerdown.testimonials + .grid {
@@ -2985,7 +3160,7 @@ section.footer .splitpara.jhppara.footerrr {
 
     .heading-3.topheader.herohero {
       max-width: 7em;
-      font-size: clamp(3.1rem, 10.5vw, 4.3rem) !important;
+      font-size: clamp(2.7125rem, 9.1875vw, 3.7625rem) !important;
       line-height: 0.94 !important;
     }
 
@@ -3015,13 +3190,13 @@ section.footer .splitpara.jhppara.footerrr {
 
   .projecttitle.headertitledesc.lefty.brand-leader.morework.pricing {
     margin-bottom: clamp(1.8rem, 8vw, 2.8rem) !important;
-    font-size: clamp(3.15rem, 13vw, 4.35rem) !important;
+    font-size: clamp(2.75625rem, 11.375vw, 3.80625rem) !important;
     line-height: 0.96 !important;
   }
 
   .projecttitle.headertitledesc.lefty.brand-leader.morework.pricing.lowerdown {
     margin-bottom: 1rem !important;
-    font-size: clamp(2.9rem, 12vw, 3.85rem) !important;
+    font-size: clamp(2.5375rem, 10.5vw, 3.36875rem) !important;
     line-height: 0.98 !important;
   }
 
@@ -3037,7 +3212,7 @@ section.footer .splitpara.jhppara.footerrr {
   }
 
   .service-pill-group__title {
-    font-size: clamp(2rem, 9vw, 2.45rem);
+    font-size: clamp(1.75rem, 7.875vw, 2.14375rem);
   }
 
   .service-pill-list {
@@ -3084,7 +3259,7 @@ section.footer .splitpara.jhppara.footerrr {
 
   .mainline.smallhomesection {
     max-width: 9em;
-    font-size: clamp(2.35rem, 10.5vw, 3rem) !important;
+    font-size: clamp(2.05625rem, 9.1875vw, 2.625rem) !important;
     line-height: 0.98 !important;
   }
 
@@ -3158,11 +3333,15 @@ section.footer .splitpara.jhppara.footerrr {
 
   .heading-4,
   .posttext h2 {
-    font-size: 2.4rem !important;
+    font-size: 2.1rem !important;
   }
 
   .posttext h1 {
-    font-size: 3rem !important;
+    font-size: 2.625rem !important;
+  }
+
+  body.writingbody .postcontent > .posttext:first-child > h1 {
+    font-size: 2.3625rem !important;
   }
 
   .posttext {
@@ -3211,8 +3390,21 @@ section.footer .splitpara.jhppara.footerrr {
 
 @media screen and (max-width: 479px) {
   .div-block-11.twoup .heading-4 {
-    font-size: clamp(1.9rem, 8vw, 2.15rem) !important;
+    font-size: clamp(1.6625rem, 7vw, 1.88125rem) !important;
     line-height: 1.02 !important;
+  }
+
+  .projecttitle,
+  .projecttitleworkpage {
+    font-size: 7.875vmin;
+  }
+
+  .heading-3 {
+    font-size: 4.375vw;
+  }
+
+  .mainline.myname.morework {
+    font-size: 15.75vw;
   }
 
   .nav {
@@ -3229,12 +3421,12 @@ section.footer .splitpara.jhppara.footerrr {
 
   .heading-3.topheader.herohero {
     max-width: min(100%, 22rem);
-    font-size: clamp(3.05rem, 13vw, 3.55rem) !important;
+    font-size: clamp(2.66875rem, 11.375vw, 3.10625rem) !important;
   }
 
   .heading-3.topheader.herohero.downher {
     max-width: 6.7em;
-    font-size: clamp(2.7rem, 11.5vw, 3.25rem) !important;
+    font-size: clamp(2.3625rem, 10.0625vw, 2.84375rem) !important;
   }
 
   .homecontainer > .aboutintro.hp.herohp .flex-block-7 {
@@ -3264,7 +3456,7 @@ section.footer .splitpara.jhppara.footerrr {
 
   .agency-pattern-hero .heading-3.topheader.herohero.agency-pattern-title {
     max-width: min(100%, 22rem) !important;
-    font-size: clamp(2.55rem, 10.4vw, 3.45rem) !important;
+    font-size: clamp(2.23125rem, 9.1vw, 3.01875rem) !important;
   }
 
   .agency-pattern-hero .flex-block-7 .ctalink {
@@ -3293,16 +3485,16 @@ section.footer .splitpara.jhppara.footerrr {
   .mainline.smallhomesection {
     max-width: 8.7em;
     margin-bottom: 1rem !important;
-    font-size: clamp(2.15rem, 9.7vw, 2.55rem) !important;
+    font-size: clamp(1.88125rem, 8.4875vw, 2.23125rem) !important;
     line-height: 0.98 !important;
   }
 
   .projecttitle.headertitledesc.lefty.brand-leader.hp {
-    font-size: clamp(3.1rem, 13vw, 3.9rem) !important;
+    font-size: clamp(2.7125rem, 11.375vw, 3.4125rem) !important;
   }
 
   .projecttitle.headertitledesc.lefty.brand-leader.morework {
-    font-size: clamp(3rem, 12vw, 3.5rem) !important;
+    font-size: clamp(2.625rem, 10.5vw, 3.0625rem) !important;
   }
 
   .homepageprojects.center {
@@ -3330,12 +3522,12 @@ section.footer .splitpara.jhppara.footerrr {
 
   .projecttitle.headertitledesc.lefty.brand-leader.morework.pricing {
     max-width: 7em;
-    font-size: clamp(2.9rem, 12.6vw, 3.55rem) !important;
+    font-size: clamp(2.5375rem, 11.025vw, 3.10625rem) !important;
   }
 
   .projecttitle.headertitledesc.lefty.brand-leader.morework.pricing.lowerdown {
     max-width: 7.6em;
-    font-size: clamp(2.55rem, 11.2vw, 3.15rem) !important;
+    font-size: clamp(2.23125rem, 9.8vw, 2.75625rem) !important;
   }
 
   .paragraph-4,
@@ -3346,13 +3538,17 @@ section.footer .splitpara.jhppara.footerrr {
 
   .heading-4,
   .posttext h2 {
-    font-size: clamp(2rem, 9.5vw, 2.35rem) !important;
+    font-size: clamp(1.75rem, 8.3125vw, 2.05625rem) !important;
     line-height: 1.03 !important;
   }
 
   .posttext h1 {
-    font-size: clamp(2.7rem, 11.5vw, 3rem) !important;
+    font-size: clamp(2.3625rem, 10.0625vw, 2.625rem) !important;
     line-height: 0.98 !important;
+  }
+
+  body.writingbody .postcontent > .posttext:first-child > h1 {
+    font-size: clamp(2.12625rem, 9.05625vw, 2.3625rem) !important;
   }
 
   .writingindex {
@@ -3364,6 +3560,10 @@ section.footer .splitpara.jhppara.footerrr {
     margin-top: clamp(2.5rem, 12vw, 3.25rem) !important;
     padding-top: clamp(12.5rem, 54vw, 14.5rem) !important;
     overflow: visible;
+  }
+
+  .bigthinks.personal-writing {
+    padding-top: clamp(15rem, 64vw, 17rem) !important;
   }
 
   .bigthinks > .whale:first-child {
@@ -3477,13 +3677,13 @@ section.footer .splitpara.jhppara.footerrr {
 .aboutintro:not(.hp):not(.pricing-coin) > .projecttitle.headertitledesc.lefty.brand-leader.morework,
 .homecontainer > .div-block-28:first-child > .projecttitle.headertitledesc.lefty.brand-leader.morework.pricing:first-child {
   max-width: 12em;
-  font-size: clamp(4.6rem, 6.1vw, 6.7rem) !important;
+  font-size: clamp(4.025rem, 5.3375vw, 5.8625rem) !important;
   line-height: 0.96 !important;
   white-space: normal;
 }
 
 .projecttitle.headertitledesc.lefty.brand-leader.morework.pricing.lowerdown {
-  font-size: clamp(4.6rem, 6.1vw, 6.7rem) !important;
+  font-size: clamp(4.025rem, 5.3375vw, 5.8625rem) !important;
   line-height: 0.96 !important;
 }
 
@@ -3496,11 +3696,11 @@ section.footer .splitpara.jhppara.footerrr {
   .aboutintro:not(.hp):not(.pricing-coin) > .projecttitle.headertitledesc.lefty.brand-leader.morework,
   .homecontainer > .div-block-28:first-child > .projecttitle.headertitledesc.lefty.brand-leader.morework.pricing:first-child {
     max-width: 7.1em;
-    font-size: clamp(3rem, 12vw, 4.25rem) !important;
+    font-size: clamp(2.625rem, 10.5vw, 3.71875rem) !important;
   }
 
   .projecttitle.headertitledesc.lefty.brand-leader.morework.pricing.lowerdown {
-    font-size: clamp(3rem, 12vw, 4.25rem) !important;
+    font-size: clamp(2.625rem, 10.5vw, 3.71875rem) !important;
   }
 }
 
@@ -3513,11 +3713,11 @@ section.footer .splitpara.jhppara.footerrr {
   .aboutintro:not(.hp):not(.pricing-coin) > .projecttitle.headertitledesc.lefty.brand-leader.morework,
   .homecontainer > .div-block-28:first-child > .projecttitle.headertitledesc.lefty.brand-leader.morework.pricing:first-child {
     max-width: 6.7em;
-    font-size: clamp(2.7rem, 11.5vw, 3.25rem) !important;
+    font-size: clamp(2.3625rem, 10.0625vw, 2.84375rem) !important;
   }
 
   .projecttitle.headertitledesc.lefty.brand-leader.morework.pricing.lowerdown {
-    font-size: clamp(2.7rem, 11.5vw, 3.25rem) !important;
+    font-size: clamp(2.3625rem, 10.0625vw, 2.84375rem) !important;
   }
 }
 
@@ -3572,7 +3772,7 @@ section.footer .splitpara.jhppara.footerrr {
 .agency-pattern-availability {
   margin: clamp(0.15rem, 0.6vw, 0.45rem) 0 0;
   color: var(--haggard-muted);
-  font-family: "Instrument Sans", sans-serif;
+  font-family: "Libre Franklin", sans-serif;
   font-size: clamp(0.95rem, 1.05vw, 1.05rem);
   font-weight: 450;
   line-height: 1.35;
@@ -3597,8 +3797,8 @@ section.footer .splitpara.jhppara.footerrr {
   max-width: 8.5em;
   margin: 0;
   color: var(--haggard-ink);
-  font-family: "Instrument Serif", serif;
-  font-size: clamp(3.6rem, 6.8vw, 7.5rem);
+  font-family: "Xanh Mono", monospace;
+  font-size: clamp(3.15rem, 5.95vw, 6.5625rem);
   font-weight: 400;
   line-height: 0.96;
   text-wrap: balance;
@@ -3731,7 +3931,7 @@ section.footer .splitpara.jhppara.footerrr {
   max-width: min(100%, 15.5em) !important;
   margin-right: auto !important;
   margin-left: auto !important;
-  font-size: clamp(3.25rem, 4.7vw, 5.55rem) !important;
+  font-size: clamp(2.84375rem, 4.1125vw, 4.85625rem) !important;
   line-height: 0.98 !important;
   text-align: center !important;
   white-space: nowrap !important;
@@ -3745,7 +3945,7 @@ section.footer .splitpara.jhppara.footerrr {
 .cylinder-home {
   isolation: isolate;
   position: relative;
-  font-family: "Instrument Sans", sans-serif;
+  font-family: "Libre Franklin", sans-serif;
   touch-action: pan-y;
   overflow: visible !important;
 }
@@ -3773,7 +3973,7 @@ section.footer .splitpara.jhppara.footerrr {
 .cylinder-home .agency-pattern-when .agency-pattern-reason-list strong,
 .cylinder-home .agency-pattern-closing-copy,
 .cylinder-home .agency-pattern-closing-copy p {
-  font-family: "Instrument Sans", sans-serif !important;
+  font-family: "Libre Franklin", sans-serif !important;
 }
 
 .cylinder-home h1,
@@ -3788,7 +3988,7 @@ section.footer .splitpara.jhppara.footerrr {
 .cylinder-home .agency-pattern-closing h2,
 .cylinder-home .agency-pattern-selected-header h2,
 .cylinder-home .agency-pattern-capabilities .agency-pattern-list strong {
-  font-family: "Instrument Serif", serif !important;
+  font-family: "Xanh Mono", monospace !important;
 }
 
 .cylinder-home.is-cylinder-dragging {
@@ -3980,7 +4180,7 @@ section.footer .splitpara.jhppara.footerrr {
   border: 1px solid var(--haggard-border);
   border-radius: 8px;
   box-shadow: 0 1rem 3rem oklch(20% 0.015 75 / 16%);
-  font-family: "Instrument Sans", sans-serif;
+  font-family: "Libre Franklin", sans-serif;
   overflow: hidden;
 }
 
@@ -3995,7 +4195,7 @@ section.footer .splitpara.jhppara.footerrr {
 
 .cylinder-controls h2 {
   margin: 0;
-  font-family: "Instrument Sans", sans-serif;
+  font-family: "Libre Franklin", sans-serif;
   font-size: 0.86rem;
   font-weight: 700;
   line-height: 1;
@@ -4006,7 +4206,7 @@ section.footer .splitpara.jhppara.footerrr {
   background: transparent;
   border: 1px solid var(--haggard-border);
   border-radius: 999px;
-  font-family: "Instrument Sans", sans-serif;
+  font-family: "Libre Franklin", sans-serif;
   font-size: 0.76rem;
   font-weight: 700;
   line-height: 1;
@@ -4130,7 +4330,7 @@ section.footer .splitpara.jhppara.footerrr {
 .agency-pattern-selected-header h2 {
   margin: 0;
   color: var(--haggard-ink);
-  font-family: "Instrument Serif", serif;
+  font-family: "Xanh Mono", monospace;
   font-weight: 400;
   letter-spacing: 0;
   line-height: 0.98;
@@ -4270,8 +4470,8 @@ section.footer .splitpara.jhppara.footerrr {
   max-width: min(100%, 15.6em);
   margin: 0;
   color: oklch(16% 0.008 75);
-  font-family: "Instrument Sans", sans-serif;
-  font-size: clamp(2.4rem, 4.2vw, 5.35rem);
+  font-family: "Libre Franklin", sans-serif;
+  font-size: clamp(2.1rem, 3.675vw, 4.68125rem);
   font-weight: 400;
   letter-spacing: 0;
   line-height: 1.08;
@@ -4347,7 +4547,7 @@ section.footer .splitpara.jhppara.footerrr {
 .agency-pattern-section h2,
 .agency-pattern-closing h2 {
   max-width: 8.5em;
-  font-size: clamp(3.6rem, 6.8vw, 7.5rem);
+  font-size: clamp(3.15rem, 5.95vw, 6.5625rem);
   overflow-wrap: break-word;
 }
 
@@ -4416,8 +4616,8 @@ section.footer .splitpara.jhppara.footerrr {
 .agency-pattern-capabilities .agency-pattern-list strong {
   max-width: 9.5em;
   color: var(--haggard-ink);
-  font-family: "Instrument Serif", serif;
-  font-size: clamp(3.4rem, 6.2vw, 7rem);
+  font-family: "Xanh Mono", monospace;
+  font-size: clamp(2.975rem, 5.425vw, 6.125rem);
   font-weight: 400;
   letter-spacing: 0;
   line-height: 0.94;
@@ -4464,7 +4664,7 @@ section.footer .splitpara.jhppara.footerrr {
 
 .agency-pattern-selected-header h2 {
   max-width: 8.5em;
-  font-size: clamp(3.6rem, 6.8vw, 7.5rem);
+  font-size: clamp(3.15rem, 5.95vw, 6.5625rem);
 }
 
 .agency-pattern-selected-grid {
@@ -4499,7 +4699,7 @@ section.footer .splitpara.jhppara.footerrr {
 
 .agency-pattern-when h2 {
   max-width: 7em;
-  font-size: clamp(2.95rem, 4.8vw, 5.65rem);
+  font-size: clamp(2.58125rem, 4.2vw, 4.94375rem);
   line-height: 0.98;
 }
 
@@ -4600,7 +4800,7 @@ section.footer .splitpara.jhppara.footerrr {
   }
 
   .agency-anthem-line {
-    font-size: clamp(2.1rem, 5.4vw, 3.9rem);
+    font-size: clamp(1.8375rem, 4.725vw, 3.4125rem);
     line-height: 1.1;
   }
 
@@ -4762,12 +4962,12 @@ section.footer .splitpara.jhppara.footerrr {
   }
 
   .personal-hire h2 {
-    font-size: clamp(3rem, 13vw, 4.7rem);
+    font-size: clamp(2.625rem, 11.375vw, 4.1125rem);
   }
 
   .agency-pattern-hero .heading-3.topheader.herohero.agency-pattern-title {
     max-width: min(100%, 22rem) !important;
-    font-size: clamp(2.65rem, 10.4vw, 4.1rem) !important;
+    font-size: clamp(2.31875rem, 9.1vw, 3.5875rem) !important;
     line-height: 1.04 !important;
     white-space: normal !important;
   }
@@ -4799,7 +4999,7 @@ section.footer .splitpara.jhppara.footerrr {
   .agency-pattern-closing h2,
   .agency-pattern-selected-header h2 {
     max-width: 100%;
-    font-size: clamp(2.75rem, 11.8vw, 4.25rem);
+    font-size: clamp(2.40625rem, 10.325vw, 3.71875rem);
     line-height: 1.03;
     overflow-wrap: anywhere;
   }
@@ -4841,7 +5041,7 @@ section.footer .splitpara.jhppara.footerrr {
 
   .agency-anthem-line {
     max-width: 100%;
-    font-size: clamp(1.7rem, 7.4vw, 2.85rem);
+    font-size: clamp(1.4875rem, 6.475vw, 2.49375rem);
     line-height: 1.12;
     text-wrap: pretty;
   }
@@ -4862,7 +5062,7 @@ section.footer .splitpara.jhppara.footerrr {
 
   .agency-pattern-when h2 {
     max-width: 8em;
-    font-size: clamp(2.55rem, 10.5vw, 3.75rem);
+    font-size: clamp(2.23125rem, 9.1875vw, 3.28125rem);
   }
 
   .agency-pattern-when .agency-pattern-reason-list li {
@@ -4887,7 +5087,7 @@ section.footer .splitpara.jhppara.footerrr {
 
   .agency-pattern-capabilities .agency-pattern-list strong {
     max-width: 100%;
-    font-size: clamp(2.85rem, 13vw, 4.25rem);
+    font-size: clamp(2.49375rem, 11.375vw, 3.71875rem);
     line-height: 0.98;
   }
 
@@ -4949,7 +5149,7 @@ body.ok-bloomer-body .site-copyright-footer {
 .flower-eyebrow {
   margin: 0 0 clamp(1rem, 1.8vw, 1.5rem);
   color: currentColor;
-  font-family: "Instrument Sans", sans-serif;
+  font-family: "Libre Franklin", sans-serif;
   font-size: clamp(0.84rem, 0.9vw, 0.98rem);
   font-weight: 500;
   line-height: 1.2;
@@ -4962,14 +5162,14 @@ body.ok-bloomer-body .site-copyright-footer {
 .flower-support h2,
 .flower-policy h1 {
   margin: 0;
-  font-family: "Instrument Serif", serif;
+  font-family: "Xanh Mono", monospace;
   font-weight: 400;
   text-wrap: balance;
 }
 
 .flower-hero h1 {
   max-width: 7.9em;
-  font-size: clamp(3.5rem, 5.8vw, 7rem);
+  font-size: clamp(3.0625rem, 5.075vw, 6.125rem);
   line-height: 0.92;
 }
 
@@ -4977,7 +5177,7 @@ body.ok-bloomer-body .site-copyright-footer {
   max-width: 36rem;
   margin: clamp(1.4rem, 2.2vw, 2rem) 0 0;
   color: oklch(92% 0.028 92);
-  font-family: "Instrument Sans", sans-serif;
+  font-family: "Libre Franklin", sans-serif;
   font-size: clamp(1.06rem, 1.3vw, 1.28rem);
   line-height: 1.55;
   text-wrap: pretty;
@@ -4997,7 +5197,7 @@ body.ok-bloomer-body .site-copyright-footer {
   align-items: center;
   min-height: 2.8rem;
   color: inherit;
-  font-family: "Instrument Sans", sans-serif;
+  font-family: "Libre Franklin", sans-serif;
   font-size: 0.98rem;
   line-height: 1;
   text-decoration: none;
@@ -5091,7 +5291,7 @@ body.ok-bloomer-body .site-copyright-footer {
 .flower-gallery h2,
 .flower-support h2 {
   max-width: 8.8em;
-  font-size: clamp(3rem, 5.6vw, 6.6rem);
+  font-size: clamp(2.625rem, 4.9vw, 5.775rem);
   line-height: 0.93;
 }
 
@@ -5107,7 +5307,7 @@ body.ok-bloomer-body .site-copyright-footer {
 .flower-policy p,
 .flower-policy li {
   color: var(--flower-muted);
-  font-family: "Instrument Sans", sans-serif;
+  font-family: "Libre Franklin", sans-serif;
   font-size: clamp(1.02rem, 1.2vw, 1.14rem);
   line-height: 1.62;
   text-wrap: pretty;
@@ -5146,7 +5346,7 @@ body.ok-bloomer-body .site-copyright-footer {
 
 .flower-feature span {
   color: var(--flower-leaf);
-  font-family: "Instrument Sans", sans-serif;
+  font-family: "Libre Franklin", sans-serif;
   font-size: 0.95rem;
   font-weight: 600;
   line-height: 1.2;
@@ -5155,8 +5355,8 @@ body.ok-bloomer-body .site-copyright-footer {
 .flower-feature h3 {
   margin: 0 0 0.5rem;
   color: var(--flower-ink);
-  font-family: "Instrument Serif", serif;
-  font-size: clamp(2.15rem, 3.2vw, 3.5rem);
+  font-family: "Xanh Mono", monospace;
+  font-size: clamp(1.88125rem, 2.8vw, 3.0625rem);
   font-weight: 400;
   line-height: 0.98;
   text-wrap: balance;
@@ -5213,7 +5413,7 @@ body.ok-bloomer-body .site-copyright-footer {
 .flower-gallery figcaption {
   margin-top: 0.75rem;
   color: oklch(88% 0.032 92);
-  font-family: "Instrument Sans", sans-serif;
+  font-family: "Libre Franklin", sans-serif;
   font-size: 0.96rem;
   line-height: 1.25;
 }
@@ -5243,7 +5443,7 @@ body.ok-bloomer-body .site-copyright-footer {
 .flower-policy h1 {
   max-width: 9em;
   color: var(--flower-ink);
-  font-size: clamp(3.2rem, 6.2vw, 7.2rem);
+  font-size: clamp(2.8rem, 5.425vw, 6.3rem);
   line-height: 0.92;
 }
 
@@ -5258,8 +5458,8 @@ body.ok-bloomer-body .site-copyright-footer {
   padding-top: clamp(1.2rem, 2vw, 1.7rem);
   border-top: 1px solid var(--flower-line);
   color: var(--flower-ink);
-  font-family: "Instrument Serif", serif;
-  font-size: clamp(2.2rem, 3.6vw, 3.6rem);
+  font-family: "Xanh Mono", monospace;
+  font-size: clamp(1.925rem, 3.15vw, 3.15rem);
   font-weight: 400;
   line-height: 0.98;
 }
@@ -5267,8 +5467,8 @@ body.ok-bloomer-body .site-copyright-footer {
 .flower-policy h3 {
   margin: clamp(1.55rem, 2.4vw, 2.1rem) 0 0.55rem;
   color: var(--flower-ink);
-  font-family: "Instrument Sans", sans-serif;
-  font-size: clamp(1.12rem, 1.4vw, 1.3rem);
+  font-family: "Libre Franklin", sans-serif;
+  font-size: clamp(0.98rem, 1.225vw, 1.1375rem);
   font-weight: 600;
   line-height: 1.25;
 }
@@ -5333,7 +5533,7 @@ body.ok-bloomer-body .site-copyright-footer {
   }
 
   .flower-hero h1 {
-    font-size: clamp(3.15rem, 14vw, 4.7rem);
+    font-size: clamp(2.75625rem, 12.25vw, 4.1125rem);
   }
 
   .flower-hero__screens {
@@ -5364,7 +5564,7 @@ body.ok-bloomer-body .site-copyright-footer {
   .flower-story h2,
   .flower-gallery h2,
   .flower-support h2 {
-    font-size: clamp(2.75rem, 12vw, 4.1rem);
+    font-size: clamp(2.40625rem, 10.5vw, 3.5875rem);
   }
 
   .flower-feature-list {
@@ -5377,7 +5577,7 @@ body.ok-bloomer-body .site-copyright-footer {
   }
 
   .flower-feature h3 {
-    font-size: clamp(2rem, 9vw, 2.7rem);
+    font-size: clamp(1.75rem, 7.875vw, 2.3625rem);
   }
 
   .flower-gallery__rail {
@@ -5390,7 +5590,7 @@ body.ok-bloomer-body .site-copyright-footer {
   }
 
   .flower-policy h1 {
-    font-size: clamp(2.85rem, 12vw, 4.25rem);
+    font-size: clamp(2.49375rem, 10.5vw, 3.71875rem);
   }
 }
 

@@ -22,8 +22,8 @@
   "type": "module",
   "dependencies": {
     "@astrojs/check": "^0.9.9",
-    "@fontsource/instrument-sans": "^5.2.8",
-    "@fontsource/instrument-serif": "^5.2.8",
+    "@fontsource/libre-franklin": "^5.3.0",
+    "@fontsource/xanh-mono": "^5.3.0",
     "astro": "^6.3.8",
     "cheerio": "^1.2.0",
     "gsap": "^3.15.0",

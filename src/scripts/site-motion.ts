@@ -4,6 +4,7 @@ import { initCtaWebglButtons } from './cta-webgl';
 import { initHeadlineReveals, initHeroIntro, prepareHeadlineChars, splitHeadline } from './hero-intro';
 import { initPortraitGlow } from './portrait-glow';
 import { initPortraitFlowers } from './portrait-flowers';
+import { initPortraitRoles } from './portrait-roles';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -951,6 +952,7 @@ const initMotion = () => {
   cleanupListeners.push(initPortraitGlow());
   cleanupListeners.push(initPortraitFlowers());
   cleanupListeners.push(initStickyNavVisibility());
+  cleanupListeners.push(initPortraitRoles());
 
   if (reduceMotion.matches) {
     return;

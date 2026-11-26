@@ -4,8 +4,9 @@ import * as cheerio from 'cheerio';
 import type { CheerioAPI } from 'cheerio';
 import type { AnyNode, Element, Text } from 'domhandler';
 import { projectDeliverables } from '../data/projectDeliverables';
+import { sentenceCaseHeadline } from './headlineCase';
 import { withBasePath } from './paths';
-import { noindexPaths, siteName } from './seo';
+import { noindexPaths, siteEmail, siteName } from './seo';
 
 interface EnhanceContentOptions {
   title: string;
@@ -188,9 +189,30 @@ function enhanceVideos($: CheerioAPI) {
 }
 
 function enhanceLinks($: CheerioAPI) {
+  const replaceLegacyContact = (value: string) =>
+    value.replace(/(?<![\w.+-])hello@darlingjules\.com(?![\w.-])/gi, siteEmail);
+
+  // Migrated pages share one contact address. Update only that known alias,
+  // leaving other people's addresses and all mailto query parameters intact.
+  $('*').contents().each((_, node) => {
+    if (node.type !== 'text' || $(node).parent().is('script, style')) return;
+    node.data = replaceLegacyContact(node.data);
+  });
+  $('[aria-label], [title]').each((_, element) => {
+    const node = $(element);
+    for (const attribute of ['aria-label', 'title']) {
+      const value = node.attr(attribute);
+      if (value) node.attr(attribute, replaceLegacyContact(value));
+    }
+  });
+
   $('a').each((_, element) => {
     const link = $(element);
-    const href = link.attr('href') ?? '';
+    let href = link.attr('href') ?? '';
+    if (/^mailto:hello@darlingjules\.com(?=[?#]|$)/i.test(href)) {
+      href = href.replace(/^mailto:hello@darlingjules\.com/i, 'mailto:' + siteEmail);
+      link.attr('href', href);
+    }
     const text = cleanText(link.text());
 
     if (link.attr('target') === '_blank') {
@@ -279,6 +301,32 @@ function enhanceHeadings($: CheerioAPI) {
 
 function isBreakNode(node?: AnyNode): node is Element {
   return node?.type === 'tag' && node.name === 'br';
+}
+
+function normalizeHeadlineCopy($: CheerioAPI) {
+  $('h1, h2, h3, h4, h5, h6, a.bigthinklink, a.writingblocks .text-block').each((_, element) => {
+    const nodes: Text[] = [];
+    const collectText = (node: AnyNode) => {
+      if (node.type === 'text') nodes.push(node);
+      else if ('children' in node) node.children.forEach(collectText);
+    };
+    collectText(element);
+
+    const original = nodes.map((node) => node.data).join('');
+    const next = sentenceCaseHeadline(original);
+    let offset = 0;
+    // Preserve inline emphasis and animation spans using their text-node boundaries.
+    nodes.forEach((node) => {
+      const length = node.data.length;
+      node.data = next.slice(offset, offset + length);
+      offset += length;
+    });
+  });
+
+  $('[data-cylinder-headline]').each((_, element) => {
+    const anchor = $(element);
+    anchor.attr('data-cylinder-headline', sentenceCaseHeadline(anchor.attr('data-cylinder-headline') ?? ''));
+  });
 }
 
 function isBlankTextNode(node?: AnyNode): node is Text {
@@ -664,6 +712,7 @@ export function enhanceContentHtml(html: string, options: EnhanceContentOptions)
   formatHomepageMarketAttentionCopy($, options);
   markAboutHero($, options);
   injectProjectDeliverables($, options);
+  normalizeHeadlineCopy($);
   rewriteRootRelativeUrls($);
 
   if (noindexPaths.has(options.currentPath)) {

@@ -1,17 +1,19 @@
 ---
-import '@fontsource/instrument-sans/400.css';
-import '@fontsource/instrument-sans/400-italic.css';
-import '@fontsource/instrument-sans/500.css';
-import '@fontsource/instrument-sans/600.css';
-import '@fontsource/instrument-sans/700.css';
-import '@fontsource/instrument-serif/400.css';
-import '@fontsource/instrument-serif/400-italic.css';
+import '@fontsource/libre-franklin/400.css';
+import '@fontsource/libre-franklin/400-italic.css';
+import '@fontsource/libre-franklin/500.css';
+import '@fontsource/libre-franklin/600.css';
+import '@fontsource/libre-franklin/700.css';
+import '@fontsource/xanh-mono/400.css';
+import '@fontsource/xanh-mono/400-italic.css';
 import { ClientRouter } from 'astro:transitions';
 import Nav from '../components/Nav.astro';
 import { absoluteSiteUrl, withBasePath } from '../lib/paths';
-import { noindexPaths, productionOrigin, siteName } from '../lib/seo';
+import { noindexPaths, productionOrigin, siteEmail, siteName } from '../lib/seo';
 import '../styles/legacy.css';
 import '../styles/site.css';
+import '../styles/cylinder-controls.css';
+import '../styles/apple-notes.css';
 
 interface Props {
   title: string;
@@ -47,7 +49,7 @@ const schema = {
   url: absoluteSiteUrl('/', Astro.site ?? new URL(productionOrigin)),
   image: absoluteOgImage,
   jobTitle: 'Freelance creative director and designer',
-  email: 'mailto:hello@darlingjules.com',
+  email: `mailto:${siteEmail}`,
   description: metaDescription,
   address: {
     '@type': 'PostalAddress',
@@ -130,8 +132,23 @@ const schema = {
       )
     }
     <script>
+      import { initCylinderControls } from '../scripts/cylinder-controls';
       import '../scripts/site-motion';
       import '../scripts/flower-favicon';
+
+      if (import.meta.env.DEV || ['localhost', '127.0.0.1', '::1', '[::1]'].includes(location.hostname)) {
+        let cleanupRingControls: (() => void) | undefined;
+        const mountRingControls = () => {
+          cleanupRingControls?.();
+          cleanupRingControls = initCylinderControls();
+        };
+        document.addEventListener('astro:before-swap', () => {
+          cleanupRingControls?.();
+          cleanupRingControls = undefined;
+        });
+        document.addEventListener('astro:page-load', mountRingControls);
+        mountRingControls();
+      }
     </script>
   </body>
 </html>

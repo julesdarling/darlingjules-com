@@ -3,6 +3,7 @@ type JulesCylinderControlGroup = {
   scale?: number;
   x?: number;
   y?: number;
+  z?: number;
   pitch?: number;
   yaw?: number;
   speed?: number;

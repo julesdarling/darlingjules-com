@@ -1,0 +1,87 @@
+.apple-notes {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 444px;
+  min-height: 440px;
+  justify-self: start;
+  align-self: start;
+  padding: 28px 24px 28px 28px;
+  color: #dcdcdc;
+  background: #1e1e1e;
+  border-radius: 18px;
+  color-scheme: dark;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 24px;
+  letter-spacing: 0;
+  text-align: left;
+  -webkit-font-smoothing: antialiased;
+}
+
+.apple-notes .apple-notes-title {
+  margin: 0 0 26px 3px;
+  color: inherit;
+  font: inherit;
+}
+
+.apple-notes .apple-notes-list {
+  display: grid;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.apple-notes-list > li {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.apple-notes .apple-notes-item {
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr);
+  align-items: start;
+  column-gap: 10px;
+  min-height: 31px;
+  margin: 0;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+.apple-notes-item > input {
+  box-sizing: border-box;
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  margin: 0;
+  padding: 0;
+  border: 2px solid #535353;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+}
+
+.apple-notes-item > input:checked {
+  appearance: auto;
+  accent-color: #f2c14f;
+  clip-path: circle(50%);
+}
+
+.apple-notes-item > span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.apple-notes-item > input:checked + span {
+  color: #9b9b9b;
+  text-decoration: line-through;
+}
+
+.apple-notes-item:has(> input:focus-visible) {
+  border-radius: 2px;
+  outline: 2px solid #f2c14f;
+  outline-offset: 2px;
+}

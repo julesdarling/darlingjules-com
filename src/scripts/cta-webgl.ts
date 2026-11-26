@@ -1,4 +1,5 @@
 const ctaSelector = '.ctalink, .mainline.inver.rightsidecontact.contact';
+const ambientCtaSelector = '.ctalink:not(.personal-secondary-cta), .mainline.inver.rightsidecontact.contact';
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
 const vertexShaderSource = `
@@ -18,6 +19,7 @@ const fragmentShaderSource = `
   uniform float u_time;
   uniform vec2 u_resolution;
   uniform vec2 u_pointer;
+  uniform float u_purple;
 
   float hash(vec2 point) {
     return fract(sin(dot(point, vec2(127.1, 311.7))) * 43758.5453123);
@@ -85,14 +87,14 @@ const fragmentShaderSource = `
     float sugar =
       smoothstep(0.88, 0.99, noise(uv * u_resolution.xy * 0.82 + vec2(time * 7.4, -time * 6.2))) * 0.42;
 
-    vec3 basePink = vec3(0.88, 0.02, 0.43);
-    vec3 brightPink = vec3(1.0, 0.18, 0.58);
-    vec3 candyPink = vec3(1.0, 0.48, 0.76);
-    vec3 glitterPink = vec3(1.0, 0.88, 0.98);
-    vec3 color = mix(basePink, brightPink, ribbon);
-    color = mix(color, candyPink, pointerGlow * 0.28);
-    color = mix(color, glitterPink, clamp(glitterA * 0.98 + glitterB * 0.9 + sugar * 0.28, 0.0, 1.0));
-    color += vec3(0.11, 0.018, 0.08) * (glitterA + glitterB);
+    vec3 base = mix(vec3(0.88, 0.02, 0.43), vec3(0.32, 0.07, 0.63), u_purple);
+    vec3 bright = mix(vec3(1.0, 0.18, 0.58), vec3(0.56, 0.19, 0.92), u_purple);
+    vec3 candy = mix(vec3(1.0, 0.48, 0.76), vec3(0.76, 0.52, 1.0), u_purple);
+    vec3 glitter = mix(vec3(1.0, 0.88, 0.98), vec3(0.94, 0.88, 1.0), u_purple);
+    vec3 color = mix(base, bright, ribbon);
+    color = mix(color, candy, pointerGlow * 0.28);
+    color = mix(color, glitter, clamp(glitterA * 0.98 + glitterB * 0.9 + sugar * 0.28, 0.0, 1.0));
+    color += mix(vec3(0.11, 0.018, 0.08), vec3(0.07, 0.025, 0.12), u_purple) * (glitterA + glitterB);
     color += (fineNoise - 0.5) * 0.018;
 
     gl_FragColor = vec4(color, 1.0);
@@ -162,6 +164,7 @@ const ensureCtaLabel = (cta: HTMLElement) => {
 
 const createRenderer = (cta: HTMLElement) => {
   ensureCtaLabel(cta);
+  const ambient = cta.matches(ambientCtaSelector);
 
   const canvas = document.createElement('canvas');
   canvas.className = 'cta-noise-canvas';
@@ -193,11 +196,21 @@ const createRenderer = (cta: HTMLElement) => {
   const timeLocation = gl.getUniformLocation(program, 'u_time');
   const resolutionLocation = gl.getUniformLocation(program, 'u_resolution');
   const pointerLocation = gl.getUniformLocation(program, 'u_pointer');
+  const purpleLocation = gl.getUniformLocation(program, 'u_purple');
   const pointer = { x: 0.5, y: 0.5 };
   let animationFrame = 0;
   let running = false;
+  let active = false;
+  let visible = false;
+  let destroyed = false;
+  let previousTime = 0;
+  let shaderTime = 0;
+  let speed = ambient ? 0.18 : 1;
+  let purpleBlend = 0;
 
-  if (!positionBuffer || positionLocation < 0 || !timeLocation || !resolutionLocation || !pointerLocation) {
+  if (!positionBuffer || positionLocation < 0 || !timeLocation || !resolutionLocation || !pointerLocation || !purpleLocation) {
+    if (positionBuffer) gl.deleteBuffer(positionBuffer);
+    gl.deleteProgram(program);
     canvas.remove();
     return null;
   }
@@ -220,14 +233,32 @@ const createRenderer = (cta: HTMLElement) => {
   };
 
   const render = (time: number) => {
-    resize();
+    animationFrame = 0;
+    if (!running || destroyed) return;
+
+    const transitioning = active || speed > 0.22 || purpleBlend > 0.02;
+    const frameInterval = ambient && !transitioning ? 1000 / 30 : 1000 / 60;
+    if (previousTime && time - previousTime < frameInterval - 0.5) {
+      animationFrame = requestAnimationFrame(render);
+      return;
+    }
+
+    const delta = previousTime ? Math.min(time - previousTime, 100) : 0;
+    previousTime = time;
+    const easing = 1 - Math.exp(-delta / 180);
+    const targetSpeed = ambient && !active ? 0.18 : 1;
+    speed += (targetSpeed - speed) * easing;
+    purpleBlend += ((ambient && active ? 1 : 0) - purpleBlend) * easing;
+    shaderTime += delta * speed;
+
     gl.useProgram(program);
     gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
     gl.enableVertexAttribArray(positionLocation);
     gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
-    gl.uniform1f(timeLocation, time);
+    gl.uniform1f(timeLocation, shaderTime);
     gl.uniform2f(resolutionLocation, canvas.width, canvas.height);
     gl.uniform2f(pointerLocation, pointer.x, pointer.y);
+    gl.uniform1f(purpleLocation, purpleBlend);
     gl.drawArrays(gl.TRIANGLES, 0, 6);
 
     if (running) {
@@ -236,32 +267,21 @@ const createRenderer = (cta: HTMLElement) => {
   };
 
   const setPointer = (event: PointerEvent | MouseEvent | FocusEvent) => {
-    if (!('clientX' in event) || !event.clientX || !event.clientY) {
+    if (!('clientX' in event)) {
       pointer.x = 0.5;
       pointer.y = 0.5;
       return;
     }
 
     const rect = cta.getBoundingClientRect();
+    if (rect.width <= 0 || rect.height <= 0) return;
     pointer.x = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width));
     pointer.y = 1 - Math.min(1, Math.max(0, (event.clientY - rect.top) / rect.height));
   };
 
-  const start = (event: PointerEvent | MouseEvent | FocusEvent) => {
-    setPointer(event);
-    cta.classList.add('cta-webgl-active');
-
-    if (running) {
-      return;
-    }
-
-    running = true;
-    animationFrame = requestAnimationFrame(render);
-  };
-
-  const stop = () => {
-    cta.classList.remove('cta-webgl-active');
+  const pause = () => {
     running = false;
+    previousTime = 0;
 
     if (animationFrame) {
       cancelAnimationFrame(animationFrame);
@@ -269,8 +289,44 @@ const createRenderer = (cta: HTMLElement) => {
     }
   };
 
+  const reconcilePlayback = () => {
+    const shouldRun = !destroyed && visible && !document.hidden && !prefersReducedMotion.matches && (ambient || active);
+    if (!shouldRun) {
+      pause();
+    } else if (!running) {
+      running = true;
+      animationFrame = requestAnimationFrame(render);
+    }
+  };
+
+  const setActive = (value: boolean, event?: PointerEvent | MouseEvent | FocusEvent) => {
+    if (event) setPointer(event);
+    active = value;
+    cta.classList.toggle('cta-webgl-active', active);
+    if (!active) {
+      pointer.x = 0.5;
+      pointer.y = 0.5;
+    }
+    reconcilePlayback();
+  };
+
+  const resizeObserver = new ResizeObserver(resize);
+  const intersectionObserver = new IntersectionObserver(([entry]) => {
+    visible = entry.isIntersecting;
+    reconcilePlayback();
+  });
+  resizeObserver.observe(cta);
+  intersectionObserver.observe(cta);
+  document.addEventListener('visibilitychange', reconcilePlayback);
+  prefersReducedMotion.addEventListener('change', reconcilePlayback);
+
   const destroy = () => {
-    stop();
+    destroyed = true;
+    pause();
+    resizeObserver.disconnect();
+    intersectionObserver.disconnect();
+    document.removeEventListener('visibilitychange', reconcilePlayback);
+    prefersReducedMotion.removeEventListener('change', reconcilePlayback);
     gl.deleteBuffer(positionBuffer);
     gl.deleteProgram(program);
     canvas.remove();
@@ -278,7 +334,7 @@ const createRenderer = (cta: HTMLElement) => {
 
   resize();
 
-  return { destroy, resize, setPointer, start, stop };
+  return { destroy, resize, setPointer, setActive };
 };
 
 export const initCtaWebglButtons = () => {
@@ -303,11 +359,26 @@ export const initCtaWebglButtons = () => {
 
     cta.classList.add('cta-webgl-ready');
 
-    const onPointerEnter = (event: PointerEvent) => renderer.start(event);
+    let hovered = cta.matches(':hover');
+    let focused = cta.matches(':focus');
+    const reconcileInteraction = (event?: PointerEvent | FocusEvent) => renderer.setActive(hovered || focused, event);
+    const onPointerEnter = (event: PointerEvent) => {
+      hovered = true;
+      reconcileInteraction(event);
+    };
     const onPointerMove = (event: PointerEvent) => renderer.setPointer(event);
-    const onPointerLeave = () => renderer.stop();
-    const onFocus = (event: FocusEvent) => renderer.start(event);
-    const onBlur = () => renderer.stop();
+    const onPointerLeave = () => {
+      hovered = false;
+      reconcileInteraction();
+    };
+    const onFocus = (event: FocusEvent) => {
+      focused = true;
+      reconcileInteraction(event);
+    };
+    const onBlur = () => {
+      focused = false;
+      reconcileInteraction();
+    };
     const onResize = () => renderer.resize();
 
     cta.addEventListener('pointerenter', onPointerEnter);
@@ -316,6 +387,7 @@ export const initCtaWebglButtons = () => {
     cta.addEventListener('focus', onFocus);
     cta.addEventListener('blur', onBlur);
     window.addEventListener('resize', onResize);
+    reconcileInteraction();
 
     cleanupCallbacks.push(() => {
       cta.removeEventListener('pointerenter', onPointerEnter);
