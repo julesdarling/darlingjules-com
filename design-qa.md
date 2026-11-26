@@ -86,3 +86,14 @@ Result: passed
 
 - Verified all 69 built pages: all eight rendered role-title occurrences use “Design Director”, including the text-cylinder data attribute. The headline normalizer protects this preferred capitalization.
 - Verified the built portrait heading reads “Meet Jules”. Astro check, build, site verification, and whitespace checks passed.
+
+# Testimonial heart refresh
+
+Result: passed
+
+- Replaced the glossy heart sprites with three transparent cutouts based on Jules’s supplied silhouettes. The trail cycles 01 → 02 → 03 → 01, preserving the pink color, existing drift, fade, blur, and cleanup. Native pointer input verified the exact cycle; particles were removed when their animation finished.
+- Added the supplied three-heart outline arrangement immediately above What clients remember. Rounded near-black linework uses three subtly varied frames at the hero flowers’ .42s stepped cadence. A static picture source and an internal SVG media query support reduced motion; the decorative artwork is hidden from assistive technology.
+- Desktop 1440 × 1000: cluster width 112px, heading gap 24px. Mobile 390 × 844: cluster width 80px, heading gap 16px. Both are centered with no horizontal overflow.
+- The transparent 256px web derivatives total 97,296 bytes. Full-size imagegen outputs and prompts are retained locally under `artifacts/heart-refresh/`.
+- Reviewed all seven required routes at desktop and mobile dimensions. Pages scroll normally, headings have clean spacing, and media keep their proportions. Screenshots are under `artifacts/heart-refresh/`.
+- Astro check passed with no errors or warnings (one existing unused-variable hint). Build generated 69 pages, site verification passed 68 routes, and `git diff --check` passed.

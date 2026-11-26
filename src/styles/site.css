@@ -2028,7 +2028,10 @@ a {
   display: block;
   width: clamp(1.25rem, 1.7vw, 1.8rem);
   height: clamp(1.25rem, 1.7vw, 1.8rem);
-  object-fit: contain;
+  background-color: #ec168c;
+  -webkit-mask: var(--heart-sprite) center / contain no-repeat;
+  mask: var(--heart-sprite) center / contain no-repeat;
+  mask-mode: alpha;
   pointer-events: none;
   user-select: none;
   transform: translate3d(0, 0, 0);

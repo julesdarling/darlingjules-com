@@ -1,0 +1,12 @@
+.testimonial-heart-doodles {
+  display: block;
+  width: 100%;
+  margin: 0 auto clamp(1rem, 2vw, 1.5rem);
+}
+
+.testimonial-heart-doodles img {
+  display: block;
+  width: clamp(5rem, 8vw, 7rem);
+  height: auto;
+  margin-inline: auto;
+}
