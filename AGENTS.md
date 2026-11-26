@@ -11,7 +11,7 @@ Use this file before making UI, copy, spacing, typography, or layout edits.
 - Read `PRODUCT.md` and `DESIGN.md` before UI work.
 - If available, use the `impeccable` skill for brand-register judgment.
 - If available, use the frontend taste skill for spacing, responsiveness, viewport stability, and anti-slop checks.
-- Preserve the existing identity: Xanh Mono display type, Libre Franklin body type, warm white surfaces, near-black text, sparse black CTAs, and large project media.
+- Preserve the existing identity: Xanh Mono display type, Epilogue body type, warm white surfaces, near-black text, sparse black CTAs, and large project media.
 - Do not replace the site with generic SaaS, dashboard, agency-template, or card-grid language.
 
 ## Typography Rules
@@ -20,6 +20,8 @@ Use this file before making UI, copy, spacing, typography, or layout edits.
 - Mobile display headlines: prefer `0.96` to `1.1` unless a browser audit proves tighter leading is clean.
 - Project card titles: use `line-height` between `1.03` and `1.12`.
 - Body copy: use `line-height` between `1.45` and `1.65`, with line length capped around `65ch` to `75ch`.
+- Body copy, captions, and metadata use Epilogue Light (300); prose emphasis and testimonial attributions use Epilogue Medium (500). Keep Xanh Mono headlines at 400 and native Notes typography intact.
+- Body copy and emphasis share the headline ink color. Preserve light copy on dark surfaces and functional control states.
 - Captions and metadata: use `line-height` between `1.32` and `1.45`.
 - CTAs and nav: use `line-height` between `1.1` and `1.25`.
 - Avoid negative letter spacing. Default to `letter-spacing: 0` unless the existing component already has a deliberate treatment.

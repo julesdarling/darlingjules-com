@@ -1,4 +1,21 @@
 /* The composition is a content-driven stack. Only the ring artwork is clipped. */
+.cylinder-home .hero-opening {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-block-size: calc(100vh - var(--hero-nav-space, 0px));
+  min-block-size: calc(100dvh - var(--hero-nav-space, 0px));
+}
+
+.cylinder-home .hero-opening + .agency-pattern-selected-work {
+  padding-top: clamp(1.25rem, 2vw, 2rem);
+}
+
+.cylinder-home .agency-pattern-selected-header h2 {
+  margin-inline: auto;
+  text-align: center;
+}
+
 .cylinder-home .responsive-hero {
   display: block;
   width: 100%;

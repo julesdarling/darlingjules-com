@@ -54,3 +54,30 @@ Result: passed
 - Required companion routes were checked at 1440 × 1000 and 390 × 844; they scroll and have no horizontal overflow. Measurements: `artifacts/responsive-hero/route-checks.json`.
 - Independent Three.js fitting checks covered 54 width/scale/tilt combinations with finite positive results. No browser console errors were observed.
 - Local controls use fresh v2 storage keys. Old saved pixel offsets remain untouched in v1 and are not reapplied over the responsive composition.
+
+# Opening, typography, and content refinements
+
+Result: passed
+
+## Opening viewport and headings
+
+- The hero and logo band share a content-driven opening container centered beneath the measured navigation. It uses a viewport minimum, so short screens can grow without clipping content. The work headline stays below the first frame.
+- Checked 320 × 740, 390 × 844, 768 × 1024, 1024 × 768, 1204 × 853, 1440 × 1000, 1440 × 600, and 1920 × 1080. Center error stayed below 0.01px; no horizontal overflow appeared. Measurements: `artifacts/nov26-refinements/final-home-checks.json`.
+- The work headline is centered and reads “She's got taste”. The portrait headline reads “It's me Jules”; its text remains inside the viewport at every tested width.
+- Capabilities and When to bring me in have identical computed heading sizes at every tested width. My point of view has bounded space above and below (32px at desktop).
+- The phone text ring defaults to 150% up to 767px. Desktop defaults to 100%; control values match the scene. Ring controls use v3 storage, preserving earlier saved values in their old namespace.
+
+## Body typography and articles
+
+- Epilogue Light 300 is used for regular body copy; Medium 500 is used for emphasis and the Design Director portrait caption. The rotating role remains Light. Xanh Mono headings retain their original weight.
+- Paragraphs, captions, lists, and article copy share headline ink, rgb(17, 16, 15). Nine representative routes were checked at desktop and mobile sizes, all with Epilogue, intended weights, normal scrolling, and no horizontal overflow. Measurements: `artifacts/nov26-refinements/text-route-checks.json`.
+- Native Notes text retains its Apple system font and weight 500, with readable dark-surface colors. CTA labels retain their functional contrast.
+- All nine built articles were checked for original-publication credit lines; none remain. The three sources that contained the footer were edited without altering the article bodies or images.
+
+## Hand-drawn icons
+
+- Reference: `/var/folders/0j/f8hz42fn3vxcrz0v7qrlggqm0000gn/T/codex-clipboard-d553152d-5e27-43f7-b913-8cc2162ad019.png` (flower style).
+- Added sixteen custom SVG doodles with rounded, irregular near-black strokes and transparent backgrounds: nine capability icons and seven How I work icons. All sixteen assets loaded successfully in the browser and are decorative to assistive technology.
+- Capability labels inherit the body typography; mobile uses one column so longer labels fit. The About list replaces its emoji assets with the matching doodles.
+- Screenshots: `artifacts/nov26-refinements/capabilities-desktop.jpg`, `capabilities-mobile.jpg`, `how-i-work-desktop.jpg`, and `how-i-work-mobile.jpg`. Desktop captures are 1440 × 1000; mobile captures are 390 × 844.
+- Compared linework, sizing, label alignment, spacing, colors, and copy in the rendered implementation. No unresolved blocking differences or browser console errors remain.

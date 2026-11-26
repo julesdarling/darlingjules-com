@@ -21,6 +21,25 @@ const cleanupMotion = () => {
   ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
 };
 
+const initHeroOpening = () => {
+  const opening = document.querySelector<HTMLElement>('.hero-opening');
+  const nav = document.querySelector<HTMLElement>('.nav');
+  if (!opening || !nav) return () => {};
+
+  // Center in the viewport area below the actual responsive navigation.
+  // CSS still allows the opening to grow when the content is taller.
+  const update = () => {
+    opening.style.setProperty('--hero-nav-space', `${nav.getBoundingClientRect().height}px`);
+  };
+  const observer = new ResizeObserver(update);
+  observer.observe(nav);
+  update();
+  return () => {
+    observer.disconnect();
+    opening.style.removeProperty('--hero-nav-space');
+  };
+};
+
 const addHoverTween = (element: HTMLElement, enterVars: gsap.TweenVars, leaveVars: gsap.TweenVars) => {
   const onEnter = () => gsap.to(element, enterVars);
   const onLeave = () => gsap.to(element, leaveVars);
@@ -952,6 +971,7 @@ const initMotion = () => {
   cleanupListeners.push(initPortraitGlow());
   cleanupListeners.push(initPortraitFlowers());
   cleanupListeners.push(initStickyNavVisibility());
+  cleanupListeners.push(initHeroOpening());
   cleanupListeners.push(initPortraitRoles());
 
   if (reduceMotion.matches) {

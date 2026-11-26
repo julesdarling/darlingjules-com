@@ -30,9 +30,9 @@ type SliderConfig = {
 };
 
 const eventName = 'jules:cylinder-controls';
-const mobileLayoutQuery = '(max-width: 1023px)';
+const mobileLayoutQuery = '(max-width: 767px)';
 // Separate from the retired v8 panel, which stored canvas heights and positions.
-const storagePrefix = 'jules:ring-controls:v2';
+const storagePrefix = 'jules:ring-controls:v3';
 const sliderConfigs: SliderConfig[] = [
   { key: 'scale', label: 'Size', min: 0.2, max: 1.5, step: 0.01 },
   { key: 'x', label: 'X position', min: -5, max: 5, step: 0.01 },
@@ -54,10 +54,10 @@ const cloneState = (state: CylinderControlState): CylinderControlState => ({
 });
 
 // Match the scene defaults without changing any anchor or canvas dimensions.
-const getDefaultState = (): CylinderControlState => ({
+const getDefaultState = (mobile: boolean): CylinderControlState => ({
   canvas: { topOffsetPx: 0, heightOffsetPx: 0, widthOffsetPx: 0, x: 0, opacity: 1 },
   title: {
-    scale: 1, x: 0, y: 0, z: 0, pitch: Math.PI / 15,
+    scale: mobile ? 1.5 : 1, x: 0, y: 0, z: 0, pitch: Math.PI / 15,
     yaw: -Math.PI / 10, speed: 1, backfaceVisible: false,
   },
   logos: {
@@ -83,7 +83,7 @@ const adjustableValues = (state: CylinderControlState) => {
 };
 
 const readStoredState = (mobile: boolean): CylinderControlState => {
-  const state = getDefaultState();
+  const state = getDefaultState(mobile);
   try {
     const raw = localStorage.getItem(`${storagePrefix}:${mobile ? 'mobile' : 'desktop'}`);
     if (!raw) return state;
@@ -305,7 +305,7 @@ export const initCylinderControls = () => {
   reset.textContent = 'Reset';
   reset.addEventListener('click', () => {
     try { localStorage.removeItem(storageKey()); } catch { /* Storage is optional. */ }
-    state = getDefaultState();
+    state = getDefaultState(mobile);
     layoutControls.reset();
     renderGroups();
     dispatchState(state);

@@ -167,6 +167,7 @@ const hasWebgl = () => {
 
 const getControlState = (detail?: CylinderControls) => {
   const source = detail ?? window.__julesCylinderControls;
+  const mobile = window.matchMedia('(max-width: 767px)').matches;
   return {
     canvas: {
       ...defaultCanvasControls,
@@ -174,6 +175,7 @@ const getControlState = (detail?: CylinderControls) => {
     },
     title: {
       ...defaultTitleControls,
+      scale: mobile ? 1.5 : 1,
       ...(source?.title ?? {}),
     },
     logos: {

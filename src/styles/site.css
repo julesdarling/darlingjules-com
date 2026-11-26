@@ -1,7 +1,7 @@
 :root {
   color-scheme: light;
   --haggard-ink: #11100f;
-  --haggard-muted: oklch(43% 0.012 285);
+  --haggard-muted: var(--haggard-ink);
   --haggard-emphasis: var(--haggard-muted);
   --haggard-soft: #f6f3ee;
   --haggard-border: rgba(17, 16, 15, 0.14);
@@ -35,7 +35,7 @@ html {
 
 body {
   min-height: 100%;
-  font-family: "Libre Franklin", sans-serif;
+  font-family: "Epilogue", sans-serif;
 }
 
 button,
@@ -194,7 +194,7 @@ button:focus-visible,
 body {
   color: var(--haggard-ink);
   background: #fff;
-  font-family: "Libre Franklin", sans-serif;
+  font-family: "Epilogue", sans-serif;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -334,7 +334,7 @@ a {
   min-height: 2.75rem;
   padding: 0.65rem 0.95rem !important;
   border-radius: 999px;
-  font-family: "Libre Franklin", sans-serif;
+  font-family: "Epilogue", sans-serif;
   font-size: 0.94rem !important;
   line-height: 1 !important;
   text-decoration: none;
@@ -588,7 +588,7 @@ a {
 .personal-eyebrow {
   margin: 0 0 clamp(0.7rem, 1vw, 1rem) !important;
   color: var(--haggard-muted) !important;
-  font-family: "Libre Franklin", sans-serif;
+  font-family: "Epilogue", sans-serif;
   font-size: clamp(0.82rem, 0.88vw, 0.96rem) !important;
   font-weight: 600;
   line-height: 1.2 !important;
@@ -779,9 +779,9 @@ a {
   border-bottom: 1px solid var(--haggard-border);
 }
 
-.personal-difference-list span {
+.personal-difference-list article > span {
   color: var(--haggard-muted);
-  font-family: "Libre Franklin", sans-serif;
+  font-family: "Epilogue", sans-serif;
   font-size: 0.86rem;
   font-weight: 600;
   line-height: 1.2;
@@ -1084,6 +1084,7 @@ a {
 }
 
 .portrait-role-prefix {
+  font-weight: 500;
   white-space: nowrap;
 }
 
@@ -1120,11 +1121,6 @@ a {
   display: flex;
   align-items: flex-start;
   gap: 0.65em;
-}
-
-.about-work-emoji {
-  flex: 0 0 1.25em;
-  text-align: center;
 }
 
 @media screen and (max-width: 767px) {
@@ -1388,7 +1384,7 @@ a {
   margin: 0;
   padding-left: 1.25rem;
   color: var(--haggard-muted);
-  font-family: "Libre Franklin", sans-serif;
+  font-family: "Epilogue", sans-serif;
   font-size: clamp(1.05rem, 1.22vw, 1.24rem);
   line-height: 1.5;
   border-top: 0;
@@ -1830,7 +1826,7 @@ a {
   margin: 0;
   padding: 0;
   color: var(--haggard-muted);
-  font-family: "Libre Franklin", sans-serif;
+  font-family: "Epilogue", sans-serif;
   font-size: clamp(1rem, 1.35vw, 1.14rem);
   line-height: 1.42;
   list-style: none;
@@ -2004,7 +2000,7 @@ a {
   border: 0;
   max-width: 36rem;
   color: inherit;
-  font-family: "Libre Franklin", sans-serif;
+  font-family: "Epilogue", sans-serif;
   font-size: clamp(1.05rem, 1.3vw, 1.28rem) !important;
   font-style: italic !important;
   line-height: 1.52 !important;
@@ -2145,6 +2141,11 @@ body.maincontent main:has(.bigthinks) {
   padding-top: 0 !important;
 }
 
+#writing-title {
+  margin-top: clamp(1.25rem, 2.5vw, 2rem) !important;
+  margin-bottom: clamp(1.25rem, 2.5vw, 2rem) !important;
+}
+
 .bigthinklink {
   color: inherit;
   display: block;
@@ -2188,7 +2189,7 @@ body.maincontent main:has(.bigthinks) {
 .tiny {
   margin: 0 !important;
   color: var(--haggard-ink);
-  font-family: "Libre Franklin", sans-serif;
+  font-family: "Epilogue", sans-serif;
   font-size: 0.95rem !important;
   line-height: 1.35 !important;
   text-align: center;
@@ -2196,7 +2197,7 @@ body.maincontent main:has(.bigthinks) {
 
 .bold-text-4 {
   color: inherit;
-  font-family: "Libre Franklin", sans-serif;
+  font-family: "Epilogue", sans-serif;
   font-size: inherit !important;
   font-weight: 500;
   line-height: inherit !important;
@@ -2253,7 +2254,7 @@ body.maincontent main:has(.bigthinks) {
 .subline.homesub {
   margin: 0 0 1.5rem;
   color: var(--haggard-muted);
-  font-family: "Libre Franklin", sans-serif;
+  font-family: "Epilogue", sans-serif;
   font-size: 0.95rem !important;
   font-weight: 500;
   line-height: 1.25 !important;
@@ -2277,7 +2278,7 @@ body.maincontent main:has(.bigthinks) {
   max-width: 42rem;
   margin: 0;
   color: var(--haggard-muted);
-  font-family: "Libre Franklin", sans-serif;
+  font-family: "Epilogue", sans-serif;
   font-size: 1.08rem !important;
   line-height: 1.62 !important;
 }
@@ -2308,7 +2309,7 @@ body.maincontent main:has(.bigthinks) {
   grid-row: span 3;
   margin: 0;
   color: var(--haggard-muted);
-  font-family: "Libre Franklin", sans-serif;
+  font-family: "Epilogue", sans-serif;
   font-size: 0.95rem !important;
   font-weight: 500;
   line-height: 1.25 !important;
@@ -2328,7 +2329,7 @@ body.maincontent main:has(.bigthinks) {
   max-width: 42rem;
   margin: 0;
   color: var(--haggard-muted);
-  font-family: "Libre Franklin", sans-serif;
+  font-family: "Epilogue", sans-serif;
   font-size: 1.05rem !important;
   line-height: 1.55 !important;
   text-wrap: pretty;
@@ -2341,7 +2342,7 @@ body.maincontent main:has(.bigthinks) {
   margin: 0.25rem 0 0;
   padding: 0;
   color: var(--haggard-ink);
-  font-family: "Libre Franklin", sans-serif;
+  font-family: "Epilogue", sans-serif;
   font-size: 0.98rem !important;
   line-height: 1.35 !important;
   list-style: none;
@@ -2418,7 +2419,7 @@ section.footer .splitpara.jhppara.footerrr {
   margin: 0;
   text-wrap: balance;
   color: var(--haggard-muted);
-  font-family: "Libre Franklin", sans-serif;
+  font-family: "Epilogue", sans-serif;
   font-size: 0.95rem;
   line-height: 1.35;
 }
@@ -2537,7 +2538,7 @@ section.footer .splitpara.jhppara.footerrr {
   background: color-mix(in srgb, #fff 96%, var(--haggard-cta-pink) 4%);
   border: 1px solid rgba(17, 16, 15, 0.15);
   border-radius: 999px;
-  font-family: "Libre Franklin", sans-serif;
+  font-family: "Epilogue", sans-serif;
   font-size: 0.95rem;
   line-height: 1;
   white-space: nowrap;
@@ -2577,14 +2578,68 @@ section.footer .splitpara.jhppara.footerrr {
   color: var(--haggard-muted) !important;
 }
 
-:is(.splitpara, .paragraph-3, .paragraph-4, .paragraph-5, .posttext p, .posttext li, .deliverables-recap__summary, .deliverables-recap__list li, .personal-hire-list p) :is(strong, b),
-.agency-pattern-reason-list li > strong,
-.personal-about-hero-copy .personal-about-pull:is(.paragraph-3, .paragraph-4),
-.personal-about-copy .personal-about-pull:is(.paragraph-3, .paragraph-4) {
-  color: var(--haggard-emphasis) !important;
+.splitpara,
+.paragraph-3,
+.paragraph-4,
+.paragraph-5,
+.posttext,
+.posttext p,
+.posttext li,
+.posttext blockquote,
+.posttext figcaption,
+.homepageprojects.center,
+.deliverables-recap__summary,
+.deliverables-recap__list,
+.deliverables-recap__list li,
+.personal-about-bullets li,
+.personal-home p,
+.personal-about p,
+.personal-services p,
+.personal-difference-list p,
+.personal-difference-list article > span,
+.personal-mode-list p,
+.personal-proof-columns p,
+.personal-client-memory p,
+.personal-hire-list p,
+.personal-eyebrow,
+.subline.homesub,
+.tiny,
+.site-copyright-footer p,
+.bigthinks .bigthinklink,
+.agency-pattern-capabilities .agency-pattern-list span,
+.agency-pattern-reason-list li,
+.agency-pattern-closing-copy p,
+.client-testimonials .text-span-7,
+.flower-eyebrow,
+.flower-lede,
+.flower-story__copy p,
+.flower-feature p,
+.flower-feature > span,
+.flower-gallery__intro p,
+.flower-gallery figcaption,
+.flower-support__copy p,
+.flower-policy p,
+.flower-policy li {
+  font-weight: 300 !important;
 }
 
-.personal-meta :is(.splitpara, .paragraph-3, .paragraph-4, .paragraph-5) :is(strong, b) {
+:is(.splitpara, .paragraph-3, .paragraph-4, .paragraph-5, .posttext p, .posttext li, .deliverables-recap__summary, .deliverables-recap__list li, .personal-hire-list p, .personal-home p, .personal-about p, .personal-services p, .subline.homesub, .tiny) :is(strong, b, em, [class*="bold-text"]),
+.agency-pattern-reason-list li > strong,
+.personal-proof,
+.personal-about-hero-copy .personal-about-pull:is(.paragraph-3, .paragraph-4),
+.personal-about-copy .personal-about-pull:is(.paragraph-3, .paragraph-4),
+.client-testimonials .text-span-8,
+.client-testimonials .text-span-8 strong {
+  color: var(--haggard-emphasis) !important;
+  font-weight: 500 !important;
+}
+
+.ok-bloomer-page :is(p, li, figcaption) :is(strong, b, em, [class*="bold-text"]) {
+  color: inherit !important;
+  font-weight: 500 !important;
+}
+
+.personal-meta :is(.splitpara, .paragraph-3, .paragraph-4, .paragraph-5) :is(strong, b, em, [class*="bold-text"]) {
   color: inherit !important;
 }
 
@@ -2634,7 +2689,7 @@ section.footer .splitpara.jhppara.footerrr {
 }
 
 .homepageprojects.center {
-  font-family: "Libre Franklin", sans-serif;
+  font-family: "Epilogue", sans-serif;
   font-size: 1rem !important;
   line-height: 1.25 !important;
 }
@@ -2845,7 +2900,7 @@ section.footer .splitpara.jhppara.footerrr {
 .posttext p,
 .posttext li {
   color: var(--haggard-muted);
-  font-family: "Libre Franklin", sans-serif;
+  font-family: "Epilogue", sans-serif;
   font-size: 1.08rem !important;
   line-height: 1.65 !important;
 }
@@ -3772,7 +3827,7 @@ body.writingbody .postcontent > .posttext:first-child > h1 {
 .agency-pattern-availability {
   margin: clamp(0.15rem, 0.6vw, 0.45rem) 0 0;
   color: var(--haggard-muted);
-  font-family: "Libre Franklin", sans-serif;
+  font-family: "Epilogue", sans-serif;
   font-size: clamp(0.95rem, 1.05vw, 1.05rem);
   font-weight: 450;
   line-height: 1.35;
@@ -3945,7 +4000,7 @@ body.writingbody .postcontent > .posttext:first-child > h1 {
 .cylinder-home {
   isolation: isolate;
   position: relative;
-  font-family: "Libre Franklin", sans-serif;
+  font-family: "Epilogue", sans-serif;
   touch-action: pan-y;
   overflow: visible !important;
 }
@@ -3973,7 +4028,7 @@ body.writingbody .postcontent > .posttext:first-child > h1 {
 .cylinder-home .agency-pattern-when .agency-pattern-reason-list strong,
 .cylinder-home .agency-pattern-closing-copy,
 .cylinder-home .agency-pattern-closing-copy p {
-  font-family: "Libre Franklin", sans-serif !important;
+  font-family: "Epilogue", sans-serif !important;
 }
 
 .cylinder-home h1,
@@ -4176,7 +4231,7 @@ body.writingbody .postcontent > .posttext:first-child > h1 {
   border: 1px solid var(--haggard-border);
   border-radius: 8px;
   box-shadow: 0 1rem 3rem oklch(20% 0.015 75 / 16%);
-  font-family: "Libre Franklin", sans-serif;
+  font-family: "Epilogue", sans-serif;
   overflow: hidden;
 }
 
@@ -4191,7 +4246,7 @@ body.writingbody .postcontent > .posttext:first-child > h1 {
 
 .cylinder-controls h2 {
   margin: 0;
-  font-family: "Libre Franklin", sans-serif;
+  font-family: "Epilogue", sans-serif;
   font-size: 0.86rem;
   font-weight: 700;
   line-height: 1;
@@ -4202,7 +4257,7 @@ body.writingbody .postcontent > .posttext:first-child > h1 {
   background: transparent;
   border: 1px solid var(--haggard-border);
   border-radius: 999px;
-  font-family: "Libre Franklin", sans-serif;
+  font-family: "Epilogue", sans-serif;
   font-size: 0.76rem;
   font-weight: 700;
   line-height: 1;
@@ -4466,7 +4521,7 @@ body.writingbody .postcontent > .posttext:first-child > h1 {
   max-width: min(100%, 15.6em);
   margin: 0;
   color: oklch(16% 0.008 75);
-  font-family: "Libre Franklin", sans-serif;
+  font-family: "Epilogue", sans-serif;
   font-size: clamp(2.1rem, 3.675vw, 4.68125rem);
   font-weight: 400;
   letter-spacing: 0;
@@ -4622,7 +4677,7 @@ body.writingbody .postcontent > .posttext:first-child > h1 {
 
 .agency-pattern-capabilities .agency-pattern-list span {
   max-width: 35rem;
-  color: oklch(35% 0.012 75);
+  color: var(--haggard-ink);
   font-size: clamp(1.05rem, 1.22vw, 1.24rem);
   font-weight: 450;
   line-height: 1.48;
@@ -4693,7 +4748,8 @@ body.writingbody .postcontent > .posttext:first-child > h1 {
   width: min(100%, 100rem);
 }
 
-.agency-pattern-when h2 {
+.agency-pattern-when h2,
+#agency-v2-capabilities-title {
   max-width: 7em;
   font-size: clamp(2.58125rem, 4.2vw, 4.94375rem);
   line-height: 0.98;
@@ -4926,7 +4982,8 @@ body.writingbody .postcontent > .posttext:first-child > h1 {
     gap: clamp(1.15rem, 5vw, 2rem);
   }
 
-  .agency-pattern-when h2 {
+  .agency-pattern-when h2,
+  #agency-v2-capabilities-title {
     max-width: 8em;
     font-size: clamp(2.23125rem, 9.1875vw, 3.28125rem);
   }
@@ -4972,7 +5029,7 @@ body.ok-bloomer-body {
   --flower-forest: oklch(27% 0.085 139);
   --flower-leaf: oklch(45% 0.12 141);
   --flower-ink: oklch(18% 0.035 130);
-  --flower-muted: oklch(46% 0.038 111);
+  --flower-muted: var(--flower-ink);
   --flower-line: oklch(31% 0.055 132 / 18%);
   --flower-rose: oklch(72% 0.12 9);
   --flower-sun: oklch(77% 0.13 75);
@@ -5015,11 +5072,11 @@ body.ok-bloomer-body .site-copyright-footer {
 .flower-eyebrow {
   margin: 0 0 clamp(1rem, 1.8vw, 1.5rem);
   color: currentColor;
-  font-family: "Libre Franklin", sans-serif;
+  font-family: "Epilogue", sans-serif;
   font-size: clamp(0.84rem, 0.9vw, 0.98rem);
   font-weight: 500;
   line-height: 1.2;
-  opacity: 0.72;
+  opacity: 1;
 }
 
 .flower-hero h1,
@@ -5042,8 +5099,8 @@ body.ok-bloomer-body .site-copyright-footer {
 .flower-lede {
   max-width: 36rem;
   margin: clamp(1.4rem, 2.2vw, 2rem) 0 0;
-  color: oklch(92% 0.028 92);
-  font-family: "Libre Franklin", sans-serif;
+  color: var(--flower-cream);
+  font-family: "Epilogue", sans-serif;
   font-size: clamp(1.06rem, 1.3vw, 1.28rem);
   line-height: 1.55;
   text-wrap: pretty;
@@ -5063,7 +5120,7 @@ body.ok-bloomer-body .site-copyright-footer {
   align-items: center;
   min-height: 2.8rem;
   color: inherit;
-  font-family: "Libre Franklin", sans-serif;
+  font-family: "Epilogue", sans-serif;
   font-size: 0.98rem;
   line-height: 1;
   text-decoration: none;
@@ -5173,7 +5230,7 @@ body.ok-bloomer-body .site-copyright-footer {
 .flower-policy p,
 .flower-policy li {
   color: var(--flower-muted);
-  font-family: "Libre Franklin", sans-serif;
+  font-family: "Epilogue", sans-serif;
   font-size: clamp(1.02rem, 1.2vw, 1.14rem);
   line-height: 1.62;
   text-wrap: pretty;
@@ -5210,9 +5267,9 @@ body.ok-bloomer-body .site-copyright-footer {
   border-bottom: 1px solid var(--flower-line);
 }
 
-.flower-feature span {
-  color: var(--flower-leaf);
-  font-family: "Libre Franklin", sans-serif;
+.flower-feature > span {
+  color: var(--flower-ink);
+  font-family: "Epilogue", sans-serif;
   font-size: 0.95rem;
   font-weight: 600;
   line-height: 1.2;
@@ -5250,7 +5307,7 @@ body.ok-bloomer-body .site-copyright-footer {
 .flower-gallery__intro p {
   max-width: 28rem;
   margin: 0;
-  color: oklch(88% 0.032 92);
+  color: var(--flower-cream);
 }
 
 .flower-gallery__rail {
@@ -5278,8 +5335,8 @@ body.ok-bloomer-body .site-copyright-footer {
 
 .flower-gallery figcaption {
   margin-top: 0.75rem;
-  color: oklch(88% 0.032 92);
-  font-family: "Libre Franklin", sans-serif;
+  color: var(--flower-cream);
+  font-family: "Epilogue", sans-serif;
   font-size: 0.96rem;
   line-height: 1.25;
 }
@@ -5293,7 +5350,7 @@ body.ok-bloomer-body .site-copyright-footer {
 }
 
 .flower-support__copy a:not(.flower-text-link) {
-  color: var(--flower-forest);
+  color: var(--flower-ink);
 }
 
 .flower-policy {
@@ -5315,7 +5372,7 @@ body.ok-bloomer-body .site-copyright-footer {
 
 .flower-policy__updated {
   margin-top: 1.35rem !important;
-  color: var(--flower-leaf) !important;
+  color: var(--flower-ink) !important;
   font-weight: 500;
 }
 
@@ -5333,7 +5390,7 @@ body.ok-bloomer-body .site-copyright-footer {
 .flower-policy h3 {
   margin: clamp(1.55rem, 2.4vw, 2.1rem) 0 0.55rem;
   color: var(--flower-ink);
-  font-family: "Libre Franklin", sans-serif;
+  font-family: "Epilogue", sans-serif;
   font-size: clamp(0.98rem, 1.225vw, 1.1375rem);
   font-weight: 600;
   line-height: 1.25;
@@ -5347,7 +5404,7 @@ body.ok-bloomer-body .site-copyright-footer {
 }
 
 .flower-policy a {
-  color: var(--flower-forest);
+  color: var(--flower-ink);
 }
 
 @media screen and (max-width: 1080px) {
