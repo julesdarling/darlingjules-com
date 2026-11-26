@@ -60,7 +60,7 @@ export const heroLayoutGroups: { key: string; label: string; sliders: HeroSlider
   },
 ];
 
-const storagePrefix = 'jules:hero-layout:v1';
+const storagePrefix = 'jules:hero-layout:v2';
 const defaultState = (): HeroLayoutState => Object.fromEntries(heroLayoutGroups.map((group) => [
   group.key, Object.fromEntries(group.sliders.map((slider) => [slider.key, slider.initial])),
 ]));

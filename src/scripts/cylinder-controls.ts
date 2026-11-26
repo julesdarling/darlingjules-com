@@ -32,7 +32,7 @@ type SliderConfig = {
 const eventName = 'jules:cylinder-controls';
 const mobileLayoutQuery = '(max-width: 1023px)';
 // Separate from the retired v8 panel, which stored canvas heights and positions.
-const storagePrefix = 'jules:ring-controls:v1';
+const storagePrefix = 'jules:ring-controls:v2';
 const sliderConfigs: SliderConfig[] = [
   { key: 'scale', label: 'Size', min: 0.2, max: 1.5, step: 0.01 },
   { key: 'x', label: 'X position', min: -5, max: 5, step: 0.01 },
@@ -54,14 +54,14 @@ const cloneState = (state: CylinderControlState): CylinderControlState => ({
 });
 
 // Match the scene defaults without changing any anchor or canvas dimensions.
-const getDefaultState = (mobile: boolean): CylinderControlState => ({
-  canvas: { topOffsetPx: -70, heightOffsetPx: -2, widthOffsetPx: 0, x: 0, opacity: 1 },
+const getDefaultState = (): CylinderControlState => ({
+  canvas: { topOffsetPx: 0, heightOffsetPx: 0, widthOffsetPx: 0, x: 0, opacity: 1 },
   title: {
-    scale: 0.78, x: 0, y: mobile ? 0 : 1.60, z: 0, pitch: Math.PI / 15,
+    scale: 1, x: 0, y: 0, z: 0, pitch: Math.PI / 15,
     yaw: -Math.PI / 10, speed: 1, backfaceVisible: false,
   },
   logos: {
-    scale: 0.46, x: 0, y: mobile ? 0 : 2.59, z: 0, pitch: -17 * Math.PI / 180,
+    scale: 1, x: 0, y: 0, z: 0, pitch: -17 * Math.PI / 180,
     yaw: 0, speed: 1, backfaceVisible: false, heightCompression: 1.32,
   },
   camera: { fov: 42, z: 25, x: 0, y: 0, pitch: 0, yaw: 0, roll: 0 },
@@ -83,7 +83,7 @@ const adjustableValues = (state: CylinderControlState) => {
 };
 
 const readStoredState = (mobile: boolean): CylinderControlState => {
-  const state = getDefaultState(mobile);
+  const state = getDefaultState();
   try {
     const raw = localStorage.getItem(`${storagePrefix}:${mobile ? 'mobile' : 'desktop'}`);
     if (!raw) return state;
@@ -305,7 +305,7 @@ export const initCylinderControls = () => {
   reset.textContent = 'Reset';
   reset.addEventListener('click', () => {
     try { localStorage.removeItem(storageKey()); } catch { /* Storage is optional. */ }
-    state = getDefaultState(mobile);
+    state = getDefaultState();
     layoutControls.reset();
     renderGroups();
     dispatchState(state);

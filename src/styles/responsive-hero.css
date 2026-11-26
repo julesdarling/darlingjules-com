@@ -1,0 +1,143 @@
+/* The composition is a content-driven stack. Only the ring artwork is clipped. */
+.cylinder-home .responsive-hero {
+  display: block;
+  width: 100%;
+  max-width: none;
+  min-height: 0;
+  margin: 0;
+  padding: clamp(2rem, 3.2vw, 3.5rem) 0 clamp(2.5rem, 4vw, 4rem);
+  overflow: visible;
+}
+
+.cylinder-home .responsive-hero .agency-pattern-copy {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas: "title" "flowers" "copy";
+  justify-items: center;
+  align-items: start;
+  row-gap: clamp(1.5rem, 2vw, 1.75rem);
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+.cylinder-home .agency-cylinder-headline {
+  --ring-overscan: 1;
+  display: block;
+  grid-area: title;
+  position: relative;
+  left: auto;
+  width: 100%;
+  height: clamp(9rem, 15.5vw, 17rem);
+  margin: 0;
+  transform: none;
+}
+
+.cylinder-home .responsive-hero .agency-cylinder-fallback-title {
+  display: grid;
+  grid-area: title;
+  align-self: stretch;
+  align-content: center;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0 1rem;
+  color: var(--haggard-ink);
+  font-size: clamp(2rem, 6.5vw, 6.25rem);
+  font-weight: 400;
+  line-height: 1.04;
+  text-align: center;
+}
+
+.cylinder-home .responsive-hero .hero-flowers {
+  grid-area: flowers;
+  position: static;
+  justify-self: center;
+  width: max-content;
+  height: auto;
+  margin: 0;
+  gap: clamp(1rem, 1.5vw, 1.25rem);
+  transform: none;
+}
+
+.cylinder-home .responsive-hero .flex-block-3 {
+  display: flex;
+  grid-area: copy;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(1rem, 1.3vw, 1.25rem);
+  width: 100%;
+  min-width: 0;
+  max-width: none;
+  margin: 0 !important;
+  padding: 0 clamp(1rem, 4vw, 3rem);
+}
+
+.cylinder-home .responsive-hero .splitpara.jhppara {
+  width: 100%;
+  max-width: 38rem;
+  margin: 0;
+  font-size: clamp(1rem, 1.4vw, 1.25rem) !important;
+  font-weight: 400;
+  line-height: 1.45 !important;
+  text-align: center;
+}
+
+.cylinder-home .responsive-hero .flex-block-7 {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.cylinder-home .responsive-hero .ctalink {
+  width: auto;
+  min-height: 3rem;
+  padding: 0.82rem 1.72rem !important;
+}
+
+.cylinder-home .agency-pattern-logo-band {
+  display: grid;
+  justify-items: center;
+  min-height: 0;
+  padding: 0 0 clamp(2.5rem, 4vw, 4rem);
+}
+
+.cylinder-home .agency-logo-cylinder {
+  --ring-overscan: 1;
+  left: auto;
+  width: min(70%, 64rem);
+  height: clamp(8rem, 10vw, 11rem);
+  margin: 0;
+  transform: none;
+}
+
+.cylinder-home .agency-cylinder-stage {
+  left: 0;
+  width: 100%;
+  min-height: 0;
+  transform: translateX(var(--cylinder-stage-x));
+  overflow: clip;
+}
+
+@media (max-width: 767px) {
+  .cylinder-home .responsive-hero {
+    padding-top: clamp(1.5rem, 5vw, 2.5rem);
+  }
+
+  .cylinder-home .agency-cylinder-headline { --ring-overscan: 1.2; }
+
+  .cylinder-home .responsive-hero .hero-flowers .flower-doodle:first-child { width: 1.35rem; }
+  .cylinder-home .responsive-hero .hero-flowers .flower-doodle:nth-child(2) { width: 2rem; }
+  .cylinder-home .responsive-hero .hero-flowers .flower-doodle:nth-child(3) { width: 1.5rem; }
+
+  .cylinder-home .agency-logo-cylinder {
+    width: min(100%, 40rem);
+    height: clamp(7rem, 24vw, 10rem);
+  }
+}

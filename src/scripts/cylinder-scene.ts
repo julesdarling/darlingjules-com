@@ -90,9 +90,6 @@ const logoCylinderHeight = 1.35;
 const logoRadialSegments = 320;
 const logoBasePitch = 0.34;
 const fogColor = new THREE.Color(0xfaf9f6);
-const sceneDesignWidth = 1600;
-const sceneDesignHeight = 900;
-const mobileLayoutQuery = '(max-width: 1023px)';
 const dragRotationScale = 0.008;
 const dragVelocityDamping = 0.925;
 
@@ -109,29 +106,15 @@ const defaultCylinderControls = {
 
 const defaultTitleControls = {
   ...defaultCylinderControls,
-  scale: 0.78,
-  y: 1.60,
   pitch: Math.PI / 15,
   yaw: -Math.PI / 10,
   backfaceVisible: false,
 };
 
-const mobileTitleControls = {
-  ...defaultTitleControls,
-  y: 0,
-};
-
 const defaultLogoControls = {
   ...defaultCylinderControls,
   heightCompression: 1.32,
-  scale: 0.46,
-  y: 2.59,
   pitch: -17 * Math.PI / 180,
-};
-
-const mobileLogoControls = {
-  ...defaultLogoControls,
-  y: 0,
 };
 
 const defaultCameraControls = {
@@ -145,8 +128,8 @@ const defaultCameraControls = {
 };
 
 const defaultCanvasControls = {
-  topOffsetPx: -70,
-  heightOffsetPx: -2,
+  topOffsetPx: 0,
+  heightOffsetPx: 0,
   widthOffsetPx: 0,
   x: 0,
   opacity: 1,
@@ -156,24 +139,6 @@ const defaultFogControls = {
   enabled: true,
   near: 20,
   far: 33,
-};
-
-const isMobileLayout = () => window.matchMedia(mobileLayoutQuery).matches;
-
-const getStageTopBleed = () => {
-  if (window.innerWidth <= 767) {
-    return 92;
-  }
-
-  if (window.innerWidth <= 1280) {
-    return 150;
-  }
-
-  if (window.innerWidth <= 1600) {
-    return 110;
-  }
-
-  return 0;
 };
 
 const logos: LogoSpec[] = [
@@ -202,20 +167,17 @@ const hasWebgl = () => {
 
 const getControlState = (detail?: CylinderControls) => {
   const source = detail ?? window.__julesCylinderControls;
-  const titleDefaults = isMobileLayout() ? mobileTitleControls : defaultTitleControls;
-  const logoDefaults = isMobileLayout() ? mobileLogoControls : defaultLogoControls;
-
   return {
     canvas: {
       ...defaultCanvasControls,
       ...(source?.canvas ?? {}),
     },
     title: {
-      ...titleDefaults,
+      ...defaultTitleControls,
       ...(source?.title ?? {}),
     },
     logos: {
-      ...logoDefaults,
+      ...defaultLogoControls,
       ...(source?.logos ?? {}),
     },
     camera: {
@@ -410,26 +372,34 @@ const fitGroupToAnchor = (
   stageRect: DOMRect,
   camera: THREE.PerspectiveCamera,
   relativeScale = 1,
+  overscan = 1,
+  paintHeightRatio = 1,
+  paintCenterY = 0,
 ) => {
   const mesh = group.children.find((child): child is THREE.Mesh => child instanceof THREE.Mesh);
   if (!mesh) return;
 
   const vertices = mesh.geometry.getAttribute('position');
+  const normals = mesh.geometry.getAttribute('normal');
   const baseScale = group.scale.clone();
   const basePosition = group.position.clone();
-  const visibleHeight = 2 * Math.tan(THREE.MathUtils.degToRad(camera.fov) / 2) * Math.abs(camera.position.z);
   const targetX = (anchorRect.left + anchorRect.width / 2 - stageRect.left) / stageRect.width * 2 - 1;
   const targetY = 1 - (anchorRect.top + anchorRect.height / 2 - stageRect.top) / stageRect.height * 2;
   const projectedBounds = () => {
     group.updateMatrixWorld(true);
     const bounds = new THREE.Box2();
 
-    // Sample the cylinder rims rather than a box, whose empty corners overestimate perspective bounds.
+    const normalMatrix = new THREE.Matrix3().getNormalMatrix(mesh.matrixWorld);
+    // Fit the painted, front-facing band rather than the transparent texture margins
+    // or the hidden back half of the cylinder.
     for (let index = 0; index < vertices.count; index += 8) {
       const point = new THREE.Vector3()
-        .fromBufferAttribute(vertices, index)
-        .applyMatrix4(mesh.matrixWorld)
-        .project(camera);
+        .fromBufferAttribute(vertices, index);
+      point.y = point.y * paintHeightRatio + paintCenterY;
+      point.applyMatrix4(mesh.matrixWorld);
+      const normal = new THREE.Vector3().fromBufferAttribute(normals, index).applyMatrix3(normalMatrix);
+      if (normal.dot(camera.position.clone().sub(point)) <= 0) continue;
+      point.project(camera);
       bounds.expandByPoint(new THREE.Vector2(point.x, point.y));
     }
 
@@ -440,23 +410,39 @@ const fitGroupToAnchor = (
     group.scale.copy(baseScale).multiplyScalar(scale);
     group.position.copy(basePosition);
 
-    for (let pass = 0; pass < 2; pass += 1) {
+    // Solve the projected center at its actual depth. A flat-plane correction
+    // overshoots when a large cylinder's front surface approaches the camera.
+    for (let pass = 0; pass < 3; pass += 1) {
       const center = projectedBounds().getCenter(new THREE.Vector2());
-      group.position.x += (targetX - center.x) * visibleHeight * camera.aspect / 2;
-      group.position.y += (targetY - center.y) * visibleHeight / 2;
+      const epsilon = 0.01;
+      group.position.x += epsilon;
+      const shiftedX = projectedBounds().getCenter(new THREE.Vector2()).sub(center).divideScalar(epsilon);
+      group.position.x -= epsilon;
+      group.position.y += epsilon;
+      const shiftedY = projectedBounds().getCenter(new THREE.Vector2()).sub(center).divideScalar(epsilon);
+      group.position.y -= epsilon;
+      const determinant = shiftedX.x * shiftedY.y - shiftedY.x * shiftedX.y;
+      if (Math.abs(determinant) < 1e-8) break;
+      const dx = targetX - center.x;
+      const dy = targetY - center.y;
+      group.position.x += (dx * shiftedY.y - shiftedY.x * dy) / determinant;
+      group.position.y += (shiftedX.x * dy - dx * shiftedX.y) / determinant;
     }
 
     return projectedBounds().getSize(new THREE.Vector2());
   };
 
   let lower = 0;
-  let upper = 1;
-  for (let pass = 0; pass < 10; pass += 1) {
+  mesh.geometry.computeBoundingSphere();
+  const radius = (mesh.geometry.boundingSphere?.radius ?? 1) * Math.max(baseScale.x, baseScale.y, baseScale.z);
+  // Bound enlargement before the front surface can cross the camera.
+  let upper = Math.min(4, Math.max(0.01, (camera.position.z - basePosition.z) * 0.8 / radius));
+  for (let pass = 0; pass < 14; pass += 1) {
     const scale = (lower + upper) / 2;
     const size = place(scale);
     if (
-      size.x <= anchorRect.width / stageRect.width * 2 * 0.94 * relativeScale &&
-      size.y <= anchorRect.height / stageRect.height * 2 * 0.9 * relativeScale
+      size.x <= anchorRect.width / stageRect.width * 2 * 0.94 * overscan * relativeScale &&
+      size.y <= anchorRect.height / stageRect.height * 2 * 0.94 * relativeScale
     ) {
       lower = scale;
     } else {
@@ -811,21 +797,12 @@ export const initCylinderScene = (root: HTMLElement) => {
       }
 
       controls = getControlState(controlOverrides);
-      const mobile = isMobileLayout();
       const rootRect = root.getBoundingClientRect();
       const titleRect = titleAnchor.getBoundingClientRect();
       const logoRect = logoAnchor.getBoundingClientRect();
-      const stageTop = Math.max(0, titleRect.top - rootRect.top - Math.min(24, titleRect.height * 0.05));
-      if (mobile) {
-        const top = Math.max(0, titleRect.top - rootRect.top - 12);
-        stage.style.top = `${Math.round(top)}px`;
-        stage.style.height = `${Math.ceil(logoRect.bottom - rootRect.top - top + 12)}px`;
-        stage.style.minHeight = '0';
-      } else {
-        stage.style.top = `${Math.round(stageTop + controls.canvas.topOffsetPx - getStageTopBleed())}px`;
-        stage.style.height = '100vh';
-        stage.style.minHeight = '100dvh';
-      }
+      const stageTop = Math.max(0, titleRect.top - rootRect.top);
+      stage.style.top = `${stageTop + controls.canvas.topOffsetPx}px`;
+      stage.style.height = `${Math.max(1, logoRect.bottom - rootRect.top - stageTop + controls.canvas.heightOffsetPx)}px`;
       stage.style.setProperty('--cylinder-stage-width-extra', `${Math.round(controls.canvas.widthOffsetPx)}px`);
       stage.style.setProperty('--cylinder-stage-x', `${Math.round(controls.canvas.x)}px`);
       stage.style.setProperty('--cylinder-stage-opacity', `${controls.canvas.opacity}`);
@@ -836,8 +813,6 @@ export const initCylinderScene = (root: HTMLElement) => {
       const renderWidth = width;
       const frameRect = new DOMRect(stageRect.left, stageRect.top, renderWidth, height);
       const ratio = renderWidth / height;
-      const layoutWidth = Math.min(window.innerWidth, sceneDesignWidth);
-      const viewportScale = Math.min(1, sceneDesignHeight / height);
 
       renderer.setSize(width, height, false);
       renderer.setViewport(0, 0, renderWidth, height);
@@ -850,43 +825,24 @@ export const initCylinderScene = (root: HTMLElement) => {
       applySceneFog(scene, controls, materials);
 
       const titlePoint = getScenePoint(titleRect, frameRect, camera);
-      const titleRatio = titleRect.width / Math.max(1, titleRect.height);
-      const titleScale = titleRatio > 4.4 ? 2.25 : titleRatio < 3.25 ? 2.2 : 1.82;
-      const titleWideScale = titleRatio > 4.4 ? 0.74 : titleRatio < 3.25 ? 0.86 : 0.79;
-      const titleWideDrop = Math.min(1.35, Math.max(0, (layoutWidth - 1680) / 420));
       setBackfaceVisibility(titleMaterial, controls.title.backfaceVisible);
-      // Keep the cylinder uniform so the lettering keeps its font proportions.
-      titleGroup.scale.setScalar(titleScale * titleWideScale * controls.title.scale * viewportScale);
-      titleGroup.position.x = titlePoint.x + controls.title.x;
-      const titleOffsetY = mobile ? 0 : (titleRatio > 4.4 ? -0.28 : titleRatio < 3.25 ? -0.14 : -0.2) - titleWideDrop;
-      titleGroup.position.y = titlePoint.y + titleOffsetY + controls.title.y;
-      titleGroup.position.z = controls.title.z;
+      titleGroup.scale.setScalar(1);
+      titleGroup.position.set(titlePoint.x, titlePoint.y, controls.title.z);
+      titleGroup.rotation.x = titleBasePitch + controls.title.pitch;
+      const titleOverscan = Number.parseFloat(getComputedStyle(titleAnchor).getPropertyValue('--ring-overscan')) || 1;
+      fitGroupToAnchor(titleGroup, titleRect, frameRect, camera, controls.title.scale, titleOverscan, 0.38, -titleCylinderHeight * 0.04);
+      titleGroup.position.x += controls.title.x;
+      titleGroup.position.y += controls.title.y;
 
       const logoPoint = getScenePoint(logoRect, frameRect, camera);
-      const logoRatio = logoRect.width / Math.max(1, logoRect.height);
-      const logoScale = logoRatio > 5.5 ? 2.34 : logoRatio < 3.4 ? 1.94 : 2.08;
-      const logoWideScale = logoRatio > 5.5 ? 1.08 : logoRatio < 3.4 ? 1 : 1.03;
       setBackfaceVisibility(logoMaterial, controls.logos.backfaceVisible);
-      logoGroup.scale.set(
-        logoScale * logoWideScale * controls.logos.scale * viewportScale,
-        logoScale * controls.logos.scale * controls.logos.heightCompression * viewportScale,
-        logoScale * controls.logos.scale * viewportScale,
-      );
-      logoGroup.position.x = logoPoint.x + controls.logos.x;
-      const logoOffsetY = mobile ? 0 : logoRatio > 5.5 ? 0.82 : logoRatio < 3.4 ? 0.44 : 0.62;
-      logoGroup.position.y = logoPoint.y + logoOffsetY + controls.logos.y;
-      logoGroup.position.z = controls.logos.z;
-
-      if (mobile) {
-        titleGroup.rotation.x = titleBasePitch + controls.title.pitch;
-        logoGroup.rotation.x = logoBasePitch + controls.logos.pitch;
-        fitGroupToAnchor(titleGroup, titleRect, frameRect, camera, controls.title.scale / defaultTitleControls.scale);
-        fitGroupToAnchor(logoGroup, logoRect, frameRect, camera, controls.logos.scale / defaultLogoControls.scale);
-        titleGroup.position.x += controls.title.x;
-        titleGroup.position.y += controls.title.y;
-        logoGroup.position.x += controls.logos.x;
-        logoGroup.position.y += controls.logos.y;
-      }
+      logoGroup.scale.set(1, controls.logos.heightCompression, 1);
+      logoGroup.position.set(logoPoint.x, logoPoint.y, controls.logos.z);
+      logoGroup.rotation.x = logoBasePitch + controls.logos.pitch;
+      const logoOverscan = Number.parseFloat(getComputedStyle(logoAnchor).getPropertyValue('--ring-overscan')) || 1;
+      fitGroupToAnchor(logoGroup, logoRect, frameRect, camera, controls.logos.scale, logoOverscan, 0.45, -logoCylinderHeight * 0.01);
+      logoGroup.position.x += controls.logos.x;
+      logoGroup.position.y += controls.logos.y;
     };
 
     resizeObserver = new ResizeObserver(resize);
