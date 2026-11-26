@@ -1,7 +1,7 @@
-// Protect the names used by this portfolio while sentence-casing editorial words.
+// Protect portfolio names and the preferred role title while sentence-casing editorial words.
 // Matching a name preserves its existing spelling, including internal periods.
 const properNames = [
-  'Jules Darling', 'Jules', 'Darling & Friends', 'Darling',
+  'Jules Darling', 'Jules', 'Darling & Friends', 'Darling', 'Design Director',
   'Google Maps', 'Google Meet', 'Google', 'Pegman', 'NotebookLM', 'Notebook LM',
   'IBM Watson', 'Watson', 'Beats by Dre', 'Apple Retail', 'Apple', 'Chase Travel',
   'Chase Bank', 'Citi Bank', 'Microsoft Windows 11', 'Microsoft Windows', 'Microsoft',

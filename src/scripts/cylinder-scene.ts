@@ -508,7 +508,7 @@ export const initCylinderScene = (root: HTMLElement) => {
   const logoAnchor = root.querySelector<HTMLElement>('.agency-logo-cylinder');
   const hero = root.querySelector<HTMLElement>('.agency-cylinder-hero');
   const band = root.querySelector<HTMLElement>('.agency-pattern-logo-band');
-  const text = titleAnchor?.dataset.cylinderHeadline?.trim() || 'Design director';
+  const text = titleAnchor?.dataset.cylinderHeadline?.trim() || 'Design Director';
   const alternateText = titleAnchor?.dataset.cylinderAlternate?.trim() || 'San Francisco';
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 

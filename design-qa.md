@@ -63,7 +63,7 @@ Result: passed
 
 - The hero and logo band share a content-driven opening container centered beneath the measured navigation. It uses a viewport minimum, so short screens can grow without clipping content. The work headline stays below the first frame.
 - Checked 320 × 740, 390 × 844, 768 × 1024, 1024 × 768, 1204 × 853, 1440 × 1000, 1440 × 600, and 1920 × 1080. Center error stayed below 0.01px; no horizontal overflow appeared. Measurements: `artifacts/nov26-refinements/final-home-checks.json`.
-- The work headline is centered and reads “She's got taste”. The portrait headline reads “It's me Jules”; its text remains inside the viewport at every tested width.
+- The work headline is centered and reads “She's got taste”. The portrait headline is restored to “Meet Jules”; its text remains inside the responsive portrait layout.
 - Capabilities and When to bring me in have identical computed heading sizes at every tested width. My point of view has bounded space above and below (32px at desktop).
 - The phone text ring defaults to 150% up to 767px. Desktop defaults to 100%; control values match the scene. Ring controls use v3 storage, preserving earlier saved values in their old namespace.
 
@@ -81,3 +81,8 @@ Result: passed
 - Capability labels inherit the body typography; mobile uses one column so longer labels fit. The About list replaces its emoji assets with the matching doodles.
 - Screenshots: `artifacts/nov26-refinements/capabilities-desktop.jpg`, `capabilities-mobile.jpg`, `how-i-work-desktop.jpg`, and `how-i-work-mobile.jpg`. Desktop captures are 1440 × 1000; mobile captures are 390 × 844.
 - Compared linework, sizing, label alignment, spacing, colors, and copy in the rendered implementation. No unresolved blocking differences or browser console errors remain.
+
+## Role capitalization correction
+
+- Verified all 69 built pages: all eight rendered role-title occurrences use “Design Director”, including the text-cylinder data attribute. The headline normalizer protects this preferred capitalization.
+- Verified the built portrait heading reads “Meet Jules”. Astro check, build, site verification, and whitespace checks passed.
