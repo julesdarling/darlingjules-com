@@ -586,9 +586,9 @@ const initTestimonialHeartParticles = (grid: HTMLElement) => {
   const activeTweens = new Set<gsap.core.Animation>();
   const heartTweens = new Map<HTMLElement, gsap.core.Animation>();
   const heartSprites = [
-    '/assets/hearts/cutout-heart-01.png',
-    '/assets/hearts/cutout-heart-02.png',
-    '/assets/hearts/cutout-heart-03.png',
+    '/assets/hearts/particle-heart-01.svg',
+    '/assets/hearts/particle-heart-02.svg',
+    '/assets/hearts/particle-heart-03.svg',
   ];
   let nextHeartIndex = 0;
   let lastEmit = 0;
@@ -644,10 +644,12 @@ const initTestimonialHeartParticles = (grid: HTMLElement) => {
       if (oldestHeart) removeHeart(oldestHeart);
     }
 
-    const heart = document.createElement('span');
+    const heart = document.createElement('img');
     heart.className = 'testimonial-heart-particle';
     heart.setAttribute('aria-hidden', 'true');
-    heart.style.setProperty('--heart-sprite', `url("${heartSprites[nextHeartIndex]}")`);
+    heart.alt = '';
+    heart.decoding = 'async';
+    heart.src = heartSprites[nextHeartIndex];
     nextHeartIndex = (nextHeartIndex + 1) % heartSprites.length;
     document.body.append(heart);
     activeHearts.add(heart);
@@ -655,7 +657,7 @@ const initTestimonialHeartParticles = (grid: HTMLElement) => {
     const driftX = gsap.utils.random(-82, 82);
     const driftY = gsap.utils.random(-132, -58);
     const startScale = gsap.utils.random(0.62, 0.88);
-    const endScale = gsap.utils.random(1.8, 2.7);
+    const endScale = gsap.utils.random(1.1, 1.6);
     const rotation = gsap.utils.random(-28, 28);
 
     const duration = gsap.utils.random(1.08, 1.44);
@@ -669,27 +671,17 @@ const initTestimonialHeartParticles = (grid: HTMLElement) => {
         scale: startScale,
         rotation,
         autoAlpha: 0.96,
-        filter: 'blur(0px)',
       },
       {
         x: event.clientX + driftX,
         y: event.clientY + driftY,
         scale: endScale,
         rotation: rotation + gsap.utils.random(-24, 24),
+        force3D: false,
         duration,
         ease: 'power3.out',
       },
       0,
-    );
-
-    tween.to(
-      heart,
-      {
-        filter: 'blur(4.8px)',
-        duration: duration * 0.5,
-        ease: 'power2.in',
-      },
-      duration * 0.36,
     );
 
     tween.to(

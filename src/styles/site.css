@@ -2028,14 +2028,10 @@ a {
   display: block;
   width: clamp(1.25rem, 1.7vw, 1.8rem);
   height: clamp(1.25rem, 1.7vw, 1.8rem);
-  background-color: #ec168c;
-  -webkit-mask: var(--heart-sprite) center / contain no-repeat;
-  mask: var(--heart-sprite) center / contain no-repeat;
-  mask-mode: alpha;
+  object-fit: contain;
   pointer-events: none;
   user-select: none;
-  transform: translate3d(0, 0, 0);
-  will-change: opacity, transform, filter;
+  will-change: opacity;
 }
 
 .homecontainer > .aboutintro.hp.herohp .flex-block-3 {

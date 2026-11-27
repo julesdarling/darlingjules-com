@@ -97,3 +97,26 @@ Result: passed
 - The transparent 256px web derivatives total 97,296 bytes. Full-size imagegen outputs and prompts are retained locally under `artifacts/heart-refresh/`.
 - Reviewed all seven required routes at desktop and mobile dimensions. Pages scroll normally, headings have clean spacing, and media keep their proportions. Screenshots are under `artifacts/heart-refresh/`.
 - Astro check passed with no errors or warnings (one existing unused-variable hint). Build generated 69 pages, site verification passed 68 routes, and `git diff --check` passed.
+
+# Outlined particle and icon corrections
+
+Result: passed
+
+## Crisp white heart particles
+
+- Replaced the pink PNG masks with three individual SVG hearts traced from the supplied outline cluster. They have white fills and rounded near-black outlines, alternating through all three shapes.
+- Removed the blur tween and filter hint. Particle motion uses 2D transforms (`force3D: false`), avoiding the previous forced 3D layer during scaling. Starting scale remains .62–.88; final scale is reduced to 1.1–1.6, about 40% smaller than before. Drift, opacity fade, reduced-motion guard, and cleanup remain intact.
+- Native pointer input verified that all SVGs load, cycle, and stay at computed filter `none` through different fade stages. Their inline transforms use 2D translate/rotate/scale. Completed particles were removed.
+- Screenshot: `artifacts/heart-refresh/outlined-particles-desktop.jpg`.
+
+## Capability alignment
+
+- Centered icons against their entire label boxes and removed the old top margin. All nine icon/label center differences measured 0px at 1440 × 1000 and 390 × 844, including wrapped desktop labels. No horizontal overflow.
+- Screenshots: `artifacts/heart-refresh/capabilities-aligned-desktop.jpg` and `capabilities-aligned-mobile.jpg`.
+
+## Cute How I work doodles
+
+- Replaced the About list’s technical symbols with seven organic SVG doodles: bunny, songbird, smiling blossom, bee, mushroom pair, cat, and butterfly. All seven loaded and remain decorative to assistive technology.
+- Reviewed the list on desktop and mobile, with stable icon sizes, readable wrapping, and no overflow. Screenshots: `artifacts/heart-refresh/cute-how-i-work-desktop.jpg` and `cute-how-i-work-mobile.jpg`.
+- Reviewed the required home, About, All work, three project, and writing routes at both standard viewport sizes. No layout regressions or horizontal overflow were observed.
+- Astro check, build (69 pages), site verification (68 routes), and whitespace checks passed. The existing unused-variable hint and bundle-size advisory are unchanged.

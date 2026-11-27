@@ -10,13 +10,13 @@
 .capability-list.agency-pattern-reason-list > li {
   display: grid;
   grid-template-columns: 2rem minmax(0, 1fr);
-  align-items: start;
+  align-items: center;
   column-gap: 0.75rem;
 }
 
 .capability-list .doodle-icon {
   justify-self: center;
-  margin-top: 0.02em;
+  margin-top: 0;
 }
 
 .capability-list .capability-label {
