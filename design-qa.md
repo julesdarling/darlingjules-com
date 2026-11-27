@@ -120,3 +120,12 @@ Result: passed
 - Reviewed the list on desktop and mobile, with stable icon sizes, readable wrapping, and no overflow. Screenshots: `artifacts/heart-refresh/cute-how-i-work-desktop.jpg` and `cute-how-i-work-mobile.jpg`.
 - Reviewed the required home, About, All work, three project, and writing routes at both standard viewport sizes. No layout regressions or horizontal overflow were observed.
 - Astro check, build (69 pages), site verification (68 routes), and whitespace checks passed. The existing unused-variable hint and bundle-size advisory are unchanged.
+
+# Cute capability doodles
+
+Result: passed
+
+- Replaced all nine technical capability symbols with the same organic animal and flower set used on About: songbird, blossom, bunny, mushrooms, cat, duck, butterfly, tulip, and bee. Added matching duck and tulip SVGs; reused the other seven assets.
+- All nine icons loaded at 1440 × 1000 and 390 × 844. Icon/label center differences remain 0px, including wrapped desktop labels, with no horizontal overflow. The icons remain decorative to assistive technology.
+- Screenshots: `artifacts/cute-capabilities/desktop.jpg` and `mobile.jpg`.
+- Astro check, build (69 pages), site verification (68 routes), SVG XML validation, and whitespace checks passed.
