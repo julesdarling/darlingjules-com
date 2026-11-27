@@ -29,7 +29,7 @@
 .cylinder-home .responsive-hero .agency-pattern-copy {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  grid-template-areas: "title" "flowers" "copy";
+  grid-template-areas: "title" "copy";
   justify-items: center;
   align-items: start;
   row-gap: clamp(1.5rem, 2vw, 1.75rem);
@@ -53,10 +53,14 @@
 }
 
 .cylinder-home .responsive-hero .agency-cylinder-fallback-title {
-  display: grid;
+  display: flex;
   grid-area: title;
+  flex-wrap: wrap;
   align-self: stretch;
+  align-items: center;
+  justify-content: center;
   align-content: center;
+  gap: clamp(0.5rem, 1.25vw, 1.25rem);
   width: 100%;
   max-width: none;
   margin: 0;
@@ -68,15 +72,23 @@
   text-align: center;
 }
 
-.cylinder-home .responsive-hero .hero-flowers {
-  grid-area: flowers;
-  position: static;
-  justify-self: center;
-  width: max-content;
+.cylinder-home .agency-cylinder-fallback-label {
+  white-space: nowrap;
+}
+
+.cylinder-home .agency-cylinder-fallback-title img {
+  flex-shrink: 0;
+  width: clamp(1.75rem, 4vw, 3rem);
   height: auto;
-  margin: 0;
-  gap: clamp(1rem, 1.5vw, 1.25rem);
-  transform: none;
+}
+
+.cylinder-home .agency-cylinder-fallback-title > .headline-visual {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: inherit;
+  max-width: 100%;
 }
 
 .cylinder-home .responsive-hero .flex-block-3 {
@@ -148,10 +160,6 @@
   }
 
   .cylinder-home .agency-cylinder-headline { --ring-overscan: 1.2; }
-
-  .cylinder-home .responsive-hero .hero-flowers .flower-doodle:first-child { width: 1.35rem; }
-  .cylinder-home .responsive-hero .hero-flowers .flower-doodle:nth-child(2) { width: 2rem; }
-  .cylinder-home .responsive-hero .hero-flowers .flower-doodle:nth-child(3) { width: 1.5rem; }
 
   .cylinder-home .agency-logo-cylinder {
     width: min(100%, 40rem);

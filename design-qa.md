@@ -129,3 +129,15 @@ Result: passed
 - All nine icons loaded at 1440 × 1000 and 390 × 844. Icon/label center differences remain 0px, including wrapped desktop labels, with no horizontal overflow. The icons remain decorative to assistive technology.
 - Screenshots: `artifacts/cute-capabilities/desktop.jpg` and `mobile.jpg`.
 - Astro check, build (69 pages), site verification (68 routes), SVG XML validation, and whitespace checks passed.
+
+# Flowers in the hero text ring
+
+Result: passed
+
+- Moved the original flower artwork into all eight gaps between the alternating Design Director and San Francisco labels. The curved flowers inherit the title ring’s rotation, tilt, position, scale, fog, and front-face visibility. Letter sizing and aspect remain unchanged.
+- Reused the three original SVG redraw frames as small shared textures, keeping the stepped .42s boiling cadence with staggered phases. Texture drawing occurs once, not every animation frame. Geometry, textures, and materials participate in scene cleanup.
+- Removed the small standalone flower row and its empty grid track. Portrait flowers and the favicon remain intact.
+- The controls now include Ring flowers Size, Animation speed, and Opacity. Native keyboard input verified size changes, zero speed, and zero opacity; all values were restored to their defaults afterward. Dragging the ring and navigating to About and back worked without browser errors.
+- Checked 320 × 740, 390 × 844, 768 × 1024, 1024 × 768, 1368 × 848, 1440 × 600, 1440 × 1000, and 1920 × 1080. No horizontal overflow, positive title-to-copy gaps, and selected work below the first frame at every size. Hero center error stayed below .01px.
+- Static fallback retains both labels and a decorative flower separator. A temporary script-free build fixture passed at 320px, 390px, and 1440px, with no overlap or overflow; the fixture was removed afterward.
+- Screenshots and layout measurements: `artifacts/hero-ring-flowers/`. Independent scene review, Astro check, build, site verification, and whitespace checks passed.

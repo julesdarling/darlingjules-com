@@ -154,7 +154,7 @@ export const initCylinderControls = () => {
 
   const note = document.createElement('p');
   note.className = 'cylinder-controls__note';
-  note.textContent = 'Changes stay in this browser, with separate desktop and mobile values. Positions and spacing are offsets from the original layout. Speed 0 pauses a ring or flower rocking.';
+  note.textContent = 'Changes stay in this browser, with separate desktop and mobile values. Positions and spacing are offsets from the original layout. Speed 0 pauses a ring or flower animation.';
   const groups = document.createElement('div');
   groups.className = 'cylinder-controls__groups';
   const status = document.createElement('p');

@@ -1237,34 +1237,6 @@ a {
   position: relative;
 }
 
-.hero-flowers {
-  position: absolute;
-  z-index: 2;
-  top: -4.5rem;
-  left: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1.25rem;
-  height: 2.75rem;
-  pointer-events: none;
-  transform: translateX(-50%);
-}
-
-.hero-flowers .flower-doodle:first-child {
-  width: 1.75rem;
-  margin-top: 0.6rem;
-}
-
-.hero-flowers .flower-doodle:nth-child(2) {
-  width: 2.6rem;
-}
-
-.hero-flowers .flower-doodle:nth-child(3) {
-  width: 2rem;
-  margin-top: 0.4rem;
-}
-
 .portrait-flowers {
   position: absolute;
   inset: 0;
@@ -1302,15 +1274,6 @@ a {
 @keyframes flower-turn {
   from { transform: rotate(calc(-1 * var(--flower-rock-angle))); }
   to { transform: rotate(var(--flower-rock-angle)); }
-}
-
-@media screen and (max-width: 1023px) {
-  .hero-flowers {
-    position: static;
-    height: 2.75rem;
-    margin: 0 auto 1.25rem;
-    transform: none;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {

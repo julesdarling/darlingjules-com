@@ -81,6 +81,9 @@ const titleHorizontalScale = titleCylinderHeight * titleTextureWidth * titleText
   / (titleTextureHeight * Math.PI * 2 * titleRadius);
 const titleRotationSpeed = 0.075;
 const titleBasePitch = -0.11;
+const titleLabelCount = 2 * titleTextureRepeatX;
+const flowerFrameDuration = 0.14;
+const flowerSizeVariants = [0.85, 1.12, 0.95] as const;
 
 const logoInk = 'rgba(92, 89, 84, 0.96)';
 const logoTextureWidth = 8192;
@@ -221,6 +224,8 @@ const createTitleTexture = (labels: readonly string[]) => {
   context.textBaseline = 'middle';
 
   const slotWidth = canvas.width / labels.length;
+  let paintHeight = 0;
+  let paintCenterY = 0;
   labels.forEach((label, index) => {
     const measuredWidth = measure.measureText(label).width;
     const targetTextWidth = slotWidth * titleTextWidthRatio;
@@ -228,6 +233,9 @@ const createTitleTexture = (labels: readonly string[]) => {
 
     context.save();
     context.font = `400 ${fittedFontSize}px ${titleFontFamily}`;
+    const metrics = context.measureText(label);
+    paintHeight = Math.max(paintHeight, metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent);
+    paintCenterY += canvas.height * 0.54 + (metrics.actualBoundingBoxDescent - metrics.actualBoundingBoxAscent) / 2;
     context.translate(slotWidth * (index + 0.5), canvas.height * 0.54);
     context.scale(titleHorizontalScale, 1);
     context.fillText(label, 0, 0);
@@ -252,7 +260,43 @@ const createTitleTexture = (labels: readonly string[]) => {
   texture.repeat.x = titleTextureRepeatX;
   texture.needsUpdate = true;
 
-  return texture;
+  return {
+    texture,
+    flowerSize: paintHeight / canvas.height * titleCylinderHeight * 0.88,
+    flowerY: (0.5 - paintCenterY / labels.length / canvas.height) * titleCylinderHeight,
+  };
+};
+
+const createFlowerTextures = async () => {
+  const response = await fetch('/assets/brand/hand-drawn-flower.svg');
+  if (!response.ok) throw new Error('Unable to load the ring flowers.');
+
+  const svg = new DOMParser().parseFromString(await response.text(), 'image/svg+xml');
+  const frames = Array.from(svg.querySelectorAll('.flower-frame'));
+  if (!frames.length) throw new Error('Missing ring flower frames.');
+
+  return frames.map((frame) => {
+    const canvas = document.createElement('canvas');
+    canvas.width = 512;
+    canvas.height = 512;
+    const context = canvas.getContext('2d');
+    if (!context) throw new Error('Unable to draw the ring flowers.');
+    context.scale(canvas.width / 100, canvas.height / 100);
+    context.fillStyle = '#fff';
+    context.strokeStyle = '#11100f';
+    context.lineCap = 'round';
+    context.lineJoin = 'round';
+    frame.querySelectorAll('path').forEach((path) => {
+      const outline = new Path2D(path.getAttribute('d') ?? '');
+      context.lineWidth = Number(path.getAttribute('stroke-width') ?? 6.5);
+      context.fill(outline);
+      context.stroke(outline);
+    });
+    const texture = new THREE.CanvasTexture(canvas);
+    texture.colorSpace = THREE.SRGBColorSpace;
+    texture.anisotropy = 8;
+    return texture;
+  });
 };
 
 const sanitizeSvg = (source: string) =>
@@ -551,26 +595,28 @@ export const initCylinderScene = (root: HTMLElement) => {
   };
 
   const start = async () => {
-    const logoTexturePromise = createLogoTexture();
-
-    await Promise.allSettled([
+    const [logoResult, flowerResult] = await Promise.allSettled([
+      createLogoTexture(),
+      createFlowerTextures(),
       document.fonts?.load?.(`400 ${titleFontSize}px "Xanh Mono"`) ?? Promise.resolve(),
       document.fonts?.ready ?? Promise.resolve(),
     ]);
-
-    if (disposed) {
+    const logoTexture = logoResult.status === 'fulfilled' ? logoResult.value : undefined;
+    const flowerTextures = flowerResult.status === 'fulfilled' ? flowerResult.value : [];
+    if (disposed || !logoTexture || !flowerTextures.length) {
+      logoTexture?.dispose();
+      flowerTextures.forEach((texture) => texture.dispose());
+      if (!disposed) hero.classList.add('is-cylinder-fallback');
       return;
     }
-
-    const titleTexture = createTitleTexture([text, alternateText]);
-    const logoTexture = await logoTexturePromise;
-
-    if (disposed || !titleTexture || !logoTexture) {
+    textures.push(logoTexture, ...flowerTextures);
+    const titleArtwork = createTitleTexture([text, alternateText]);
+    if (!titleArtwork) {
       hero.classList.add('is-cylinder-fallback');
       return;
     }
-
-    textures.push(titleTexture, logoTexture);
+    const { texture: titleTexture, flowerSize, flowerY } = titleArtwork;
+    textures.push(titleTexture);
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(defaultCameraControls.fov, 1, 0.1, 100);
@@ -605,6 +651,32 @@ export const initCylinderScene = (root: HTMLElement) => {
     titleCylinder.renderOrder = 1;
     titleGroup.add(titleCylinder);
     scene.add(titleGroup);
+
+    const flowerMaterials = flowerTextures.map((map) => new THREE.MeshBasicMaterial({
+      map,
+      transparent: true,
+      alphaTest: 0.02,
+      side: THREE.FrontSide,
+      fog: true,
+      depthWrite: false,
+    }));
+    const ringFlowers = Array.from({ length: titleLabelCount }, (_, index) => {
+      const angle = index * Math.PI * 2 / titleLabelCount;
+      const radius = titleRadius + 0.002;
+      const size = flowerSize * flowerSizeVariants[index % flowerSizeVariants.length];
+      const arc = size / radius;
+      const center = new THREE.Vector3(radius * Math.sin(angle), flowerY, radius * Math.cos(angle));
+      const geometry = new THREE.CylinderGeometry(radius, radius, size, 12, 1, true, angle - arc / 2, arc);
+      geometry.translate(-center.x, 0, -center.z);
+      const flower = new THREE.Mesh(geometry, flowerMaterials[index % flowerMaterials.length]);
+      flower.position.copy(center);
+      flower.renderOrder = 2;
+      titleCylinder.add(flower);
+      geometries.push(geometry);
+      return flower;
+    });
+    materials.push(...flowerMaterials);
+    let flowerControls = { scale: 1, speed: 1, opacity: 1 };
 
     const logoGroup = new THREE.Group();
     const logoGeometry = new THREE.CylinderGeometry(
@@ -799,6 +871,21 @@ export const initCylinderScene = (root: HTMLElement) => {
       }
 
       controls = getControlState(controlOverrides);
+      const rootStyle = getComputedStyle(root);
+      const flowerValue = (key: string) => {
+        const value = Number.parseFloat(rootStyle.getPropertyValue(`--hero-ring-flower-${key}`));
+        return Number.isFinite(value) ? value : 1;
+      };
+      flowerControls = {
+        scale: THREE.MathUtils.clamp(flowerValue('scale'), 0.25, 2),
+        speed: THREE.MathUtils.clamp(flowerValue('speed'), 0, 3),
+        opacity: THREE.MathUtils.clamp(flowerValue('opacity'), 0, 1),
+      };
+      ringFlowers.forEach((flower) => flower.scale.setScalar(flowerControls.scale));
+      flowerMaterials.forEach((material) => {
+        material.opacity = flowerControls.opacity;
+        setBackfaceVisibility(material, controls.title.backfaceVisible);
+      });
       const rootRect = root.getBoundingClientRect();
       const titleRect = titleAnchor.getBoundingClientRect();
       const logoRect = logoAnchor.getBoundingClientRect();
@@ -865,6 +952,7 @@ export const initCylinderScene = (root: HTMLElement) => {
 
     const startTime = performance.now();
     let previousFrameTime = startTime;
+    let flowerElapsed = 0;
     const animate = () => {
       if (disposed || !renderer) {
         return;
@@ -874,6 +962,11 @@ export const initCylinderScene = (root: HTMLElement) => {
       const elapsed = (now - startTime) / 1000;
       const frameDelta = Math.min(0.05, Math.max(0.001, (now - previousFrameTime) / 1000));
       previousFrameTime = now;
+      flowerElapsed += frameDelta * flowerControls.speed;
+      const flowerFrame = Math.floor(flowerElapsed / flowerFrameDuration);
+      ringFlowers.forEach((flower, index) => {
+        flower.material = flowerMaterials[(flowerFrame + index) % flowerMaterials.length];
+      });
 
       (['title', 'logos'] as const).forEach((target) => {
         if (dragState?.active && dragState.target === target) {

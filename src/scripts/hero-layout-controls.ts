@@ -16,7 +16,6 @@ const positionSliders: HeroSliderConfig[] = [
   { key: 'y', label: 'Y position', min: -300, max: 300, step: 1, initial: 0, unit: 'px' },
 ];
 const sizeSlider: HeroSliderConfig = { key: 'scale', label: 'Size', min: 0.25, max: 2.5, step: 0.01, initial: 1, unit: '%' };
-const rotationSlider: HeroSliderConfig = { key: 'rotation', label: 'Rotation', min: -180, max: 180, step: 1, initial: 0, unit: '°' };
 
 export const heroLayoutGroups: { key: string; label: string; sliders: HeroSliderConfig[] }[] = [
   {
@@ -29,16 +28,12 @@ export const heroLayoutGroups: { key: string; label: string; sliders: HeroSlider
     ],
   },
   {
-    key: 'flowers', label: 'Flowers', sliders: [
-      ...positionSliders, sizeSlider, rotationSlider,
-      { key: 'gap', label: 'Flower spacing', min: -20, max: 100, step: 1, initial: 0, unit: 'px' },
-      { key: 'speed', label: 'Rocking speed', min: 0, max: 3, step: 0.05, initial: 1, unit: '×' },
+    key: 'ringFlowers', label: 'Ring flowers', sliders: [
+      { key: 'scale', label: 'Size', min: 0.25, max: 2, step: 0.01, initial: 1, unit: '%' },
+      { key: 'speed', label: 'Animation speed', min: 0, max: 3, step: 0.05, initial: 1, unit: '×' },
       { key: 'opacity', label: 'Opacity', min: 0, max: 1, step: 0.01, initial: 1, unit: '%' },
     ],
   },
-  ...[1, 2, 3].map((number) => ({
-    key: `flower${number}`, label: `Flower ${number}`, sliders: [...positionSliders, sizeSlider, rotationSlider],
-  })),
   {
     key: 'copy', label: 'Body copy', sliders: [
       ...positionSliders,
@@ -68,9 +63,6 @@ const defaultState = (): HeroLayoutState => Object.fromEntries(heroLayoutGroups.
 export const createHeroLayoutControls = (root: HTMLElement) => {
   const hero = root.querySelector<HTMLElement>('.agency-cylinder-hero');
   const content = hero?.querySelector<HTMLElement>('.agency-pattern-copy');
-  const flowers = hero?.querySelector<HTMLElement>('.hero-flowers');
-  const individualFlowers = Array.from(flowers?.querySelectorAll<HTMLElement>('.flower-doodle') ?? []);
-  const flowerImages = individualFlowers.map((flower) => flower.querySelector<HTMLElement>('img'));
   const copyContainer = hero?.querySelector<HTMLElement>('.flex-block-3');
   const copy = hero?.querySelector<HTMLElement>('.splitpara.jhppara');
   const actions = hero?.querySelector<HTMLElement>('.flex-block-7');
@@ -101,8 +93,8 @@ export const createHeroLayoutControls = (root: HTMLElement) => {
     return {
       width: style.width, minHeight: style.minHeight, paddingTop: style.paddingTop,
       paddingBottom: style.paddingBottom, paddingLeft: style.paddingLeft, paddingRight: style.paddingRight,
-      columnGap: style.columnGap, fontSize: style.fontSize, lineHeight: style.lineHeight,
-      marginTop: style.marginTop, marginBottom: style.marginBottom, animationDuration: style.animationDuration,
+      fontSize: style.fontSize, lineHeight: style.lineHeight,
+      marginTop: style.marginTop, marginBottom: style.marginBottom,
     };
   };
   const px = (value: string | undefined) => Number.parseFloat(value ?? '') || 0;
@@ -112,12 +104,10 @@ export const createHeroLayoutControls = (root: HTMLElement) => {
     restore();
     const heroCSS = css(hero);
     const contentCSS = css(content);
-    const flowerCSS = css(flowers);
     const copyCSS = css(copy);
     const actionsCSS = css(actions);
     const buttonCSS = css(button);
-    const durations = flowerImages.map((image) => css(image)?.animationDuration);
-    const { hero: layout, flowers: flower, copy: text, button: cta } = state;
+    const { hero: layout, ringFlowers: flower, copy: text, button: cta } = state;
     const move = (element: HTMLElement | null | undefined, values: LayoutValues) => {
       if (values.x || values.y) set(element, 'translate', `${values.x}px ${values.y}px`);
       if (values.scale !== undefined && values.scale !== 1) set(element, 'scale', String(values.scale));
@@ -131,17 +121,9 @@ export const createHeroLayoutControls = (root: HTMLElement) => {
     if (layout.topSpace) set(hero, 'padding-top', `${Math.max(0, px(heroCSS?.paddingTop) + layout.topSpace)}px`);
     if (layout.bottomSpace) set(hero, 'padding-bottom', `${Math.max(0, px(heroCSS?.paddingBottom) + layout.bottomSpace)}px`);
     if (layout.height) set(hero, 'min-height', `${Math.max(0, px(heroCSS?.minHeight) + layout.height)}px`);
-    move(flowers, flower);
-    if (flower.gap) set(flowers, 'gap', `${Math.max(0, px(flowerCSS?.columnGap) + flower.gap)}px`);
-    if (flower.opacity !== 1) set(flowers, 'opacity', String(flower.opacity));
-    individualFlowers.forEach((element, index) => move(element, state[`flower${index + 1}`]));
-    flowerImages.forEach((image, index) => {
-      if (flower.speed === 0) set(image, 'animation-play-state', 'paused');
-      else if (flower.speed !== 1) {
-        const seconds = Number.parseFloat(durations[index] ?? '') || 1.8;
-        set(image, 'animation-duration', `${seconds / flower.speed}s`);
-      }
-    });
+    set(root, '--hero-ring-flower-scale', String(flower.scale));
+    set(root, '--hero-ring-flower-speed', String(flower.speed));
+    set(root, '--hero-ring-flower-opacity', String(flower.opacity));
     move(copy, text);
     if (text.fontScale !== 1) set(copy, 'font-size', `${px(copyCSS?.fontSize) * text.fontScale}px`);
     if (text.leading !== 1 || text.fontScale !== 1) set(copy, 'line-height', `${px(copyCSS?.lineHeight) * text.leading * text.fontScale}px`);
