@@ -245,6 +245,16 @@ function decorateBookingCtas($: CheerioAPI) {
   });
 }
 
+function wrapCtaLabels($: CheerioAPI) {
+  $('.ctalink, .mainline.inver.rightsidecontact.contact').each((_, element) => {
+    const cta = $(element);
+    if (cta.children('.cta-label').length) return;
+    const label = $('<span class="cta-label"></span>');
+    label.append(cta.contents());
+    cta.append(label);
+  });
+}
+
 function rewriteSrcset(srcset: string) {
   return srcset
     .split(',')
@@ -705,6 +715,7 @@ export function enhanceContentHtml(html: string, options: EnhanceContentOptions)
   enhanceVideos($);
   enhanceLinks($);
   decorateBookingCtas($);
+  wrapCtaLabels($);
   normalizeBodyCopyParagraphs($);
   stripEmptyNoise($);
   formatServicePills($);

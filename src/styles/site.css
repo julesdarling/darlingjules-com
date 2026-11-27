@@ -514,7 +514,16 @@ a {
   align-items: center;
   justify-content: center;
   gap: 0.48rem;
+  text-align: center;
+  transform: translateY(var(--cta-label-offset, 0px));
   pointer-events: none;
+}
+
+.ctalink,
+.cylinder-home .mainline.inver.rightsidecontact.contact {
+  /* Center Epilogue's visible letters within its taller font metrics. */
+  --cta-label-offset: 0.09em;
+  text-align: center;
 }
 
 .cta-calendar-icon {
@@ -526,6 +535,7 @@ a {
   stroke-width: 1.9;
   stroke-linecap: round;
   stroke-linejoin: round;
+  transform: translateY(calc(-1 * var(--cta-label-offset, 0px)));
 }
 
 .cta-noise-canvas {
@@ -3052,7 +3062,7 @@ body.writingbody .postcontent > .posttext:first-child > h1 {
 
   .ctalink {
     min-height: 3rem;
-    padding: 0.82rem 1.35rem 0.82rem 1.45rem !important;
+    padding: 0.82rem 1.4rem !important;
   }
 
   .homecontainer {
@@ -3468,7 +3478,7 @@ body.writingbody .postcontent > .posttext:first-child > h1 {
 
   .ctalink {
     min-height: 3rem;
-    padding: 0.82rem 1.3rem 0.82rem 1.4rem !important;
+    padding: 0.82rem 1.35rem !important;
   }
 
   .agency-pattern-hero .heading-3.topheader.herohero.agency-pattern-title {

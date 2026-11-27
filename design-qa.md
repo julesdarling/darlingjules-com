@@ -141,3 +141,13 @@ Result: passed
 - Checked 320 × 740, 390 × 844, 768 × 1024, 1024 × 768, 1368 × 848, 1440 × 600, 1440 × 1000, and 1920 × 1080. No horizontal overflow, positive title-to-copy gaps, and selected work below the first frame at every size. Hero center error stayed below .01px.
 - Static fallback retains both labels and a decorative flower separator. A temporary script-free build fixture passed at 320px, 390px, and 1440px, with no overlap or overflow; the fixture was removed afterward.
 - Screenshots and layout measurements: `artifacts/hero-ring-flowers/`. Independent scene review, Astro check, build, site verification, and whitespace checks passed.
+
+# Centered button labels
+
+Result: passed
+
+- CTA labels now receive their shared wrapper in the rendered HTML, making alignment consistent with animation enabled, reduced motion, or no JavaScript. Client enhancement recognizes the existing wrapper without duplicating it.
+- Corrected Epilogue’s visible-letter alignment with a proportional .09em vertical offset. Existing Xanh Mono footer labels retain their centered font metrics, and calendar icons counter the text-only adjustment.
+- Equalized the two asymmetric mobile horizontal-padding rules while preserving their total width. At the original 1280px comparison size, View Work remains 133.906 × 48px and Get in touch remains 289.734 × 89.594px.
+- Checked all seven required routes at 1440 × 1000 and 390 × 844. Visible labels have 0px horizontal center error, symmetric padding, one label wrapper, and no horizontal overflow. Measured offsets and screenshots are under `artifacts/button-centering/`.
+- A temporary script-free home fixture retained the same label alignment; the fixture was removed afterward. Independent review, Astro check, build, site verification, and whitespace checks passed.
