@@ -104,7 +104,56 @@ const schema = {
     <link rel="icon" data-flower-favicon data-static-icon={withBasePath('/assets/favicon.png?v=flower-1')} href={withBasePath('/assets/favicon.png?v=flower-1')} type="image/png" sizes="64x64" />
     <link rel="apple-touch-icon" href={withBasePath('/assets/apple-touch-icon.png?v=flower-1')} />
     <script is:inline>
-      document.documentElement.classList.add('motion-ready');
+      (() => {
+        document.documentElement.classList.add('motion-ready');
+
+        const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+        let watchdog = 0;
+        let discoveryFrame = 0;
+        let monitoredRoot = null;
+
+        const armWatchdog = (root) => {
+          if (root === monitoredRoot) return;
+          window.clearTimeout(watchdog);
+          watchdog = 0;
+          monitoredRoot = root;
+          if (!root || root.dataset.cylinderState !== 'pending') return;
+          if (reducedMotion.matches) {
+            root.dataset.cylinderState = 'fallback';
+            return;
+          }
+
+          watchdog = window.setTimeout(() => {
+            watchdog = 0;
+            if (root.isConnected && root.dataset.cylinderState === 'pending') {
+              root.dataset.cylinderState = 'fallback';
+            }
+          }, 10000);
+        };
+
+        const discoverRoot = () => {
+          discoveryFrame = 0;
+          const root = document.querySelector('.cylinder-home');
+          if (root || document.readyState !== 'loading') {
+            armWatchdog(root);
+            return;
+          }
+          discoveryFrame = window.requestAnimationFrame(discoverRoot);
+        };
+
+        document.addEventListener('astro:before-swap', (event) => {
+          window.clearTimeout(watchdog);
+          window.cancelAnimationFrame(discoveryFrame);
+          watchdog = 0;
+          discoveryFrame = 0;
+          monitoredRoot = null;
+          event.newDocument.documentElement.classList.add('motion-ready');
+        });
+        const monitorCurrentRoot = () => armWatchdog(document.querySelector('.cylinder-home'));
+        document.addEventListener('astro:after-swap', monitorCurrentRoot);
+        document.addEventListener('astro:page-load', monitorCurrentRoot);
+        discoverRoot();
+      })();
     </script>
     <script type="application/ld+json" is:inline set:html={JSON.stringify(schema)} />
     <ClientRouter fallback="animate" />

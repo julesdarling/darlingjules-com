@@ -4187,6 +4187,34 @@ body.writingbody .postcontent > .posttext:first-child > h1 {
   display: none;
 }
 
+@media (prefers-reduced-motion: no-preference) {
+  .motion-ready .cylinder-home[data-cylinder-state="pending"] .agency-cylinder-fallback-title {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    margin: -1px !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    clip: rect(0 0 0 0) !important;
+    clip-path: inset(50%) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+  }
+
+  .motion-ready .cylinder-home[data-cylinder-state="pending"] .agency-pattern-marquee {
+    display: none;
+  }
+
+  .motion-ready .cylinder-home[data-cylinder-state="pending"] .agency-logo-cylinder {
+    display: block;
+  }
+
+  .motion-ready .cylinder-home[data-cylinder-state="pending"] .agency-cylinder-stage {
+    display: block;
+    visibility: hidden;
+  }
+}
+
 .cylinder-controls {
   --cylinder-controls-height: min(43rem, calc(100svh - 2rem));
   position: fixed;

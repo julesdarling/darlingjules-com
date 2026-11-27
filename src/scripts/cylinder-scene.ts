@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { setCylinderState } from './cylinder-state';
 
 type LogoSpec = {
   src: string;
@@ -546,6 +547,9 @@ const isPointInRect = (clientX: number, clientY: number, rect: DOMRect) =>
   clientX >= rect.left && clientX <= rect.right && clientY >= rect.top && clientY <= rect.bottom;
 
 export const initCylinderScene = (root: HTMLElement) => {
+  // A timed-out load keeps its fallback for the rest of this page visit.
+  if (root.dataset.cylinderState === 'fallback') return () => {};
+
   const stage = root.querySelector<HTMLElement>('.agency-cylinder-stage');
   const canvas = root.querySelector<HTMLCanvasElement>('.agency-cylinder-stage__canvas');
   const titleAnchor = root.querySelector<HTMLElement>('.agency-cylinder-headline');
@@ -557,10 +561,11 @@ export const initCylinderScene = (root: HTMLElement) => {
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
   if (!stage || !canvas || !titleAnchor || !logoAnchor || !hero || !band || reduceMotion.matches || !hasWebgl()) {
-    hero?.classList.add('is-cylinder-fallback');
+    setCylinderState(root, 'fallback');
     return () => {};
   }
 
+  setCylinderState(root, 'pending');
   let disposed = false;
   let animationFrame = 0;
   let renderer: THREE.WebGLRenderer | undefined;
@@ -575,6 +580,7 @@ export const initCylinderScene = (root: HTMLElement) => {
   const materials: THREE.Material[] = [];
 
   const cleanup = () => {
+    if (disposed) return;
     disposed = true;
     cancelAnimationFrame(animationFrame);
     resizeObserver?.disconnect();
@@ -589,9 +595,8 @@ export const initCylinderScene = (root: HTMLElement) => {
     textures.forEach((texture) => texture.dispose());
     geometries.forEach((geometry) => geometry.dispose());
     materials.forEach((material) => material.dispose());
-    root.classList.remove('is-cylinder-scene-ready');
-    hero.classList.remove('is-cylinder-ready');
-    band.classList.remove('is-logo-cylinder-ready');
+    // Navigation must not uncover the static version while the old page exits.
+    if (root.dataset.cylinderState !== 'fallback') setCylinderState(root, 'pending');
   };
 
   const start = async () => {
@@ -603,16 +608,17 @@ export const initCylinderScene = (root: HTMLElement) => {
     ]);
     const logoTexture = logoResult.status === 'fulfilled' ? logoResult.value : undefined;
     const flowerTextures = flowerResult.status === 'fulfilled' ? flowerResult.value : [];
-    if (disposed || !logoTexture || !flowerTextures.length) {
+    if (disposed || root.dataset.cylinderState === 'fallback' || !logoTexture || !flowerTextures.length) {
       logoTexture?.dispose();
       flowerTextures.forEach((texture) => texture.dispose());
-      if (!disposed) hero.classList.add('is-cylinder-fallback');
+      if (!disposed) setCylinderState(root, 'fallback');
       return;
     }
     textures.push(logoTexture, ...flowerTextures);
     const titleArtwork = createTitleTexture([text, alternateText]);
     if (!titleArtwork) {
-      hero.classList.add('is-cylinder-fallback');
+      cleanup();
+      setCylinderState(root, 'fallback');
       return;
     }
     const { texture: titleTexture, flowerSize, flowerY } = titleArtwork;
@@ -702,10 +708,6 @@ export const initCylinderScene = (root: HTMLElement) => {
 
     geometries.push(titleGeometry, logoGeometry);
     materials.push(titleMaterial, logoMaterial);
-
-    root.classList.add('is-cylinder-scene-ready');
-    hero.classList.add('is-cylinder-ready');
-    band.classList.add('is-logo-cylinder-ready');
 
     const spinOffset = {
       title: 0,
@@ -953,6 +955,7 @@ export const initCylinderScene = (root: HTMLElement) => {
     const startTime = performance.now();
     let previousFrameTime = startTime;
     let flowerElapsed = 0;
+    let firstFrameRendered = false;
     const animate = () => {
       if (disposed || !renderer) {
         return;
@@ -990,13 +993,21 @@ export const initCylinderScene = (root: HTMLElement) => {
       logoGroup.rotation.y = -0.18 + controls.logos.yaw + automaticRotation.logos + spinOffset.logos;
 
       renderer.render(scene, camera);
+      if (!firstFrameRendered) {
+        firstFrameRendered = true;
+        setCylinderState(root, 'ready');
+      }
       animationFrame = requestAnimationFrame(animate);
     };
 
     animate();
   };
 
-  void start();
+  void start().catch(() => {
+    if (disposed) return;
+    cleanup();
+    setCylinderState(root, 'fallback');
+  });
 
   return cleanup;
 };

@@ -104,6 +104,15 @@
   padding: 0 clamp(1rem, 4vw, 3rem);
 }
 
+.cylinder-home .responsive-hero .hero-body-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: inherit;
+  width: 100%;
+  max-width: 38rem;
+}
+
 .cylinder-home .responsive-hero .splitpara.jhppara {
   width: 100%;
   max-width: 38rem;

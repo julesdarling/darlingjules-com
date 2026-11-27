@@ -64,7 +64,8 @@ export const createHeroLayoutControls = (root: HTMLElement) => {
   const hero = root.querySelector<HTMLElement>('.agency-cylinder-hero');
   const content = hero?.querySelector<HTMLElement>('.agency-pattern-copy');
   const copyContainer = hero?.querySelector<HTMLElement>('.flex-block-3');
-  const copy = hero?.querySelector<HTMLElement>('.splitpara.jhppara');
+  const copy = hero?.querySelector<HTMLElement>('.hero-body-copy');
+  const paragraphs = Array.from(copy?.querySelectorAll<HTMLElement>('.splitpara.jhppara') ?? []);
   const actions = hero?.querySelector<HTMLElement>('.flex-block-7');
   const button = actions?.querySelector<HTMLElement>('.ctalink');
   const originalStyles = new Map<HTMLElement, Map<string, { value: string; priority: string }>>();
@@ -105,6 +106,7 @@ export const createHeroLayoutControls = (root: HTMLElement) => {
     const heroCSS = css(hero);
     const contentCSS = css(content);
     const copyCSS = css(copy);
+    const paragraphStyles = paragraphs.map((paragraph) => ({ paragraph, style: css(paragraph) }));
     const actionsCSS = css(actions);
     const buttonCSS = css(button);
     const { hero: layout, ringFlowers: flower, copy: text, button: cta } = state;
@@ -125,12 +127,14 @@ export const createHeroLayoutControls = (root: HTMLElement) => {
     set(root, '--hero-ring-flower-speed', String(flower.speed));
     set(root, '--hero-ring-flower-opacity', String(flower.opacity));
     move(copy, text);
-    if (text.fontScale !== 1) set(copy, 'font-size', `${px(copyCSS?.fontSize) * text.fontScale}px`);
-    if (text.leading !== 1 || text.fontScale !== 1) set(copy, 'line-height', `${px(copyCSS?.lineHeight) * text.leading * text.fontScale}px`);
-    if (text.width !== 1) {
-      set(copy, 'width', `${px(copyCSS?.width) * text.width}px`);
-      set(copy, 'max-width', 'none');
-    }
+    paragraphStyles.forEach(({ paragraph, style }) => {
+      if (text.fontScale !== 1) set(paragraph, 'font-size', `${px(style?.fontSize) * text.fontScale}px`);
+      if (text.leading !== 1 || text.fontScale !== 1) set(paragraph, 'line-height', `${px(style?.lineHeight) * text.leading * text.fontScale}px`);
+      if (text.width !== 1) {
+        set(paragraph, 'width', `${px(style?.width) * text.width}px`);
+        set(paragraph, 'max-width', 'none');
+      }
+    });
     if (text.spaceAbove) set(copyContainer, 'padding-top', `${Math.max(0, text.spaceAbove)}px`);
     if (text.spaceBelow) set(copy, 'margin-bottom', `${px(copyCSS?.marginBottom) + text.spaceBelow}px`);
     move(button, cta);

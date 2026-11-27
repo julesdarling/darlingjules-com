@@ -5,6 +5,7 @@ import { initHeadlineReveals, initHeroIntro, prepareHeadlineChars, splitHeadline
 import { initPortraitGlow } from './portrait-glow';
 import { initPortraitFlowers } from './portrait-flowers';
 import { initPortraitRoles } from './portrait-roles';
+import { setCylinderState } from './cylinder-state';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -936,7 +937,6 @@ const initCylinderScene = () => {
 
   let cleanup: (() => void) | undefined;
   let cancelled = false;
-  const hero = root.querySelector<HTMLElement>('.agency-cylinder-hero');
 
   import('./cylinder-scene')
     .then(({ initCylinderScene: initSharedCylinderScene }) => {
@@ -947,7 +947,7 @@ const initCylinderScene = () => {
       cleanup = initSharedCylinderScene(root);
     })
     .catch(() => {
-      hero?.classList.add('is-cylinder-fallback');
+      if (!cancelled) setCylinderState(root, 'fallback');
     });
 
   cleanupListeners.push(() => {

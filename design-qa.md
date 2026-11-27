@@ -151,3 +151,15 @@ Result: passed
 - Equalized the two asymmetric mobile horizontal-padding rules while preserving their total width. At the original 1280px comparison size, View Work remains 133.906 × 48px and Get in touch remains 289.734 × 89.594px.
 - Checked all seven required routes at 1440 × 1000 and 390 × 844. Visible labels have 0px horizontal center error, symmetric padding, one label wrapper, and no horizontal overflow. Measured offsets and screenshots are under `artifacts/button-centering/`.
 - A temporary script-free home fixture retained the same label alignment; the fixture was removed afterward. Independent review, Astro check, build, site verification, and whitespace checks passed.
+
+# Clean cylinder startup and hero copy
+
+Result: passed
+
+- The initial HTML marks the hero pending. A synchronous head bootstrap and CSS gate clip the accessible static title and hide the flat logo row before module loading. Hidden stage and logo anchors remain measurable, reserving their responsive layout.
+- The scene reveals both cylinders only after its first successful render. Import, asset, and setup failures use the shared fallback state. A module-independent 10-second watchdog handles stalled startup; late results cannot replace a timed-out fallback. Reduced-motion discovery immediately selects the static fallback. Astro navigation marks the incoming document before swapping and cancels the previous watchdog.
+- Temporary blocked-module and script-free build fixtures verified the pending gate and no-JS fallback at 1440 × 1000 and 390 × 844, plus timeout fallback on desktop. The title remains accessible while clipped. Both fixtures were removed afterward. Native About-to-home navigation returned to rendered cylinders successfully.
+- Replaced the hero copy with the supplied two paragraphs in the existing Epilogue Light styling. Measured paragraph gap is about 19px on desktop and 16px on mobile; font sizes remain 20px and 16px respectively. Body copy controls now move the group together and update both paragraphs' font, leading, and width.
+- Changed the home footer and About contact buttons to “Say hey”, preserving their existing mail links and glitter treatment.
+- Home and the six other required routes remain scrollable without horizontal overflow at both standard viewport sizes. Home selected work stays below the opening frame. Screenshots and route measurements are under `artifacts/cylinder-load/`.
+- Independent startup/lifecycle review, Astro check, build (69 pages), site verification (68 routes), and whitespace checks passed. The existing unused-variable hint and bundle-size advisory are unchanged.
