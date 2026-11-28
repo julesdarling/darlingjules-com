@@ -1075,56 +1075,26 @@ a {
   text-align: center;
 }
 
-.personal-about-meet-hero .portrait-role-line {
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
+.personal-about-meet-hero .portrait-bio {
+  display: grid;
   grid-column: 1 / -1;
   grid-row: 3;
-  align-items: center;
-  justify-content: center;
-  gap: 0.45em;
-  width: 100%;
-  margin: 0;
-  color: var(--haggard-muted);
-  font-size: clamp(0.9rem, 1.25vw, 1.15rem);
-  font-weight: 400;
-  line-height: 1.5;
+  justify-self: center;
+  gap: 1.1rem;
+  width: min(100%, 46rem);
+  margin-top: clamp(0.5rem, 1vw, 1rem);
+  color: var(--haggard-ink);
+  font-size: clamp(1rem, 1.25vw, 1.15rem);
+  font-weight: 300;
+  line-height: 1.6;
   text-align: center;
 }
 
-.portrait-role-prefix {
-  font-weight: 500;
-  white-space: nowrap;
-}
-
-.portrait-role-rotator {
-  display: inline-grid;
-  align-items: center;
-  overflow: clip;
-}
-
-.portrait-role-word {
-  grid-area: 1 / 1;
-  white-space: nowrap;
-  opacity: 0;
-  visibility: hidden;
-}
-
-.portrait-role-word:first-child {
-  opacity: 1;
-  visibility: visible;
-}
-
-.portrait-role-accessible {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip-path: inset(50%);
-  white-space: nowrap;
+.personal-about-meet-hero .portrait-bio p {
+  max-width: none;
+  margin: 0;
+  font-size: inherit !important;
+  line-height: inherit !important;
 }
 
 .personal-how-work-list > p {
@@ -4455,6 +4425,14 @@ body.writingbody .postcontent > .posttext:first-child > h1 {
   object-fit: contain;
   filter: brightness(0) saturate(100%) invert(37%) sepia(8%) saturate(284%) hue-rotate(349deg) brightness(93%) contrast(88%);
   opacity: 1;
+}
+
+.cylinder-home .agency-pattern-marquee-group img {
+  filter: brightness(0);
+}
+
+.cylinder-home .agency-pattern-marquee-group img[src*="liveramp"] {
+  transform: scaleX(1.1745);
 }
 
 .agency-pattern-marquee-group img[src*="google"] {

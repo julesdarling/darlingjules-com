@@ -4,9 +4,9 @@ import { initCtaWebglButtons } from './cta-webgl';
 import { initHeadlineReveals, initHeroIntro, prepareHeadlineChars, splitHeadline } from './hero-intro';
 import { initPortraitGlow } from './portrait-glow';
 import { initPortraitFlowers } from './portrait-flowers';
-import { initPortraitRoles } from './portrait-roles';
 import { setCylinderState } from './cylinder-state';
 import { initAboutBunny } from './about-bunny';
+import { initWritingWhale } from './writing-whale';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -969,8 +969,8 @@ const initMotion = () => {
   cleanupListeners.push(initPortraitFlowers());
   cleanupListeners.push(initStickyNavVisibility());
   cleanupListeners.push(initHeroOpening());
-  cleanupListeners.push(initPortraitRoles());
   cleanupListeners.push(initAboutBunny());
+  cleanupListeners.push(initWritingWhale());
 
   if (reduceMotion.matches) {
     return;

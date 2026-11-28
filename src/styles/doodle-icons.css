@@ -31,6 +31,10 @@
   margin-top: -0.05em;
 }
 
+.personal-how-work-list > p > .about-work-icon[src*="cute-facing-fish"] {
+  transform: scale(1.25);
+}
+
 @media (max-width: 639px) {
   .capability-list.agency-pattern-reason-list {
     grid-template-columns: minmax(0, 1fr);

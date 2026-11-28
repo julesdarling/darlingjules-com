@@ -193,3 +193,31 @@ Result: passed
 - Added the owl with a book, smiling phone, circuit brain, globe, circus tent, and cow. Preserved the blossom, butterfly, and tulip requested to stay. Renamed the tent item to “Event and Interactive Experiences”.
 - All nine SVGs load and their label/icon center differences remain 0px at 1440 × 1000 and 390 × 844, including wrapped labels. Screenshots: `capabilities-desktop.jpg` and `capabilities-mobile.jpg`.
 - All eleven new SVGs passed XML checks. The seven required routes still scroll without horizontal overflow at both standard viewport sizes. Independent review, Astro check, build (69 pages), site verification (68 routes), and whitespace checks passed. The existing unused-variable hint and bundle-size advisory remain unchanged.
+
+# Writing whale, biography, and final refinements
+
+Result: passed
+
+## Registered whale animation
+
+- Replaced the two large blue edge whales with the supplied small hand-drawn whale above “From the pool of wisdom”. Removed the introductory methodology/process line. The article links and contact action remain centered and responsive without the old mobile whale padding.
+- Reused the original 8 × 4 PNG unchanged. Each of the 32 poses now has a registered body center and waterline plus its own clipping rectangle, preserving hearts, rays, eyes, and complete outlines while excluding neighboring fragments. Unregistered waterlines varied from 152.75px to 217px; all are now aligned to 200px in source-frame coordinates, with a common 110.875px horizontal center.
+- All 32 poses passed dark-ink and antialias-bound checks: no clipped pose components or foreign pixels. Two different rendered rows measured identical body centers and baselines in browser screenshots. Proof is retained in `artifacts/writing-whale-refinements/registration-proof.json` and `rendered-registration.json`.
+- The 4.48s stepped loop pauses off screen or when the document is hidden. Independent lifecycle checks passed for intersection visibility, preference changes, and cleanup. Reduced motion and no JavaScript show the registered first pose. A temporary script-free fixture verified the static frame and was removed afterward.
+
+## Portrait biography
+
+- Replaced the standalone Design Director label and rotating titles with the two supplied biography paragraphs, retaining she/her below the portrait. Removed the old rotation module, initialization, and styles, so no old title layers remain.
+- The biography uses Epilogue Light at 18px/28.8px on desktop and 16px/25.6px on mobile, with a clear paragraph gap. Both paragraphs fit their centered measure without overflow or collision.
+
+## Logos and About icons
+
+- Hero logos now use opaque near-black ink. LiveRamp is 350 × 86 instead of 298 × 86, about 17.4% wider with its height unchanged; existing ring geometry and edge fading remain intact. The static fallback uses black filtering and the matching horizontal stretch.
+- Clear communication now uses two inward-facing fish at the same height, enlarged 25% without moving the label column. No ego now uses a side-profile baby lamb. Both SVGs load successfully and retain the existing rounded linework.
+
+## Copy and navigation removals
+
+- Both contact buttons now say “Say heyyyyy”, retaining centered labels and the existing glitter interaction.
+- Removed the final “Built for teams…” sentence from the All work introduction and the homepage's “View All Projects” link. The remaining archive copy and Work navigation remain intact.
+- All seven required routes scroll without horizontal overflow at 1440 × 1000 and 390 × 844. Focused screenshots and route measurements are under `artifacts/writing-whale-refinements/`.
+- Independent review, Astro check, build (69 pages), site verification (68 routes), and whitespace checks passed. The existing unused-variable hint and bundle-size advisory remain unchanged.

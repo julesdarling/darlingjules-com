@@ -86,7 +86,7 @@ const titleLabelCount = 2 * titleTextureRepeatX;
 const flowerFrameDuration = 0.14;
 const flowerSizeVariants = [0.85, 1.12, 0.95] as const;
 
-const logoInk = 'rgba(92, 89, 84, 0.96)';
+const logoInk = '#11100f';
 const logoTextureWidth = 8192;
 const logoTextureHeight = 320;
 const logoRadius = 6.4;
@@ -160,7 +160,7 @@ const logos: LogoSpec[] = [
   { src: '/assets/logos/agency-home/square.svg', width: 92, height: 92, y: 0.51 },
   { src: '/assets/logos/agency-home/linkedin.svg', width: 92, height: 92, y: 0.51 },
   { src: '/assets/logos/agency-home/wish.svg', width: 126, height: 98, y: 0.51 },
-  { src: '/assets/logos/agency-home/liveramp.svg', width: 298, height: 86, y: 0.51 },
+  { src: '/assets/logos/agency-home/liveramp.svg', width: 350, height: 86, y: 0.51 },
   { src: '/assets/logos/agency-home/adult-swim.svg', width: 318, height: 72, y: 0.51 },
 ];
 

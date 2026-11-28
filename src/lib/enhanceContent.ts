@@ -15,6 +15,7 @@ interface EnhanceContentOptions {
 
 const decorativeClasses = [
   'about-bunny__sheet',
+  'writing-whale__sheet',
   'capricorn',
   'caterpillar',
   'cow',
