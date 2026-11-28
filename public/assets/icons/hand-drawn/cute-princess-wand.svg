@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" stroke="#11100f" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+  <style>
+    .wand-sparkle { animation: twinkle 2.6s ease-in-out infinite; }
+    .wand-sparkle--b { animation-delay: -1.3s; }
+    @keyframes twinkle { 0%, 100% { opacity: .55; } 50% { opacity: 1; } }
+    @media (prefers-reduced-motion: reduce) { .wand-sparkle { animation: none; opacity: 1; } }
+  </style>
+  <path d="M20.8 3.6C21.8 5.1 22.2 6.7 23.1 8.3L28.3 9.2L24.4 12.9L25.3 18L20.5 15.6L15.6 18.1L16.6 12.9L13.1 9L18.4 8.2L20.8 3.6ZM17.1 18L6.1 28.7"/>
+  <path class="wand-sparkle" d="M6.6 3.7C6.8 6.4 7.8 7.1 10.4 7.6C7.8 8.2 6.8 9.1 6.4 11.7C6 9.1 5.1 8 2.8 7.6C5.3 7.1 6.1 6.3 6.6 3.7Z" stroke-width="1.5"/>
+  <path class="wand-sparkle wand-sparkle--b" d="M25 21C25.4 23.4 26.2 24.2 28.4 24.7C26.1 25.3 25.4 26.1 25 28.4C24.5 26 23.7 25.3 21.5 24.8C23.9 24.2 24.5 23.3 25 21Z" stroke-width="1.5"/>
+</svg>

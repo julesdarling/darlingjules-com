@@ -14,6 +14,7 @@ interface EnhanceContentOptions {
 }
 
 const decorativeClasses = [
+  'about-bunny__sheet',
   'capricorn',
   'caterpillar',
   'cow',

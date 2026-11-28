@@ -1393,6 +1393,35 @@ a {
   text-align: center;
 }
 
+.personal-about-final-heading {
+  display: grid;
+  justify-items: center;
+  gap: 0.25rem;
+  max-width: 100%;
+}
+
+.about-bunny {
+  --bunny-size: clamp(7rem, 10vw, 8.5rem);
+  position: relative;
+  width: var(--bunny-size);
+  aspect-ratio: 5 / 4;
+  overflow: clip;
+  pointer-events: none;
+  user-select: none;
+  mix-blend-mode: multiply;
+}
+
+.about-bunny .about-bunny__sheet {
+  display: block;
+  position: absolute;
+  top: calc(var(--bunny-size) * -0.1);
+  left: 0;
+  width: 400%;
+  max-width: none;
+  height: auto;
+  transform: translate(-25%, 0);
+}
+
 .personal-about-final .projecttitle.headertitledesc.lefty.brand-leader.hp {
   justify-self: center;
   max-width: 8.8em;

@@ -6,6 +6,7 @@ import { initPortraitGlow } from './portrait-glow';
 import { initPortraitFlowers } from './portrait-flowers';
 import { initPortraitRoles } from './portrait-roles';
 import { setCylinderState } from './cylinder-state';
+import { initAboutBunny } from './about-bunny';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -969,6 +970,7 @@ const initMotion = () => {
   cleanupListeners.push(initStickyNavVisibility());
   cleanupListeners.push(initHeroOpening());
   cleanupListeners.push(initPortraitRoles());
+  cleanupListeners.push(initAboutBunny());
 
   if (reduceMotion.matches) {
     return;

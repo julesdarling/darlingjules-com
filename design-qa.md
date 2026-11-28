@@ -171,3 +171,25 @@ Result: passed
 - Removed “I lead the work and make the work.” The hero now contains only the supplied “20 years…” paragraph. Its single-child flex wrapper adds no empty paragraph gap, and the body controls still apply normally.
 - At 1440 × 1000 and 390 × 844, the paragraph-to-button gaps remain about 19px and 16px, the page has no horizontal overflow, and selected work begins below the opening viewport. All six other required routes still scroll without horizontal overflow.
 - Independent markup/control review, Astro check, build, site verification, and whitespace checks passed. Screenshots and route measurements are under `artifacts/hero-line-removal/`.
+
+# About bunny and custom icon sets
+
+Result: passed
+
+## Cursor-following bunny
+
+- Added the supplied eight-pose bunny above the About page's closing headline, using the original PNG unchanged and CSS sprite framing. The final revision makes her about one third smaller: frame widths are 136px on desktop and 112px on mobile, with a 4px layout gap above the headline. No dark artwork is clipped in any pose.
+- Native pointer input verified all eight gaze directions. Tracking batches work into a single requested animation frame, updates on scrolling/resizing, and stops while hidden or off screen. A small angular overlap prevents twitching at direction boundaries.
+- Independent in-memory lifecycle checks passed for all directions, coalesced events, scroll recalculation, touch rejection, reduced-motion/coarse-pointer preference changes, and cleanup. Astro navigation removes listeners and queued frames. The decorative bunny is excluded from assistive technology.
+- A temporary script-free About fixture showed the default pose correctly at 390 × 844 with no overflow; the fixture was removed afterward. Screenshots include `bunny-small-desktop.jpg` and `bunny-small-mobile.jpg` under `artifacts/about-bunny-icons/`.
+
+## How I work icons
+
+- Applied the requested running bird, facing fish pair, two mushrooms, bow, sheep, smiley bunny, and princess wand. The five new SVG assets match the existing rounded hand-drawn linework. Wand sparkles use a restrained opacity animation and remain static for reduced motion.
+- All seven assets load at desktop and mobile sizes, retain their existing first-line alignment, and remain decorative. Screenshots: `how-i-work-desktop.jpg` and `how-i-work-mobile.jpg`.
+
+## Capability icons
+
+- Added the owl with a book, smiling phone, circuit brain, globe, circus tent, and cow. Preserved the blossom, butterfly, and tulip requested to stay. Renamed the tent item to “Event and Interactive Experiences”.
+- All nine SVGs load and their label/icon center differences remain 0px at 1440 × 1000 and 390 × 844, including wrapped labels. Screenshots: `capabilities-desktop.jpg` and `capabilities-mobile.jpg`.
+- All eleven new SVGs passed XML checks. The seven required routes still scroll without horizontal overflow at both standard viewport sizes. Independent review, Astro check, build (69 pages), site verification (68 routes), and whitespace checks passed. The existing unused-variable hint and bundle-size advisory remain unchanged.
