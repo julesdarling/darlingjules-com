@@ -243,16 +243,6 @@ const createTitleTexture = (labels: readonly string[]) => {
     context.restore();
   });
 
-  const edgeFade = context.createLinearGradient(0, 0, canvas.width, 0);
-  edgeFade.addColorStop(0, 'rgba(0, 0, 0, 0)');
-  edgeFade.addColorStop(0.08, 'rgba(0, 0, 0, 1)');
-  edgeFade.addColorStop(0.92, 'rgba(0, 0, 0, 1)');
-  edgeFade.addColorStop(1, 'rgba(0, 0, 0, 0)');
-  context.globalCompositeOperation = 'destination-in';
-  context.fillStyle = edgeFade;
-  context.fillRect(0, 0, canvas.width, canvas.height);
-  context.globalCompositeOperation = 'source-over';
-
   const texture = new THREE.CanvasTexture(canvas);
   texture.colorSpace = THREE.SRGBColorSpace;
   texture.anisotropy = 8;

@@ -49,13 +49,22 @@
   height: auto;
   transform: translate(calc(0% + var(--whale-size) * -0.0456595265), calc(0% + var(--whale-size) * 0.099210823));
   clip-path: inset(9.2446448703% 87.2604284104% 79.7068771139% 0.9019165727%);
-  animation: writing-whale-swim 4.48s steps(1, end) infinite;
-  animation-play-state: paused;
 }
 
-.writing-whale.is-whale-playing .writing-whale__sheet {
-  animation-play-state: running;
-  will-change: transform;
+.writing-whale .writing-whale__canvas {
+  position: absolute;
+  inset: 0;
+  display: none;
+  width: 100%;
+  height: 100%;
+}
+
+.writing-whale.is-whale-ready .writing-whale__canvas {
+  display: block;
+}
+
+.writing-whale.is-whale-ready .writing-whale__sheet {
+  visibility: hidden;
 }
 
 .personal-writing--whale ul {
@@ -74,151 +83,5 @@
 .personal-writing--whale .marquee-content.scroll.footer {
   margin: 0 !important;
   padding-top: 0.75rem !important;
-}
-
-/* The source drawings have uneven padding. Register their outline centers and
-   waterlines, then clip each pose separately so neighboring ink cannot leak. */
-@keyframes writing-whale-swim {
-  0% {
-    transform: translate(calc(0% + var(--whale-size) * -0.0456595265), calc(0% + var(--whale-size) * 0.099210823));
-    clip-path: inset(9.2446448703% 87.2604284104% 79.7068771139% 0.9019165727%);
-  }
-  3.125% {
-    transform: translate(calc(-12.5% + var(--whale-size) * -0.0490417136), calc(0% + var(--whale-size) * 0.0586245772));
-    clip-path: inset(10.5975197294% 74.8027057497% 78.6922209696% 13.5287485908%);
-  }
-  6.25% {
-    transform: translate(calc(-25% + var(--whale-size) * -0.0411499436), calc(0% + var(--whale-size) * 0.0270574972));
-    clip-path: inset(11.3866967306% 62.3449830891% 77.9030439684% 25.8737316798%);
-  }
-  9.375% {
-    transform: translate(calc(-37.5% + var(--whale-size) * -0.0332581736), calc(0% + var(--whale-size) * -0.0045095829));
-    clip-path: inset(12.2886133033% 50% 77.1138669673% 38.3314543405%);
-  }
-  12.5% {
-    transform: translate(calc(-50% + var(--whale-size) * -0.0186020293), calc(0% + var(--whale-size) * -0.0225479143));
-    clip-path: inset(13.4160090192% 37.6550169109% 76.6629086809% 50.6200676437%);
-  }
-  15.625% {
-    transform: translate(calc(-62.5% + var(--whale-size) * -0.0174746336), calc(0% + var(--whale-size) * -0.0360766629));
-    clip-path: inset(8.9064261556% 25.0845546787% 76.3246899662% 63.0214205186%);
-  }
-  18.75% {
-    transform: translate(calc(-75% + var(--whale-size) * -0.0163472379), calc(0% + var(--whale-size) * -0.0541149944));
-    clip-path: inset(9.8083427283% 12.626832018% 75.8737316798% 75.5355129651%);
-  }
-  21.875% {
-    transform: translate(calc(-87.5% + var(--whale-size) * -0.0107102593), calc(0% + var(--whale-size) * -0.0766629087));
-    clip-path: inset(11.6121758737% 0.2254791432% 75.3100338219% 87.9932356257%);
-  }
-  25% {
-    transform: translate(calc(0% + var(--whale-size) * -0.0321307779), calc(-25% + var(--whale-size) * -0.0597519729));
-    clip-path: inset(36.9785794814% 87.3167981962% 50.7328072153% 0.6200676437%);
-  }
-  28.125% {
-    transform: translate(calc(-12.5% + var(--whale-size) * -0.0264937993), calc(-25% + var(--whale-size) * -0.0597519729));
-    clip-path: inset(39.2333709132% 75.0281848929% 50.7328072153% 13.190529876%);
-  }
-  31.25% {
-    transform: translate(calc(-25% + var(--whale-size) * -0.0298759865), calc(-25% + var(--whale-size) * -0.0191657272));
-    clip-path: inset(38.3314543405% 62.4577226607% 51.7474633596% 25.7046223224%);
-  }
-  34.375% {
-    transform: translate(calc(-37.5% + var(--whale-size) * -0.0219842165), calc(-25% + var(--whale-size) * -0.0056369786));
-    clip-path: inset(34.4983089064% 50.1127395716% 52.0856820744% 38.1623449831%);
-  }
-  37.5% {
-    transform: translate(calc(-50% + var(--whale-size) * -0.0186020293), calc(-25% + var(--whale-size) * 0.0349492672));
-    clip-path: inset(32.694475761% 37.5422773393% 53.1003382187% 50.5073280722%);
-  }
-  40.625% {
-    transform: translate(calc(-62.5% + var(--whale-size) * -0.019729425), calc(-25% + var(--whale-size) * 0.0574971815));
-    clip-path: inset(35.5129650507% 25.0845546787% 53.6640360767% 63.0777903044%);
-  }
-  43.75% {
-    transform: translate(calc(-75% + var(--whale-size) * -0.0163472379), calc(-25% + var(--whale-size) * 0.075535513));
-    clip-path: inset(34.9492671928% 12.626832018% 54.114994363% 75.5355129651%);
-  }
-  46.875% {
-    transform: translate(calc(-87.5% + var(--whale-size) * -0.0062006764), calc(-25% + var(--whale-size) * 0.1161217587));
-    clip-path: inset(31.5670800451% 0.2254791432% 55.1296505073% 87.8804960541%);
-  }
-  50% {
-    transform: translate(calc(0% + var(--whale-size) * -0.0434047351), calc(-50% + var(--whale-size) * 0.1645997745));
-    clip-path: inset(58.3990980834% 87.2604284104% 31.3416009019% 0.8455467869%);
-  }
-  53.125% {
-    transform: translate(calc(-12.5% + var(--whale-size) * -0.0445321308), calc(-50% + var(--whale-size) * 0.1014656144));
-    clip-path: inset(59.8647125141% 74.8590755355% 29.7632468997% 13.472378805%);
-  }
-  56.25% {
-    transform: translate(calc(-25% + var(--whale-size) * -0.0411499436), calc(-50% + var(--whale-size) * 0.0608793687));
-    clip-path: inset(60.6538895152% 62.3449830891% 28.7485907554% 25.8737316798%);
-  }
-  59.375% {
-    transform: translate(calc(-37.5% + var(--whale-size) * -0.0355129651), calc(-50% + var(--whale-size) * 0.0293122886));
-    clip-path: inset(61.7812852311% 49.9436302142% 27.9594137542% 38.3314543405%);
-  }
-  62.5% {
-    transform: translate(calc(-50% + var(--whale-size) * -0.0253664036), calc(-50% + var(--whale-size) * -0.0067643743));
-    clip-path: inset(62.908680947% 37.5422773393% 27.0574971815% 50.6764374295%);
-  }
-  65.625% {
-    transform: translate(calc(-62.5% + var(--whale-size) * -0.0219842165), calc(-50% + var(--whale-size) * -0.0293122886));
-    clip-path: inset(60.99210823% 25.0845546787% 26.4937993236% 63.1341600902%);
-  }
-  68.75% {
-    transform: translate(calc(-75% + var(--whale-size) * -0.0163472379), calc(-50% + var(--whale-size) * -0.0428410372));
-    clip-path: inset(64.1488162345% 12.626832018% 26.1555806088% 75.5355129651%);
-  }
-  71.875% {
-    transform: translate(calc(-87.5% + var(--whale-size) * -0.0084554679), calc(-50% + var(--whale-size) * -0.0518602029));
-    clip-path: inset(59.7519729425% 0.1691093574% 25.9301014656% 87.8804960541%);
-  }
-  75% {
-    transform: translate(calc(0% + var(--whale-size) * -0.0343855693), calc(-75% + var(--whale-size) * 0.0642615558));
-    clip-path: inset(86.1330326945% 87.2604284104% 3.833145434% 0.6200676437%);
-  }
-  78.125% {
-    transform: translate(calc(-12.5% + var(--whale-size) * -0.0332581736), calc(-75% + var(--whale-size) * 0.1048478016));
-    clip-path: inset(84.892897407% 74.9154453213% 4.8478015784% 13.2468996618%);
-  }
-  81.25% {
-    transform: translate(calc(-25% + var(--whale-size) * -0.027621195), calc(-75% + var(--whale-size) * 0.1364148816));
-    clip-path: inset(83.7655016911% 62.5140924464% 5.6369785795% 25.7046223224%);
-  }
-  84.375% {
-    transform: translate(calc(-37.5% + var(--whale-size) * -0.0264937993), calc(-75% + var(--whale-size) * 0.1589627959));
-    clip-path: inset(79.1431792559% 49.9436302142% 6.2006764374% 38.1059751973%);
-  }
-  87.5% {
-    transform: translate(calc(-50% + var(--whale-size) * -0.0186020293), calc(-75% + var(--whale-size) * 0.1724915445));
-    clip-path: inset(82.412626832% 37.5422773393% 6.5388951522% 50.5073280722%);
-  }
-  90.625% {
-    transform: translate(calc(-62.5% + var(--whale-size) * -0.0152198422), calc(-75% + var(--whale-size) * 0.190529876));
-    clip-path: inset(79.932356257% 25.0845546787% 6.9898534386% 62.9650507328%);
-  }
-  93.75% {
-    transform: translate(calc(-75% + var(--whale-size) * -0.011837655), calc(-75% + var(--whale-size) * 0.1950394589));
-    clip-path: inset(79.8196166855% 12.626832018% 7.1025930101% 75.4227733935%);
-  }
-  96.875% {
-    transform: translate(calc(-87.5% + var(--whale-size) * -0.003945885), calc(-75% + var(--whale-size) * 0.2130777903));
-    clip-path: inset(81.6234498309% 0.2254791432% 7.5535512965% 87.8241262683%);
-  }
-  100% {
-    transform: translate(calc(0% + var(--whale-size) * -0.0456595265), calc(0% + var(--whale-size) * 0.099210823));
-    clip-path: inset(9.2446448703% 87.2604284104% 79.7068771139% 0.9019165727%);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .writing-whale .writing-whale__sheet {
-    animation: none;
-    transform: translate(calc(0% + var(--whale-size) * -0.0456595265), calc(0% + var(--whale-size) * 0.099210823));
-    clip-path: inset(9.2446448703% 87.2604284104% 79.7068771139% 0.9019165727%);
-    will-change: auto;
-  }
 }
 

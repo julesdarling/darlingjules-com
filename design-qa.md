@@ -221,3 +221,13 @@ Result: passed
 - Removed the final “Built for teams…” sentence from the All work introduction and the homepage's “View All Projects” link. The remaining archive copy and Work navigation remain intact.
 - All seven required routes scroll without horizontal overflow at 1440 × 1000 and 390 × 844. Focused screenshots and route measurements are under `artifacts/writing-whale-refinements/`.
 - Independent review, Astro check, build (69 pages), site verification (68 routes), and whitespace checks passed. The existing unused-variable hint and bundle-size advisory remain unchanged.
+
+# Whale flicker and title-ring letter fade
+
+Result: passed
+
+- Removed the title texture's baked edge-opacity mask, which was fading the first and last letters. Existing font fitting leaves ample empty space at the repeating texture seam. Ring geometry, controls, and depth fog are unchanged; desktop screenshots show uniformly dark lettering.
+- The whale now prepares all 32 registered poses into fixed-size canvas buffers, then copies each complete buffer in one paint. It no longer animates a translated, clipped spritesheet in the DOM. The original PNG and 140ms frame cadence remain unchanged.
+- Eight browser captures across the loop contain complete, nonempty whale drawings. Their waterline baseline is identical; body-center variation is at most one screenshot pixel from rasterization. Mobile framing remains 84px wide, and desktop framing remains 100px wide.
+- Verified offscreen pause and a static, script-free fallback at both required viewport sizes. The static image stays visible until the first complete canvas frame has been painted. Animation cleanup removes observers, listeners, the canvas, and queued animation work.
+- The seven required routes remain scrollable without horizontal overflow at 1440 × 1000 and 390 × 844. Screenshots and measurements are under `artifacts/whale-flicker/`. Astro check, build, site verification, and whitespace checks passed; the existing hint and bundle-size advisory remain unchanged.
