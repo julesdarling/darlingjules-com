@@ -163,3 +163,11 @@ Result: passed
 - Changed the home footer and About contact buttons to “Say hey”, preserving their existing mail links and glitter treatment.
 - Home and the six other required routes remain scrollable without horizontal overflow at both standard viewport sizes. Home selected work stays below the opening frame. Screenshots and route measurements are under `artifacts/cylinder-load/`.
 - Independent startup/lifecycle review, Astro check, build (69 pages), site verification (68 routes), and whitespace checks passed. The existing unused-variable hint and bundle-size advisory are unchanged.
+
+# Remove the opening hero line
+
+Result: passed
+
+- Removed “I lead the work and make the work.” The hero now contains only the supplied “20 years…” paragraph. Its single-child flex wrapper adds no empty paragraph gap, and the body controls still apply normally.
+- At 1440 × 1000 and 390 × 844, the paragraph-to-button gaps remain about 19px and 16px, the page has no horizontal overflow, and selected work begins below the opening viewport. All six other required routes still scroll without horizontal overflow.
+- Independent markup/control review, Astro check, build, site verification, and whitespace checks passed. Screenshots and route measurements are under `artifacts/hero-line-removal/`.
